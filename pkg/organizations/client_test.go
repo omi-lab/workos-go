@@ -8,8 +8,9 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/omi-lab/workos-go/v4/pkg/common"
+	"github.com/omi-lab/workos-go/v4/pkg/models"
 	"github.com/stretchr/testify/require"
-	"github.com/workos/workos-go/v4/pkg/common"
 )
 
 func TestGetOrganization(t *testing.T) {
@@ -17,7 +18,7 @@ func TestGetOrganization(t *testing.T) {
 		scenario string
 		client   *Client
 		options  GetOrganizationOpts
-		expected Organization
+		expected models.Organization
 		err      bool
 	}{
 		{
@@ -33,12 +34,12 @@ func TestGetOrganization(t *testing.T) {
 			options: GetOrganizationOpts{
 				Organization: "organization_id",
 			},
-			expected: Organization{
+			expected: models.Organization{
 				ID:                               "organization_id",
 				Name:                             "Foo Corp",
 				AllowProfilesOutsideOrganization: false,
-				Domains: []OrganizationDomain{
-					OrganizationDomain{
+				Domains: []models.OrganizationDomain{
+					models.OrganizationDomain{
 						ID:     "organization_domain_id",
 						Domain: "foo-corp.com",
 					},
@@ -74,12 +75,12 @@ func getOrganizationTestHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	body, err := json.Marshal(Organization{
+	body, err := json.Marshal(models.Organization{
 		ID:                               "organization_id",
 		Name:                             "Foo Corp",
 		AllowProfilesOutsideOrganization: false,
-		Domains: []OrganizationDomain{
-			OrganizationDomain{
+		Domains: []models.OrganizationDomain{
+			models.OrganizationDomain{
 				ID:     "organization_domain_id",
 				Domain: "foo-corp.com",
 			},
@@ -117,13 +118,13 @@ func TestListOrganizations(t *testing.T) {
 			},
 
 			expected: ListOrganizationsResponse{
-				Data: []Organization{
-					Organization{
+				Data: []models.Organization{
+					models.Organization{
 						ID:                               "organization_id",
 						Name:                             "Foo Corp",
 						AllowProfilesOutsideOrganization: false,
-						Domains: []OrganizationDomain{
-							OrganizationDomain{
+						Domains: []models.OrganizationDomain{
+							models.OrganizationDomain{
 								ID:     "organization_domain_id",
 								Domain: "foo-corp.com",
 							},
@@ -174,13 +175,13 @@ func listOrganizationsTestHandler(w http.ResponseWriter, r *http.Request) {
 		ListOrganizationsResponse
 	}{
 		ListOrganizationsResponse: ListOrganizationsResponse{
-			Data: []Organization{
-				Organization{
+			Data: []models.Organization{
+				models.Organization{
 					ID:                               "organization_id",
 					Name:                             "Foo Corp",
 					AllowProfilesOutsideOrganization: false,
-					Domains: []OrganizationDomain{
-						OrganizationDomain{
+					Domains: []models.OrganizationDomain{
+						models.OrganizationDomain{
 							ID:     "organization_domain_id",
 							Domain: "foo-corp.com",
 						},
@@ -207,7 +208,7 @@ func TestCreateOrganization(t *testing.T) {
 		scenario string
 		client   *Client
 		options  CreateOrganizationOpts
-		expected Organization
+		expected models.Organization
 		err      bool
 	}{
 		{
@@ -224,12 +225,12 @@ func TestCreateOrganization(t *testing.T) {
 				Name:    "Foo Corp",
 				Domains: []string{"foo-corp.com"},
 			},
-			expected: Organization{
+			expected: models.Organization{
 				ID:                               "organization_id",
 				Name:                             "Foo Corp",
 				AllowProfilesOutsideOrganization: false,
-				Domains: []OrganizationDomain{
-					OrganizationDomain{
+				Domains: []models.OrganizationDomain{
+					models.OrganizationDomain{
 						ID:     "organization_domain_id",
 						Domain: "foo-corp.com",
 					},
@@ -243,19 +244,19 @@ func TestCreateOrganization(t *testing.T) {
 			},
 			options: CreateOrganizationOpts{
 				Name: "Foo Corp",
-				DomainData: []OrganizationDomainData{
-					OrganizationDomainData{
+				DomainData: []models.OrganizationDomainData{
+					models.OrganizationDomainData{
 						Domain: "foo-corp.com",
-						State:  "verified",
+						State:  models.OrganizationDomainDataStateVerified,
 					},
 				},
 			},
-			expected: Organization{
+			expected: models.Organization{
 				ID:                               "organization_id",
 				Name:                             "Foo Corp",
 				AllowProfilesOutsideOrganization: false,
-				Domains: []OrganizationDomain{
-					OrganizationDomain{
+				Domains: []models.OrganizationDomain{
+					models.OrganizationDomain{
 						ID:     "organization_domain_id",
 						Domain: "foo-corp.com",
 					},
@@ -341,12 +342,12 @@ func createOrganizationTestHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	body, err := json.Marshal(
-		Organization{
+		models.Organization{
 			ID:                               "organization_id",
 			Name:                             "Foo Corp",
 			AllowProfilesOutsideOrganization: false,
-			Domains: []OrganizationDomain{
-				OrganizationDomain{
+			Domains: []models.OrganizationDomain{
+				models.OrganizationDomain{
 					ID:     "organization_domain_id",
 					Domain: "foo-corp.com",
 				},
@@ -367,7 +368,7 @@ func TestUpdateOrganization(t *testing.T) {
 		scenario string
 		client   *Client
 		options  UpdateOrganizationOpts
-		expected Organization
+		expected models.Organization
 		err      bool
 	}{
 		{
@@ -385,16 +386,16 @@ func TestUpdateOrganization(t *testing.T) {
 				Name:         "Foo Corp",
 				Domains:      []string{"foo-corp.com", "foo-corp.io"},
 			},
-			expected: Organization{
+			expected: models.Organization{
 				ID:                               "organization_id",
 				Name:                             "Foo Corp",
 				AllowProfilesOutsideOrganization: false,
-				Domains: []OrganizationDomain{
-					OrganizationDomain{
+				Domains: []models.OrganizationDomain{
+					models.OrganizationDomain{
 						ID:     "organization_domain_id",
 						Domain: "foo-corp.com",
 					},
-					OrganizationDomain{
+					models.OrganizationDomain{
 						ID:     "organization_domain_id_2",
 						Domain: "foo-corp.io",
 					},
@@ -409,27 +410,27 @@ func TestUpdateOrganization(t *testing.T) {
 			options: UpdateOrganizationOpts{
 				Organization: "organization_id",
 				Name:         "Foo Corp",
-				DomainData: []OrganizationDomainData{
-					OrganizationDomainData{
+				DomainData: []models.OrganizationDomainData{
+					models.OrganizationDomainData{
 						Domain: "foo-corp.com",
-						State:  "verified",
+						State:  models.OrganizationDomainDataStateVerified,
 					},
-					OrganizationDomainData{
+					models.OrganizationDomainData{
 						Domain: "foo-corp.io",
-						State:  "verified",
+						State:  models.OrganizationDomainDataStateVerified,
 					},
 				},
 			},
-			expected: Organization{
+			expected: models.Organization{
 				ID:                               "organization_id",
 				Name:                             "Foo Corp",
 				AllowProfilesOutsideOrganization: false,
-				Domains: []OrganizationDomain{
-					OrganizationDomain{
+				Domains: []models.OrganizationDomain{
+					models.OrganizationDomain{
 						ID:     "organization_domain_id",
 						Domain: "foo-corp.com",
 					},
-					OrganizationDomain{
+					models.OrganizationDomain{
 						ID:     "organization_domain_id_2",
 						Domain: "foo-corp.io",
 					},
@@ -492,16 +493,16 @@ func updateOrganizationTestHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	body, err := json.Marshal(
-		Organization{
+		models.Organization{
 			ID:                               "organization_id",
 			Name:                             "Foo Corp",
 			AllowProfilesOutsideOrganization: false,
-			Domains: []OrganizationDomain{
-				OrganizationDomain{
+			Domains: []models.OrganizationDomain{
+				models.OrganizationDomain{
 					ID:     "organization_domain_id",
 					Domain: "foo-corp.com",
 				},
-				OrganizationDomain{
+				models.OrganizationDomain{
 					ID:     "organization_domain_id_2",
 					Domain: "foo-corp.io",
 				},

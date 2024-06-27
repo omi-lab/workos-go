@@ -8,9 +8,10 @@ import (
 	"sync"
 	"time"
 
-	"github.com/workos/workos-go/v4/pkg/workos_errors"
+	"github.com/omi-lab/workos-go/v4/pkg/models"
+	"github.com/omi-lab/workos-go/v4/pkg/workos_errors"
 
-	"github.com/workos/workos-go/v4/internal/workos"
+	"github.com/omi-lab/workos-go/v4/internal/workos"
 )
 
 // ResponseLimit is the default number of records to limit a response to.
@@ -55,66 +56,11 @@ type CreateEventOpts struct {
 	OrganizationID string `json:"organization_id" binding:"required"`
 
 	// Event payload
-	Event Event `json:"event" binding:"required"`
+	Event models.AuditLogEvent `json:"event" binding:"required"`
 
 	// If no key is provided or the key is empty, the key will not be attached
 	// to the request.
 	IdempotencyKey string `json:"-"`
-}
-
-type Event struct {
-	// Represents the activity performed by the actor.
-	Action string `json:"action"`
-
-	// The schema version of the event
-	Version int `json:"version,omitempty"`
-
-	// The time when the event occurred.
-	// Defaults to time.Now().
-	OccurredAt time.Time `json:"occurred_at"`
-
-	// Describes the entity that generated the event
-	Actor Actor `json:"actor"`
-
-	// List of event target
-	Targets []Target `json:"targets"`
-
-	// Attributes of event context
-	Context Context `json:"context"`
-
-	// Event metadata.
-	Metadata map[string]interface{} `json:"metadata,omitempty"`
-}
-
-// Context describes the event location and user agent
-type Context struct {
-	// Place from where the event is fired
-	Location string `json:"location"`
-
-	// User Agent identity information of the event actor
-	UserAgent string `json:"user_agent"`
-}
-
-// Target describes event entity's
-type Target struct {
-	ID string `json:"id"`
-
-	Name string `json:"name"`
-
-	Type string `json:"type"`
-
-	Metadata map[string]interface{} `json:"metadata,omitempty"`
-}
-
-// Actor describes the entity that generated the event
-type Actor struct {
-	ID string `json:"id"`
-
-	Name string `json:"name"`
-
-	Type string `json:"type"`
-
-	Metadata map[string]interface{} `json:"metadata,omitempty"`
 }
 
 type CreateExportOpts struct {
@@ -141,40 +87,6 @@ type CreateExportOpts struct {
 
 	// Optional list of targets to filter
 	Targets []string `json:"targets,omitempty"`
-}
-
-// AuditLogExportState represents the active state of an AuditLogExport.
-type AuditLogExportState string
-
-// Constants that enumerate the state of a AuditLogExport.
-const (
-	Ready   AuditLogExportState = "Ready"
-	Pending AuditLogExportState = "Pending"
-	Error   AuditLogExportState = "Error"
-)
-
-type AuditLogExportObject string
-
-const AuditLogExportObjectName AuditLogExportObject = "audit_log_export"
-
-type AuditLogExport struct {
-	// Object will always be set to 'audit_log_export'
-	Object AuditLogExportObject `json:"object"`
-
-	// AuditLogExport identifier
-	ID string `json:"id"`
-
-	// State is the active state of AuditLogExport
-	State AuditLogExportState `json:"state"`
-
-	// URL for downloading the exported logs
-	URL string `json:"url"`
-
-	// AuditLogExport's created at date
-	CreatedAt string `json:"created_at"`
-
-	// AuditLogExport's updated at date
-	UpdatedAt string `json:"updated_at"`
 }
 
 type GetExportOpts struct {
@@ -233,17 +145,17 @@ func (c *Client) CreateEvent(ctx context.Context, e CreateEventOpts) error {
 }
 
 // CreateExport creates an export of Audit Log events. You can specify some filters.
-func (c *Client) CreateExport(ctx context.Context, e CreateExportOpts) (AuditLogExport, error) {
+func (c *Client) CreateExport(ctx context.Context, e CreateExportOpts) (models.AuditLogExport, error) {
 	c.once.Do(c.init)
 
 	data, err := c.JSONEncode(e)
 	if err != nil {
-		return AuditLogExport{}, err
+		return models.AuditLogExport{}, err
 	}
 
 	req, err := http.NewRequest(http.MethodPost, c.ExportsEndpoint, bytes.NewBuffer(data))
 	if err != nil {
-		return AuditLogExport{}, err
+		return models.AuditLogExport{}, err
 	}
 	req = req.WithContext(ctx)
 	req.Header.Set("Content-Type", "application/json")
@@ -252,27 +164,27 @@ func (c *Client) CreateExport(ctx context.Context, e CreateExportOpts) (AuditLog
 
 	res, err := c.HTTPClient.Do(req)
 	if err != nil {
-		return AuditLogExport{}, err
+		return models.AuditLogExport{}, err
 	}
 	defer res.Body.Close()
 
 	if err = workos_errors.TryGetHTTPError(res); err != nil {
-		return AuditLogExport{}, err
+		return models.AuditLogExport{}, err
 	}
 
-	var body AuditLogExport
+	var body models.AuditLogExport
 	dec := json.NewDecoder(res.Body)
 	err = dec.Decode(&body)
 	return body, err
 }
 
 // GetExport retrieves an export of Audit Log events
-func (c *Client) GetExport(ctx context.Context, e GetExportOpts) (AuditLogExport, error) {
+func (c *Client) GetExport(ctx context.Context, e GetExportOpts) (models.AuditLogExport, error) {
 	c.once.Do(c.init)
 
 	req, err := http.NewRequest(http.MethodGet, c.ExportsEndpoint+"/"+e.ExportID, nil)
 	if err != nil {
-		return AuditLogExport{}, err
+		return models.AuditLogExport{}, err
 	}
 	req = req.WithContext(ctx)
 	req.Header.Set("Content-Type", "application/json")
@@ -281,15 +193,15 @@ func (c *Client) GetExport(ctx context.Context, e GetExportOpts) (AuditLogExport
 
 	res, err := c.HTTPClient.Do(req)
 	if err != nil {
-		return AuditLogExport{}, err
+		return models.AuditLogExport{}, err
 	}
 	defer res.Body.Close()
 
 	if err = workos_errors.TryGetHTTPError(res); err != nil {
-		return AuditLogExport{}, err
+		return models.AuditLogExport{}, err
 	}
 
-	var body AuditLogExport
+	var body models.AuditLogExport
 	dec := json.NewDecoder(res.Body)
 	err = dec.Decode(&body)
 	return body, err

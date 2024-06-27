@@ -3,6 +3,8 @@ package passwordless
 
 import (
 	"context"
+
+	"github.com/omi-lab/workos-go/v4/pkg/models"
 )
 
 // DefaultClient is the client used by the SetAPIKey, CreateSession, and SendSession functions.
@@ -21,7 +23,7 @@ func SetAPIKey(apiKey string) {
 func CreateSession(
 	ctx context.Context,
 	opts CreateSessionOpts,
-) (PasswordlessSession, error) {
+) (models.PasswordlessSession, error) {
 	return DefaultClient.CreateSession(ctx, opts)
 }
 

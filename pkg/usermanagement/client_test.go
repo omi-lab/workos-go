@@ -9,9 +9,9 @@ import (
 	"testing"
 	"time"
 
+	"github.com/omi-lab/workos-go/v4/pkg/common"
+	"github.com/omi-lab/workos-go/v4/pkg/models"
 	"github.com/stretchr/testify/require"
-	"github.com/workos/workos-go/v4/pkg/common"
-	"github.com/workos/workos-go/v4/pkg/mfa"
 )
 
 func TestGetUser(t *testing.T) {
@@ -19,7 +19,7 @@ func TestGetUser(t *testing.T) {
 		scenario string
 		client   *Client
 		options  GetUserOpts
-		expected User
+		expected models.User
 		err      bool
 	}{
 		{
@@ -33,7 +33,7 @@ func TestGetUser(t *testing.T) {
 			options: GetUserOpts{
 				User: "user_123",
 			},
-			expected: User{
+			expected: models.User{
 				ID:            "user_01E3JC5F5Z1YJNPGVYWV9SX6GH",
 				Email:         "marcelina@foo-corp.com",
 				FirstName:     "Marcelina",
@@ -49,7 +49,7 @@ func TestGetUser(t *testing.T) {
 			options: GetUserOpts{
 				User: "user_456",
 			},
-			expected: User{
+			expected: models.User{
 				ID:                "user_01E3JC5F5Z1YJNPGVYWV9SX456",
 				Email:             "marcelina@foo-corp.com",
 				FirstName:         "Marcelina",
@@ -93,7 +93,7 @@ func getUserTestHandler(w http.ResponseWriter, r *http.Request) {
 	var err error
 
 	if r.URL.Path == "/user_management/users/user_123" {
-		body, err = json.Marshal(User{
+		body, err = json.Marshal(models.User{
 			ID:            "user_01E3JC5F5Z1YJNPGVYWV9SX6GH",
 			Email:         "marcelina@foo-corp.com",
 			FirstName:     "Marcelina",
@@ -105,7 +105,7 @@ func getUserTestHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if r.URL.Path == "/user_management/users/user_456" {
-		body, err = json.Marshal(User{
+		body, err = json.Marshal(models.User{
 			ID:                "user_01E3JC5F5Z1YJNPGVYWV9SX456",
 			Email:             "marcelina@foo-corp.com",
 			FirstName:         "Marcelina",
@@ -137,7 +137,7 @@ func TestListUsers(t *testing.T) {
 		}
 
 		expectedResponse := ListUsersResponse{
-			Data: []User{
+			Data: []models.User{
 				{
 					ID:            "user_01E3JC5F5Z1YJNPGVYWV9SX6GH",
 					Email:         "marcelina@foo-corp.com",
@@ -169,7 +169,7 @@ func TestListUsers(t *testing.T) {
 		}
 
 		expectedResponse := ListUsersResponse{
-			Data: []User{
+			Data: []models.User{
 				{
 					ID:            "user_01E3JC5F5Z1YJNPGVYWV9SX6GH",
 					Email:         "marcelina@foo-corp.com",
@@ -208,7 +208,7 @@ func TestListUsers(t *testing.T) {
 		}
 
 		expectedResponse := ListUsersResponse{
-			Data: []User{
+			Data: []models.User{
 				{
 					ID:            "user_01E3JC5F5Z1YJNPGVYWV9SX6GH",
 					Email:         "marcelina@foo-corp.com",
@@ -247,7 +247,7 @@ func listUsersTestHandler(w http.ResponseWriter, r *http.Request) {
 		ListUsersResponse
 	}{
 		ListUsersResponse: ListUsersResponse{
-			Data: []User{
+			Data: []models.User{
 				{
 					ID:            "user_01E3JC5F5Z1YJNPGVYWV9SX6GH",
 					Email:         "marcelina@foo-corp.com",
@@ -277,7 +277,7 @@ func TestCreateUser(t *testing.T) {
 		scenario string
 		client   *Client
 		options  CreateUserOpts
-		expected User
+		expected models.User
 		err      bool
 	}{
 		{
@@ -295,7 +295,7 @@ func TestCreateUser(t *testing.T) {
 				EmailVerified: false,
 				Password:      "pass",
 			},
-			expected: User{
+			expected: models.User{
 				ID:            "user_01E3JC5F5Z1YJNPGVYWV9SX6GH",
 				Email:         "marcelina@foo-corp.com",
 				FirstName:     "Marcelina",
@@ -338,7 +338,7 @@ func createUserTestHandler(w http.ResponseWriter, r *http.Request) {
 	var err error
 
 	if r.URL.Path == "/user_management/users" {
-		body, err = json.Marshal(User{
+		body, err = json.Marshal(models.User{
 			ID:            "user_01E3JC5F5Z1YJNPGVYWV9SX6GH",
 			Email:         "marcelina@foo-corp.com",
 			FirstName:     "Marcelina",
@@ -363,7 +363,7 @@ func TestUpdateUser(t *testing.T) {
 		scenario string
 		client   *Client
 		options  UpdateUserOpts
-		expected User
+		expected models.User
 		err      bool
 	}{
 		{
@@ -380,7 +380,7 @@ func TestUpdateUser(t *testing.T) {
 				LastName:      "Davis",
 				EmailVerified: false,
 			},
-			expected: User{
+			expected: models.User{
 				ID:            "user_01E3JC5F5Z1YJNPGVYWV9SX6GH",
 				Email:         "marcelina@foo-corp.com",
 				FirstName:     "Marcelina",
@@ -423,7 +423,7 @@ func updateUserTestHandler(w http.ResponseWriter, r *http.Request) {
 	var err error
 
 	if r.URL.Path == "/user_management/users/user_01E3JC5F5Z1YJNPGVYWV9SX6GH" {
-		body, err = json.Marshal(User{
+		body, err = json.Marshal(models.User{
 			ID:            "user_01E3JC5F5Z1YJNPGVYWV9SX6GH",
 			Email:         "marcelina@foo-corp.com",
 			FirstName:     "Marcelina",
@@ -529,7 +529,7 @@ func TestListIdentities(t *testing.T) {
 				ID: "user_01E3JC5F5Z1YJNPGVYWV9SX6GH",
 			},
 			expected: ListIdentitiesResult{
-				Identities: []Identity{
+				Identities: []models.Identity{
 					{
 						IdpID:    "13966412",
 						Type:     "OAuth",
@@ -578,7 +578,7 @@ func listIdentitiesTestHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	body, err := json.Marshal(ListIdentitiesResult{
-		Identities: []Identity{
+		Identities: []models.Identity{
 			{
 				IdpID:    "13966412",
 				Type:     "OAuth",
@@ -755,7 +755,7 @@ func TestAuthenticateUserWithPassword(t *testing.T) {
 				Password: "test_123",
 			},
 			expected: AuthenticateResponse{
-				User: User{
+				User: models.User{
 					ID:        "testUserID",
 					FirstName: "John",
 					LastName:  "Doe",
@@ -807,7 +807,7 @@ func TestAuthenticateUserWithCode(t *testing.T) {
 				Code:     "test_123",
 			},
 			expected: AuthenticateResponse{
-				User: User{
+				User: models.User{
 					ID:        "testUserID",
 					FirstName: "John",
 					LastName:  "Doe",
@@ -826,7 +826,7 @@ func TestAuthenticateUserWithCode(t *testing.T) {
 				Code:     "test_123",
 			},
 			expected: AuthenticateResponse{
-				User: User{
+				User: models.User{
 					ID:        "testUserID",
 					FirstName: "John",
 					LastName:  "Doe",
@@ -929,7 +929,7 @@ func TestAuthenticateUserWithMagicAuth(t *testing.T) {
 				LinkAuthorizationCode: "test_456",
 			},
 			expected: AuthenticateResponse{
-				User: User{
+				User: models.User{
 					ID:        "testUserID",
 					FirstName: "John",
 					LastName:  "Doe",
@@ -983,7 +983,7 @@ func TestAuthenticateUserWithTOTP(t *testing.T) {
 				AuthenticationChallengeID:  "auth_challenge_01H96FETXGTW1QMBSBT2T36PW0",
 			},
 			expected: AuthenticateResponse{
-				User: User{
+				User: models.User{
 					ID:        "testUserID",
 					FirstName: "John",
 					LastName:  "Doe",
@@ -1036,7 +1036,7 @@ func TestAuthenticateUserWithEmailVerificationCode(t *testing.T) {
 				PendingAuthenticationToken: "cTDQJTTkTkkVYxQUlKBIxEsFs",
 			},
 			expected: AuthenticateResponse{
-				User: User{
+				User: models.User{
 					ID:        "testUserID",
 					FirstName: "John",
 					LastName:  "Doe",
@@ -1089,7 +1089,7 @@ func TestAuthenticateUserWithOrganizationSelection(t *testing.T) {
 				PendingAuthenticationToken: "cTDQJTTkTkkVYxQUlKBIxEsFs",
 			},
 			expected: AuthenticateResponse{
-				User: User{
+				User: models.User{
 					ID:        "testUserID",
 					FirstName: "John",
 					LastName:  "Doe",
@@ -1134,7 +1134,7 @@ func authenticationResponseTestHandler(w http.ResponseWriter, r *http.Request) {
 		switch secret {
 		case "test":
 			response = AuthenticateResponse{
-				User: User{
+				User: models.User{
 					ID:        "testUserID",
 					FirstName: "John",
 					LastName:  "Doe",
@@ -1146,7 +1146,7 @@ func authenticationResponseTestHandler(w http.ResponseWriter, r *http.Request) {
 			}
 		case "test_with_impersonation":
 			response = AuthenticateResponse{
-				User: User{
+				User: models.User{
 					ID:        "testUserID",
 					FirstName: "John",
 					LastName:  "Doe",
@@ -1196,7 +1196,7 @@ func TestGetEmailVerification(t *testing.T) {
 		scenario string
 		client   *Client
 		options  GetEmailVerificationOpts
-		expected EmailVerification
+		expected models.EmailVerification
 		err      bool
 	}{
 		{
@@ -1208,7 +1208,7 @@ func TestGetEmailVerification(t *testing.T) {
 			scenario: "Request returns EmailVerification by ID",
 			client:   NewClient("test"),
 			options:  GetEmailVerificationOpts{EmailVerification: "email_verification_123"},
-			expected: EmailVerification{
+			expected: models.EmailVerification{
 				ID:        "email_verification_123",
 				UserId:    "user_123",
 				Email:     "marcelina@foo-corp.com",
@@ -1251,7 +1251,7 @@ func getEmailVerificationTestHandler(w http.ResponseWriter, r *http.Request) {
 	var err error
 
 	if r.URL.Path == "/user_management/email_verification/email_verification_123" {
-		emailVerification := EmailVerification{
+		emailVerification := models.EmailVerification{
 			ID:        "email_verification_123",
 			UserId:    "user_123",
 			Email:     "marcelina@foo-corp.com",
@@ -1292,7 +1292,7 @@ func TestSendVerificationEmail(t *testing.T) {
 				User: "user_123",
 			},
 			expected: UserResponse{
-				User: User{
+				User: models.User{
 					ID:            "user_123",
 					Email:         "marcelina@foo-corp.com",
 					FirstName:     "Marcelina",
@@ -1337,7 +1337,7 @@ func sendVerificationEmailTestHandler(w http.ResponseWriter, r *http.Request) {
 
 	if r.URL.Path == "/user_management/users/user_123/email_verification/send" {
 		body, err = json.Marshal(UserResponse{
-			User: User{
+			User: models.User{
 				ID: "user_123",
 
 				Email:         "marcelina@foo-corp.com",
@@ -1380,7 +1380,7 @@ func TestVerifyEmail(t *testing.T) {
 				Code: "testToken",
 			},
 			expected: UserResponse{
-				User: User{
+				User: models.User{
 					ID:            "user_123",
 					Email:         "marcelina@foo-corp.com",
 					FirstName:     "Marcelina",
@@ -1423,7 +1423,7 @@ func verifyEmailCodeTestHandler(w http.ResponseWriter, r *http.Request) {
 
 	if r.URL.Path == "/user_management/users/user_123/email_verification/confirm" {
 		body, err = json.Marshal(UserResponse{
-			User: User{
+			User: models.User{
 				ID:            "user_123",
 				Email:         "marcelina@foo-corp.com",
 				FirstName:     "Marcelina",
@@ -1447,7 +1447,7 @@ func TestGetPasswordReset(t *testing.T) {
 		scenario string
 		client   *Client
 		options  GetPasswordResetOpts
-		expected PasswordReset
+		expected models.PasswordReset
 		err      bool
 	}{
 		{
@@ -1459,7 +1459,7 @@ func TestGetPasswordReset(t *testing.T) {
 			scenario: "Request returns PasswordReset by ID",
 			client:   NewClient("test"),
 			options:  GetPasswordResetOpts{PasswordReset: "password_reset_123"},
-			expected: PasswordReset{
+			expected: models.PasswordReset{
 				ID:                 "password_reset_123",
 				UserId:             "user_123",
 				Email:              "marcelina@foo-corp.com",
@@ -1502,7 +1502,7 @@ func getPasswordResetTestHandler(w http.ResponseWriter, r *http.Request) {
 	var err error
 
 	if r.URL.Path == "/user_management/password_reset/password_reset_123" {
-		passwordReset := PasswordReset{
+		passwordReset := models.PasswordReset{
 			ID:                 "password_reset_123",
 			UserId:             "user_123",
 			Email:              "marcelina@foo-corp.com",
@@ -1528,7 +1528,7 @@ func TestCreatePasswordReset(t *testing.T) {
 		scenario string
 		client   *Client
 		options  CreatePasswordResetOpts
-		expected PasswordReset
+		expected models.PasswordReset
 		err      bool
 	}{
 		{
@@ -1542,7 +1542,7 @@ func TestCreatePasswordReset(t *testing.T) {
 			options: CreatePasswordResetOpts{
 				Email: "marcelina@foo-corp.com",
 			},
-			expected: PasswordReset{
+			expected: models.PasswordReset{
 				ID:                 "password_reset_123",
 				UserId:             "user_123",
 				Email:              "marcelina@foo-corp.com",
@@ -1586,7 +1586,7 @@ func CreatePasswordResetTestHandler(w http.ResponseWriter, r *http.Request) {
 
 	if r.URL.Path == "/user_management/password_reset" {
 		body, err = json.Marshal(
-			PasswordReset{
+			models.PasswordReset{
 				ID:                 "password_reset_123",
 				UserId:             "user_123",
 				Email:              "marcelina@foo-corp.com",
@@ -1677,7 +1677,7 @@ func TestResetPassword(t *testing.T) {
 				Token: "testToken",
 			},
 			expected: UserResponse{
-				User: User{
+				User: models.User{
 					ID: "user_123",
 
 					Email:         "marcelina@foo-corp.com",
@@ -1721,7 +1721,7 @@ func resetPasswordHandler(w http.ResponseWriter, r *http.Request) {
 
 	if r.URL.Path == "/user_management/password_reset/confirm" {
 		body, err = json.Marshal(UserResponse{
-			User: User{
+			User: models.User{
 				ID: "user_123",
 
 				Email:         "marcelina@foo-corp.com",
@@ -1746,7 +1746,7 @@ func TestGetMagicAuth(t *testing.T) {
 		scenario string
 		client   *Client
 		options  GetMagicAuthOpts
-		expected MagicAuth
+		expected models.MagicAuth
 		err      bool
 	}{
 		{
@@ -1758,7 +1758,7 @@ func TestGetMagicAuth(t *testing.T) {
 			scenario: "Request returns MagicAuth by ID",
 			client:   NewClient("test"),
 			options:  GetMagicAuthOpts{MagicAuth: "magic_auth_123"},
-			expected: MagicAuth{
+			expected: models.MagicAuth{
 				ID:        "magic_auth_123",
 				UserId:    "user_123",
 				Email:     "marcelina@foo-corp.com",
@@ -1801,7 +1801,7 @@ func getMagicAuthTestHandler(w http.ResponseWriter, r *http.Request) {
 	var err error
 
 	if r.URL.Path == "/user_management/magic_auth/magic_auth_123" {
-		magicAuth := MagicAuth{
+		magicAuth := models.MagicAuth{
 			ID:        "magic_auth_123",
 			UserId:    "user_123",
 			Email:     "marcelina@foo-corp.com",
@@ -1827,7 +1827,7 @@ func TestCreateMagicAuth(t *testing.T) {
 		scenario string
 		client   *Client
 		options  CreateMagicAuthOpts
-		expected MagicAuth
+		expected models.MagicAuth
 		err      bool
 	}{
 		{
@@ -1841,7 +1841,7 @@ func TestCreateMagicAuth(t *testing.T) {
 			options: CreateMagicAuthOpts{
 				Email: "marcelina@foo-corp.com",
 			},
-			expected: MagicAuth{
+			expected: models.MagicAuth{
 				ID:        "magic_auth_123",
 				UserId:    "user_123",
 				Email:     "marcelina@foo-corp.com",
@@ -1885,7 +1885,7 @@ func CreateMagicAuthTestHandler(w http.ResponseWriter, r *http.Request) {
 
 	if r.URL.Path == "/user_management/magic_auth" {
 		body, err = json.Marshal(
-			MagicAuth{
+			models.MagicAuth{
 				ID:        "magic_auth_123",
 				UserId:    "user_123",
 				Email:     "marcelina@foo-corp.com",
@@ -1972,16 +1972,16 @@ func TestEnrollAuthFactor(t *testing.T) {
 			client:   NewClient("test"),
 			options: EnrollAuthFactorOpts{
 				User: "user_01E3JC5F5Z1YJNPGVYWV9SX6GH",
-				Type: mfa.TOTP,
+				Type: models.FactorTypeTOTP,
 			},
 			expected: EnrollAuthFactorResponse{
-				Factor: mfa.Factor{
+				Factor: models.Factor{
 					ID:        "auth_factor_test123",
 					CreatedAt: "2022-02-17T22:39:26.616Z",
 					UpdatedAt: "2022-02-17T22:39:26.616Z",
 					Type:      "generic_otp",
 				},
-				Challenge: mfa.Challenge{
+				Challenge: models.Challenge{
 					ID:        "auth_challenge_test123",
 					CreatedAt: "2022-02-17T22:39:26.616Z",
 					UpdatedAt: "2022-02-17T22:39:26.616Z",
@@ -2024,13 +2024,13 @@ func enrollAuthFactorTestHandler(w http.ResponseWriter, r *http.Request) {
 
 	if r.URL.Path == "/user_management/users/user_01E3JC5F5Z1YJNPGVYWV9SX6GH/auth_factors" {
 		body, err = json.Marshal(EnrollAuthFactorResponse{
-			Factor: mfa.Factor{
+			Factor: models.Factor{
 				ID:        "auth_factor_test123",
 				CreatedAt: "2022-02-17T22:39:26.616Z",
 				UpdatedAt: "2022-02-17T22:39:26.616Z",
 				Type:      "generic_otp",
 			},
-			Challenge: mfa.Challenge{
+			Challenge: models.Challenge{
 				ID:        "auth_challenge_test123",
 				CreatedAt: "2022-02-17T22:39:26.616Z",
 				UpdatedAt: "2022-02-17T22:39:26.616Z",
@@ -2069,7 +2069,7 @@ func TestListAuthFactor(t *testing.T) {
 				User: "user_01E3JC5F5Z1YJNPGVYWV9SX6GH",
 			},
 			expected: ListAuthFactorsResponse{
-				Data: []mfa.Factor{
+				Data: []models.Factor{
 					{
 						ID:        "auth_factor_test123",
 						CreatedAt: "2022-02-17T22:39:26.616Z",
@@ -2119,7 +2119,7 @@ func listAuthFactorsTestHandler(w http.ResponseWriter, r *http.Request) {
 
 	if r.URL.Path == "/user_management/users/user_01E3JC5F5Z1YJNPGVYWV9SX6GH/auth_factors" {
 		body, err = json.Marshal(ListAuthFactorsResponse{
-			Data: []mfa.Factor{
+			Data: []models.Factor{
 				{
 					ID:        "auth_factor_test123",
 					CreatedAt: "2022-02-17T22:39:26.616Z",
@@ -2150,7 +2150,7 @@ func TestGetOrganizationMembership(t *testing.T) {
 		scenario string
 		client   *Client
 		options  GetOrganizationMembershipOpts
-		expected OrganizationMembership
+		expected models.OrganizationMembership
 		err      bool
 	}{
 		{
@@ -2164,11 +2164,11 @@ func TestGetOrganizationMembership(t *testing.T) {
 			options: GetOrganizationMembershipOpts{
 				OrganizationMembership: "om_01E4ZCR3C56J083X43JQXF3JK5",
 			},
-			expected: OrganizationMembership{
+			expected: models.OrganizationMembership{
 				ID:             "om_01E4ZCR3C56J083X43JQXF3JK5",
 				UserID:         "user_01E4ZCR3C5A4QZ2Z2JQXGKZJ9E",
 				OrganizationID: "org_01E4ZCR3C56J083X43JQXF3JK5",
-				Status:         Active,
+				Status:         models.OrganizationMembershipStatusActive,
 				CreatedAt:      "2021-06-25T19:07:33.155Z",
 				UpdatedAt:      "2021-06-25T19:07:33.155Z",
 			},
@@ -2206,11 +2206,11 @@ func getOrganizationMembershipTestHandler(w http.ResponseWriter, r *http.Request
 	var err error
 
 	if r.URL.Path == "/user_management/organization_memberships/om_01E4ZCR3C56J083X43JQXF3JK5" {
-		body, err = json.Marshal(OrganizationMembership{
+		body, err = json.Marshal(models.OrganizationMembership{
 			ID:             "om_01E4ZCR3C56J083X43JQXF3JK5",
 			UserID:         "user_01E4ZCR3C5A4QZ2Z2JQXGKZJ9E",
 			OrganizationID: "org_01E4ZCR3C56J083X43JQXF3JK5",
-			Status:         Active,
+			Status:         models.OrganizationMembershipStatusActive,
 			CreatedAt:      "2021-06-25T19:07:33.155Z",
 			UpdatedAt:      "2021-06-25T19:07:33.155Z",
 		})
@@ -2236,12 +2236,12 @@ func TestListOrganizationMemberships(t *testing.T) {
 		}
 
 		expectedResponse := ListOrganizationMembershipsResponse{
-			Data: []OrganizationMembership{
+			Data: []models.OrganizationMembership{
 				{
 					ID:             "om_01E4ZCR3C56J083X43JQXF3JK5",
 					UserID:         "user_01E4ZCR3C5A4QZ2Z2JQXGKZJ9E",
 					OrganizationID: "org_01E4ZCR3C56J083X43JQXF3JK5",
-					Status:         Active,
+					Status:         models.OrganizationMembershipStatusActive,
 					CreatedAt:      "2021-06-25T19:07:33.155Z",
 					UpdatedAt:      "2021-06-25T19:07:33.155Z",
 				},
@@ -2270,12 +2270,12 @@ func TestListOrganizationMemberships(t *testing.T) {
 		}
 
 		expectedResponse := ListOrganizationMembershipsResponse{
-			Data: []OrganizationMembership{
+			Data: []models.OrganizationMembership{
 				{
 					ID:             "om_01E4ZCR3C56J083X43JQXF3JK5",
 					UserID:         "user_01E4ZCR3C5A4QZ2Z2JQXGKZJ9E",
 					OrganizationID: "org_01E4ZCR3C56J083X43JQXF3JK5",
-					Status:         Active,
+					Status:         models.OrganizationMembershipStatusActive,
 					CreatedAt:      "2021-06-25T19:07:33.155Z",
 					UpdatedAt:      "2021-06-25T19:07:33.155Z",
 				},
@@ -2304,12 +2304,12 @@ func TestListOrganizationMemberships(t *testing.T) {
 		}
 
 		expectedResponse := ListOrganizationMembershipsResponse{
-			Data: []OrganizationMembership{
+			Data: []models.OrganizationMembership{
 				{
 					ID:             "om_01E4ZCR3C56J083X43JQXF3JK5",
 					UserID:         "user_01E4ZCR3C5A4QZ2Z2JQXGKZJ9E",
 					OrganizationID: "org_01E4ZCR3C56J083X43JQXF3JK5",
-					Status:         Active,
+					Status:         models.OrganizationMembershipStatusActive,
 					CreatedAt:      "2021-06-25T19:07:33.155Z",
 					UpdatedAt:      "2021-06-25T19:07:33.155Z",
 				},
@@ -2321,7 +2321,7 @@ func TestListOrganizationMemberships(t *testing.T) {
 
 		organizationMemberships, err := client.ListOrganizationMemberships(
 			context.Background(),
-			ListOrganizationMembershipsOpts{Statuses: []OrganizationMembershipStatus{Active, Inactive}, UserID: "user_01E4ZCR3C5A4QZ2Z2JQXGKZJ9E"},
+			ListOrganizationMembershipsOpts{Statuses: []models.OrganizationMembershipStatus{models.OrganizationMembershipStatusActive, models.OrganizationMembershipStatusInactive}, UserID: "user_01E4ZCR3C5A4QZ2Z2JQXGKZJ9E"},
 		)
 
 		require.NoError(t, err)
@@ -2349,12 +2349,12 @@ func listOrganizationMembershipsTestHandler(w http.ResponseWriter, r *http.Reque
 			ListOrganizationMembershipsResponse
 		}{
 			ListOrganizationMembershipsResponse: ListOrganizationMembershipsResponse{
-				Data: []OrganizationMembership{
+				Data: []models.OrganizationMembership{
 					{
 						ID:             "om_01E4ZCR3C56J083X43JQXF3JK5",
 						UserID:         "user_01E4ZCR3C5A4QZ2Z2JQXGKZJ9E",
 						OrganizationID: "org_01E4ZCR3C56J083X43JQXF3JK5",
-						Status:         Active,
+						Status:         models.OrganizationMembershipStatusActive,
 						CreatedAt:      "2021-06-25T19:07:33.155Z",
 						UpdatedAt:      "2021-06-25T19:07:33.155Z",
 					},
@@ -2379,7 +2379,7 @@ func TestCreateOrganizationMembership(t *testing.T) {
 		scenario string
 		client   *Client
 		options  CreateOrganizationMembershipOpts
-		expected OrganizationMembership
+		expected models.OrganizationMembership
 		err      bool
 	}{
 		{
@@ -2394,11 +2394,11 @@ func TestCreateOrganizationMembership(t *testing.T) {
 				UserID:         "user_01E4ZCR3C5A4QZ2Z2JQXGKZJ9E",
 				OrganizationID: "org_01E4ZCR3C56J083X43JQXF3JK5",
 			},
-			expected: OrganizationMembership{
+			expected: models.OrganizationMembership{
 				ID:             "om_01E4ZCR3C56J083X43JQXF3JK5",
 				UserID:         "user_01E4ZCR3C5A4QZ2Z2JQXGKZJ9E",
 				OrganizationID: "org_01E4ZCR3C56J083X43JQXF3JK5",
-				Status:         Active,
+				Status:         models.OrganizationMembershipStatusActive,
 				Role: common.RoleResponse{
 					Slug: "member",
 				},
@@ -2439,11 +2439,11 @@ func createOrganizationMembershipTestHandler(w http.ResponseWriter, r *http.Requ
 	var err error
 
 	if r.URL.Path == "/user_management/organization_memberships" {
-		body, err = json.Marshal(OrganizationMembership{
+		body, err = json.Marshal(models.OrganizationMembership{
 			ID:             "om_01E4ZCR3C56J083X43JQXF3JK5",
 			UserID:         "user_01E4ZCR3C5A4QZ2Z2JQXGKZJ9E",
 			OrganizationID: "org_01E4ZCR3C56J083X43JQXF3JK5",
-			Status:         Active,
+			Status:         models.OrganizationMembershipStatusActive,
 			Role: common.RoleResponse{
 				Slug: "member",
 			},
@@ -2467,7 +2467,7 @@ func TestUpdateOrganizationMembership(t *testing.T) {
 		client                   *Client
 		organizationMembershipId string
 		options                  UpdateOrganizationMembershipOpts
-		expected                 OrganizationMembership
+		expected                 models.OrganizationMembership
 		err                      bool
 	}{
 		{
@@ -2482,11 +2482,11 @@ func TestUpdateOrganizationMembership(t *testing.T) {
 			options: UpdateOrganizationMembershipOpts{
 				RoleSlug: "member",
 			},
-			expected: OrganizationMembership{
+			expected: models.OrganizationMembership{
 				ID:             "om_01E4ZCR3C56J083X43JQXF3JK5",
 				UserID:         "user_01E4ZCR3C5A4QZ2Z2JQXGKZJ9E",
 				OrganizationID: "org_01E4ZCR3C56J083X43JQXF3JK5",
-				Status:         Active,
+				Status:         models.OrganizationMembershipStatusActive,
 				Role: common.RoleResponse{
 					Slug: "member",
 				},
@@ -2527,11 +2527,11 @@ func updateOrganizationMembershipTestHandler(w http.ResponseWriter, r *http.Requ
 	var err error
 
 	if r.URL.Path == "/user_management/organization_memberships/om_01E4ZCR3C56J083X43JQXF3JK5" {
-		body, err = json.Marshal(OrganizationMembership{
+		body, err = json.Marshal(models.OrganizationMembership{
 			ID:             "om_01E4ZCR3C56J083X43JQXF3JK5",
 			UserID:         "user_01E4ZCR3C5A4QZ2Z2JQXGKZJ9E",
 			OrganizationID: "org_01E4ZCR3C56J083X43JQXF3JK5",
-			Status:         Active,
+			Status:         models.OrganizationMembershipStatusActive,
 			Role: common.RoleResponse{
 				Slug: "member",
 			},
@@ -2620,7 +2620,7 @@ func TestDeactivateOrganizationMembership(t *testing.T) {
 		scenario string
 		client   *Client
 		options  DeactivateOrganizationMembershipOpts
-		expected OrganizationMembership
+		expected models.OrganizationMembership
 		err      bool
 	}{
 		{
@@ -2634,11 +2634,11 @@ func TestDeactivateOrganizationMembership(t *testing.T) {
 			options: DeactivateOrganizationMembershipOpts{
 				OrganizationMembership: "om_01E4ZCR3C56J083X43JQXF3JK5",
 			},
-			expected: OrganizationMembership{
+			expected: models.OrganizationMembership{
 				ID:             "om_01E4ZCR3C56J083X43JQXF3JK5",
 				UserID:         "user_01E4ZCR3C5A4QZ2Z2JQXGKZJ9E",
 				OrganizationID: "org_01E4ZCR3C56J083X43JQXF3JK5",
-				Status:         Inactive,
+				Status:         models.OrganizationMembershipStatusInactive,
 				CreatedAt:      "2021-06-25T19:07:33.155Z",
 				UpdatedAt:      "2021-06-25T19:07:33.155Z",
 			},
@@ -2676,11 +2676,11 @@ func deactivateOrganizationMembershipTestHandler(w http.ResponseWriter, r *http.
 	var err error
 
 	if r.URL.Path == "/user_management/organization_memberships/om_01E4ZCR3C56J083X43JQXF3JK5/deactivate" {
-		body, err = json.Marshal(OrganizationMembership{
+		body, err = json.Marshal(models.OrganizationMembership{
 			ID:             "om_01E4ZCR3C56J083X43JQXF3JK5",
 			UserID:         "user_01E4ZCR3C5A4QZ2Z2JQXGKZJ9E",
 			OrganizationID: "org_01E4ZCR3C56J083X43JQXF3JK5",
-			Status:         Inactive,
+			Status:         models.OrganizationMembershipStatusInactive,
 			CreatedAt:      "2021-06-25T19:07:33.155Z",
 			UpdatedAt:      "2021-06-25T19:07:33.155Z",
 		})
@@ -2700,7 +2700,7 @@ func TestReactivateOrganizationMembership(t *testing.T) {
 		scenario string
 		client   *Client
 		options  ReactivateOrganizationMembershipOpts
-		expected OrganizationMembership
+		expected models.OrganizationMembership
 		err      bool
 	}{
 		{
@@ -2714,11 +2714,11 @@ func TestReactivateOrganizationMembership(t *testing.T) {
 			options: ReactivateOrganizationMembershipOpts{
 				OrganizationMembership: "om_01E4ZCR3C56J083X43JQXF3JK5",
 			},
-			expected: OrganizationMembership{
+			expected: models.OrganizationMembership{
 				ID:             "om_01E4ZCR3C56J083X43JQXF3JK5",
 				UserID:         "user_01E4ZCR3C5A4QZ2Z2JQXGKZJ9E",
 				OrganizationID: "org_01E4ZCR3C56J083X43JQXF3JK5",
-				Status:         Active,
+				Status:         models.OrganizationMembershipStatusActive,
 				CreatedAt:      "2021-06-25T19:07:33.155Z",
 				UpdatedAt:      "2021-06-25T19:07:33.155Z",
 			},
@@ -2756,11 +2756,11 @@ func reactivateOrganizationMembershipTestHandler(w http.ResponseWriter, r *http.
 	var err error
 
 	if r.URL.Path == "/user_management/organization_memberships/om_01E4ZCR3C56J083X43JQXF3JK5/reactivate" {
-		body, err = json.Marshal(OrganizationMembership{
+		body, err = json.Marshal(models.OrganizationMembership{
 			ID:             "om_01E4ZCR3C56J083X43JQXF3JK5",
 			UserID:         "user_01E4ZCR3C5A4QZ2Z2JQXGKZJ9E",
 			OrganizationID: "org_01E4ZCR3C56J083X43JQXF3JK5",
-			Status:         Active,
+			Status:         models.OrganizationMembershipStatusActive,
 			CreatedAt:      "2021-06-25T19:07:33.155Z",
 			UpdatedAt:      "2021-06-25T19:07:33.155Z",
 		})
@@ -2780,7 +2780,7 @@ func TestGetInvitation(t *testing.T) {
 		scenario string
 		client   *Client
 		options  GetInvitationOpts
-		expected Invitation
+		expected models.Invitation
 		err      bool
 	}{
 		{
@@ -2792,10 +2792,10 @@ func TestGetInvitation(t *testing.T) {
 			scenario: "Request returns Invitation by ID",
 			client:   NewClient("test"),
 			options:  GetInvitationOpts{Invitation: "invitation_123"},
-			expected: Invitation{
+			expected: models.Invitation{
 				ID:                  "invitation_123",
 				Email:               "marcelina@foo-corp.com",
-				State:               Pending,
+				State:               models.InvitationStatePending,
 				Token:               "myToken",
 				AcceptInvitationUrl: "https://your-app.com/invite?invitation_token=myToken",
 				ExpiresAt:           "2021-06-25T19:07:33.155Z",
@@ -2836,10 +2836,10 @@ func getInvitationTestHandler(w http.ResponseWriter, r *http.Request) {
 	var err error
 
 	if r.URL.Path == "/user_management/invitations/invitation_123" {
-		invitations := Invitation{
+		invitations := models.Invitation{
 			ID:                  "invitation_123",
 			Email:               "marcelina@foo-corp.com",
-			State:               Pending,
+			State:               models.InvitationStatePending,
 			Token:               "myToken",
 			AcceptInvitationUrl: "https://your-app.com/invite?invitation_token=myToken",
 			ExpiresAt:           "2021-06-25T19:07:33.155Z",
@@ -2863,7 +2863,7 @@ func TestFindInvitationByToken(t *testing.T) {
 		scenario string
 		client   *Client
 		options  FindInvitationByTokenOpts
-		expected Invitation
+		expected models.Invitation
 		err      bool
 	}{
 		{
@@ -2875,10 +2875,10 @@ func TestFindInvitationByToken(t *testing.T) {
 			scenario: "Request returns Invitation by token",
 			client:   NewClient("test"),
 			options:  FindInvitationByTokenOpts{InvitationToken: "myToken"},
-			expected: Invitation{
+			expected: models.Invitation{
 				ID:                  "invitation_123",
 				Email:               "marcelina@foo-corp.com",
-				State:               Pending,
+				State:               models.InvitationStatePending,
 				Token:               "myToken",
 				AcceptInvitationUrl: "https://your-app.com/invite?invitation_token=myToken",
 				ExpiresAt:           "2021-06-25T19:07:33.155Z",
@@ -2919,10 +2919,10 @@ func findInvitationByTokenTestHandler(w http.ResponseWriter, r *http.Request) {
 	var err error
 
 	if r.URL.Path == "/user_management/invitations/by_token/myToken" {
-		invitation := Invitation{
+		invitation := models.Invitation{
 			ID:                  "invitation_123",
 			Email:               "marcelina@foo-corp.com",
-			State:               Pending,
+			State:               models.InvitationStatePending,
 			Token:               "myToken",
 			AcceptInvitationUrl: "https://your-app.com/invite?invitation_token=myToken",
 			ExpiresAt:           "2021-06-25T19:07:33.155Z",
@@ -2961,11 +2961,11 @@ func TestListInvitations(t *testing.T) {
 				Email: "marcelina@foo-corp.com",
 			},
 			expected: ListInvitationsResponse{
-				Data: []Invitation{
+				Data: []models.Invitation{
 					{
 						ID:                  "invitation_123",
 						Email:               "marcelina@foo-corp.com",
-						State:               Pending,
+						State:               models.InvitationStatePending,
 						Token:               "myToken",
 						AcceptInvitationUrl: "https://your-app.com/invite?invitation_token=myToken",
 						ExpiresAt:           "2021-06-25T19:07:33.155Z",
@@ -3012,11 +3012,11 @@ func listInvitationsTestHandler(w http.ResponseWriter, r *http.Request) {
 
 	if r.URL.Path == "/user_management/invitations" {
 		invitations := ListInvitationsResponse{
-			Data: []Invitation{
+			Data: []models.Invitation{
 				{
 					ID:                  "invitation_123",
 					Email:               "marcelina@foo-corp.com",
-					State:               Pending,
+					State:               models.InvitationStatePending,
 					Token:               "myToken",
 					AcceptInvitationUrl: "https://your-app.com/invite?invitation_token=myToken",
 					ExpiresAt:           "2021-06-25T19:07:33.155Z",
@@ -3045,7 +3045,7 @@ func TestSendInvitation(t *testing.T) {
 		scenario string
 		client   *Client
 		options  SendInvitationOpts
-		expected Invitation
+		expected models.Invitation
 		err      bool
 	}{
 		{
@@ -3063,10 +3063,10 @@ func TestSendInvitation(t *testing.T) {
 				InviterUserID:  "user_123",
 				RoleSlug:       "admin",
 			},
-			expected: Invitation{
+			expected: models.Invitation{
 				ID:                  "invitation_123",
 				Email:               "marcelina@foo-corp.com",
-				State:               Pending,
+				State:               models.InvitationStatePending,
 				Token:               "myToken",
 				AcceptInvitationUrl: "https://your-app.com/invite?invitation_token=myToken",
 				ExpiresAt:           "2021-06-25T19:07:33.155Z",
@@ -3108,10 +3108,10 @@ func SendInvitationTestHandler(w http.ResponseWriter, r *http.Request) {
 
 	if r.URL.Path == "/user_management/invitations" {
 		body, err = json.Marshal(
-			Invitation{
+			models.Invitation{
 				ID:                  "invitation_123",
 				Email:               "marcelina@foo-corp.com",
-				State:               Pending,
+				State:               models.InvitationStatePending,
 				Token:               "myToken",
 				AcceptInvitationUrl: "https://your-app.com/invite?invitation_token=myToken",
 				ExpiresAt:           "2021-06-25T19:07:33.155Z",
@@ -3134,7 +3134,7 @@ func TestRevokeInvitation(t *testing.T) {
 		scenario string
 		client   *Client
 		options  RevokeInvitationOpts
-		expected Invitation
+		expected models.Invitation
 		err      bool
 	}{
 		{
@@ -3148,11 +3148,11 @@ func TestRevokeInvitation(t *testing.T) {
 			options: RevokeInvitationOpts{
 				Invitation: "invitation_123",
 			},
-			expected: Invitation{
+			expected: models.Invitation{
 
 				ID:                  "invitation_123",
 				Email:               "marcelina@foo-corp.com",
-				State:               Pending,
+				State:               models.InvitationStatePending,
 				Token:               "myToken",
 				AcceptInvitationUrl: "https://your-app.com/invite?invitation_token=myToken",
 				ExpiresAt:           "2021-06-25T19:07:33.155Z",
@@ -3194,10 +3194,10 @@ func RevokeInvitationTestHandler(w http.ResponseWriter, r *http.Request) {
 
 	if r.URL.Path == "/user_management/invitations/invitation_123/revoke" {
 		body, err = json.Marshal(
-			Invitation{
+			models.Invitation{
 				ID:                  "invitation_123",
 				Email:               "marcelina@foo-corp.com",
-				State:               Pending,
+				State:               models.InvitationStatePending,
 				Token:               "myToken",
 				AcceptInvitationUrl: "https://your-app.com/invite?invitation_token=myToken",
 				ExpiresAt:           "2021-06-25T19:07:33.155Z",

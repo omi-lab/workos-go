@@ -6,8 +6,8 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/workos/workos-go/v4/pkg/common"
-	"github.com/workos/workos-go/v4/pkg/mfa"
+	"github.com/omi-lab/workos-go/v4/pkg/common"
+	"github.com/omi-lab/workos-go/v4/pkg/models"
 
 	"github.com/stretchr/testify/require"
 )
@@ -27,7 +27,7 @@ func TestUserManagementGetUser(t *testing.T) {
 
 	SetAPIKey("test")
 
-	expectedResponse := User{
+	expectedResponse := models.User{
 		ID:            "user_01E3JC5F5Z1YJNPGVYWV9SX6GH",
 		Email:         "marcelina@foo-corp.com",
 		FirstName:     "Marcelina",
@@ -55,7 +55,7 @@ func TestUserManagementListUsers(t *testing.T) {
 	SetAPIKey("test")
 
 	expectedResponse := ListUsersResponse{
-		Data: []User{
+		Data: []models.User{
 			{
 				ID:            "user_01E3JC5F5Z1YJNPGVYWV9SX6GH",
 				Email:         "marcelina@foo-corp.com",
@@ -85,7 +85,7 @@ func TestUserManagementCreateUser(t *testing.T) {
 
 	SetAPIKey("test")
 
-	expectedResponse := User{
+	expectedResponse := models.User{
 		ID:            "user_01E3JC5F5Z1YJNPGVYWV9SX6GH",
 		Email:         "marcelina@foo-corp.com",
 		FirstName:     "Marcelina",
@@ -115,7 +115,7 @@ func TestUserManagementCreateUserPasswordHash(t *testing.T) {
 
 	SetAPIKey("test")
 
-	expectedResponse := User{
+	expectedResponse := models.User{
 		ID:            "user_01E3JC5F5Z1YJNPGVYWV9SX6GH",
 		Email:         "marcelina@foo-corp.com",
 		FirstName:     "Marcelina",
@@ -146,7 +146,7 @@ func TestUserManagementUpdateUser(t *testing.T) {
 
 	SetAPIKey("test")
 
-	expectedResponse := User{
+	expectedResponse := models.User{
 		ID:            "user_01E3JC5F5Z1YJNPGVYWV9SX6GH",
 		Email:         "marcelina@foo-corp.com",
 		FirstName:     "Marcelina",
@@ -176,7 +176,7 @@ func TestUserManagementUpdateUserPasswordHash(t *testing.T) {
 
 	SetAPIKey("test")
 
-	expectedResponse := User{
+	expectedResponse := models.User{
 		ID:            "user_01E3JC5F5Z1YJNPGVYWV9SX6GH",
 		Email:         "marcelina@foo-corp.com",
 		FirstName:     "Marcelina",
@@ -222,7 +222,7 @@ func TestUsersGetEmailVerification(t *testing.T) {
 	DefaultClient = mockClient(server)
 	SetAPIKey("test")
 
-	expectedResponse := EmailVerification{
+	expectedResponse := models.EmailVerification{
 		ID:        "email_verification_123",
 		UserId:    "user_123",
 		Email:     "marcelina@foo-corp.com",
@@ -249,7 +249,7 @@ func TestUsersSendVerificationEmail(t *testing.T) {
 	SetAPIKey("test")
 
 	expectedResponse := UserResponse{
-		User: User{
+		User: models.User{
 			ID:            "user_123",
 			Email:         "marcelina@foo-corp.com",
 			FirstName:     "Marcelina",
@@ -277,7 +277,7 @@ func TestUserManagementVerifyEmail(t *testing.T) {
 	SetAPIKey("test")
 
 	expectedResponse := UserResponse{
-		User: User{
+		User: models.User{
 			ID:            "user_123",
 			Email:         "marcelina@foo-corp.com",
 			FirstName:     "Marcelina",
@@ -302,7 +302,7 @@ func TestUsersGetPasswordReset(t *testing.T) {
 	DefaultClient = mockClient(server)
 	SetAPIKey("test")
 
-	expectedResponse := PasswordReset{
+	expectedResponse := models.PasswordReset{
 		ID:                 "password_reset_123",
 		UserId:             "user_123",
 		Email:              "marcelina@foo-corp.com",
@@ -329,7 +329,7 @@ func TestUserManagementCreatePasswordReset(t *testing.T) {
 
 	SetAPIKey("test")
 
-	expectedResponse := PasswordReset{
+	expectedResponse := models.PasswordReset{
 		ID:                 "password_reset_123",
 		UserId:             "user_123",
 		Email:              "marcelina@foo-corp.com",
@@ -372,7 +372,7 @@ func TestUserManagementResetPassword(t *testing.T) {
 	SetAPIKey("test")
 
 	expectedResponse := UserResponse{
-		User: User{
+		User: models.User{
 			ID: "user_123",
 
 			Email:         "marcelina@foo-corp.com",
@@ -417,7 +417,7 @@ func TestUserManagementAuthenticateWithCode(t *testing.T) {
 	SetAPIKey("test")
 
 	expectedResponse := AuthenticateResponse{
-		User: User{
+		User: models.User{
 			ID:        "testUserID",
 			FirstName: "John",
 			LastName:  "Doe",
@@ -444,7 +444,7 @@ func TestUserManagementAuthenticateWithPassword(t *testing.T) {
 	SetAPIKey("test")
 
 	expectedResponse := AuthenticateResponse{
-		User: User{
+		User: models.User{
 			ID:        "testUserID",
 			FirstName: "John",
 			LastName:  "Doe",
@@ -471,7 +471,7 @@ func TestUserManagementAuthenticateWithMagicAuth(t *testing.T) {
 	SetAPIKey("test")
 
 	expectedResponse := AuthenticateResponse{
-		User: User{
+		User: models.User{
 			ID:        "testUserID",
 			FirstName: "John",
 			LastName:  "Doe",
@@ -498,7 +498,7 @@ func TestUserManagementAuthenticateWithTOTP(t *testing.T) {
 	SetAPIKey("test")
 
 	expectedResponse := AuthenticateResponse{
-		User: User{
+		User: models.User{
 			ID:        "testUserID",
 			FirstName: "John",
 			LastName:  "Doe",
@@ -525,7 +525,7 @@ func TestUserManagementAuthenticateWithEmailVerificationCode(t *testing.T) {
 	SetAPIKey("test")
 
 	expectedResponse := AuthenticateResponse{
-		User: User{
+		User: models.User{
 			ID:        "testUserID",
 			FirstName: "John",
 			LastName:  "Doe",
@@ -552,7 +552,7 @@ func TestUserManagementAuthenticateWithOrganizationSelection(t *testing.T) {
 	SetAPIKey("test")
 
 	expectedResponse := AuthenticateResponse{
-		User: User{
+		User: models.User{
 			ID:        "testUserID",
 			FirstName: "John",
 			LastName:  "Doe",
@@ -576,7 +576,7 @@ func TestUsersGetMagicAuth(t *testing.T) {
 	DefaultClient = mockClient(server)
 	SetAPIKey("test")
 
-	expectedResponse := MagicAuth{
+	expectedResponse := models.MagicAuth{
 		ID:        "magic_auth_123",
 		UserId:    "user_123",
 		Email:     "marcelina@foo-corp.com",
@@ -603,7 +603,7 @@ func TestUserManagementCreateMagicAuth(t *testing.T) {
 
 	SetAPIKey("test")
 
-	expectedResponse := MagicAuth{
+	expectedResponse := models.MagicAuth{
 		ID:        "magic_auth_123",
 		UserId:    "user_123",
 		Email:     "marcelina@foo-corp.com",
@@ -645,13 +645,13 @@ func TestUserManagementEnrollAuthFactor(t *testing.T) {
 	SetAPIKey("test")
 
 	expectedResponse := EnrollAuthFactorResponse{
-		Factor: mfa.Factor{
+		Factor: models.Factor{
 			ID:        "auth_factor_test123",
 			CreatedAt: "2022-02-17T22:39:26.616Z",
 			UpdatedAt: "2022-02-17T22:39:26.616Z",
 			Type:      "generic_otp",
 		},
-		Challenge: mfa.Challenge{
+		Challenge: models.Challenge{
 			ID:        "auth_challenge_test123",
 			CreatedAt: "2022-02-17T22:39:26.616Z",
 			UpdatedAt: "2022-02-17T22:39:26.616Z",
@@ -662,7 +662,7 @@ func TestUserManagementEnrollAuthFactor(t *testing.T) {
 
 	authenticationRes, err := EnrollAuthFactor(context.Background(), EnrollAuthFactorOpts{
 		User:       "user_01E3JC5F5Z1YJNPGVYWV9SX6GH",
-		Type:       mfa.TOTP,
+		Type:       models.FactorTypeTOTP,
 		TOTPSecret: "testSecret",
 	})
 
@@ -680,7 +680,7 @@ func TestUserManagementListAuthFactors(t *testing.T) {
 	SetAPIKey("test")
 
 	expectedResponse := ListAuthFactorsResponse{
-		Data: []mfa.Factor{
+		Data: []models.Factor{
 			{
 				ID:        "auth_factor_test123",
 				CreatedAt: "2022-02-17T22:39:26.616Z",
@@ -712,11 +712,11 @@ func TestUserManagementGetOrganizationMembership(t *testing.T) {
 
 	SetAPIKey("test")
 
-	expectedResponse := OrganizationMembership{
+	expectedResponse := models.OrganizationMembership{
 		ID:             "om_01E4ZCR3C56J083X43JQXF3JK5",
 		UserID:         "user_01E4ZCR3C5A4QZ2Z2JQXGKZJ9E",
 		OrganizationID: "org_01E4ZCR3C56J083X43JQXF3JK5",
-		Status:         Active,
+		Status:         models.OrganizationMembershipStatusActive,
 		CreatedAt:      "2021-06-25T19:07:33.155Z",
 		UpdatedAt:      "2021-06-25T19:07:33.155Z",
 	}
@@ -739,12 +739,12 @@ func TestUserManagementListOrganizationMemberships(t *testing.T) {
 	SetAPIKey("test")
 
 	expectedResponse := ListOrganizationMembershipsResponse{
-		Data: []OrganizationMembership{
+		Data: []models.OrganizationMembership{
 			{
 				ID:             "om_01E4ZCR3C56J083X43JQXF3JK5",
 				UserID:         "user_01E4ZCR3C5A4QZ2Z2JQXGKZJ9E",
 				OrganizationID: "org_01E4ZCR3C56J083X43JQXF3JK5",
-				Status:         Active,
+				Status:         models.OrganizationMembershipStatusActive,
 				CreatedAt:      "2021-06-25T19:07:33.155Z",
 				UpdatedAt:      "2021-06-25T19:07:33.155Z",
 			},
@@ -772,11 +772,11 @@ func TestUserManagementCreateOrganizationMembership(t *testing.T) {
 		Slug: "member",
 	}
 
-	expectedResponse := OrganizationMembership{
+	expectedResponse := models.OrganizationMembership{
 		ID:             "om_01E4ZCR3C56J083X43JQXF3JK5",
 		UserID:         "user_01E4ZCR3C5A4QZ2Z2JQXGKZJ9E",
 		OrganizationID: "org_01E4ZCR3C56J083X43JQXF3JK5",
-		Status:         Active,
+		Status:         models.OrganizationMembershipStatusActive,
 		Role:           expectedRole,
 		CreatedAt:      "2021-06-25T19:07:33.155Z",
 		UpdatedAt:      "2021-06-25T19:07:33.155Z",
@@ -819,11 +819,11 @@ func TestUsersUpdateOrganizationMembership(t *testing.T) {
 		Slug: "member",
 	}
 
-	expectedResponse := OrganizationMembership{
+	expectedResponse := models.OrganizationMembership{
 		ID:             "om_01E4ZCR3C56J083X43JQXF3JK5",
 		UserID:         "user_01E4ZCR3C5A4QZ2Z2JQXGKZJ9E",
 		OrganizationID: "org_01E4ZCR3C56J083X43JQXF3JK5",
-		Status:         Active,
+		Status:         models.OrganizationMembershipStatusActive,
 		Role:           expectedRole,
 		CreatedAt:      "2021-06-25T19:07:33.155Z",
 		UpdatedAt:      "2021-06-25T19:07:33.155Z",
@@ -849,11 +849,11 @@ func TestUserManagementDeactivateOrganizationMembership(t *testing.T) {
 
 	SetAPIKey("test")
 
-	expectedResponse := OrganizationMembership{
+	expectedResponse := models.OrganizationMembership{
 		ID:             "om_01E4ZCR3C56J083X43JQXF3JK5",
 		UserID:         "user_01E4ZCR3C5A4QZ2Z2JQXGKZJ9E",
 		OrganizationID: "org_01E4ZCR3C56J083X43JQXF3JK5",
-		Status:         Inactive,
+		Status:         models.OrganizationMembershipStatusInactive,
 		CreatedAt:      "2021-06-25T19:07:33.155Z",
 		UpdatedAt:      "2021-06-25T19:07:33.155Z",
 	}
@@ -874,11 +874,11 @@ func TestUserManagementReactivateOrganizationMembership(t *testing.T) {
 
 	SetAPIKey("test")
 
-	expectedResponse := OrganizationMembership{
+	expectedResponse := models.OrganizationMembership{
 		ID:             "om_01E4ZCR3C56J083X43JQXF3JK5",
 		UserID:         "user_01E4ZCR3C5A4QZ2Z2JQXGKZJ9E",
 		OrganizationID: "org_01E4ZCR3C56J083X43JQXF3JK5",
-		Status:         Active,
+		Status:         models.OrganizationMembershipStatusActive,
 		CreatedAt:      "2021-06-25T19:07:33.155Z",
 		UpdatedAt:      "2021-06-25T19:07:33.155Z",
 	}
@@ -898,10 +898,10 @@ func TestUsersGetInvitation(t *testing.T) {
 	DefaultClient = mockClient(server)
 	SetAPIKey("test")
 
-	expectedResponse := Invitation{
+	expectedResponse := models.Invitation{
 		ID:                  "invitation_123",
 		Email:               "marcelina@foo-corp.com",
-		State:               Pending,
+		State:               models.InvitationStatePending,
 		Token:               "myToken",
 		AcceptInvitationUrl: "https://your-app.com/invite?invitation_token=myToken",
 		ExpiresAt:           "2021-06-25T19:07:33.155Z",
@@ -924,10 +924,10 @@ func TestUsersFindInvitationByToken(t *testing.T) {
 	DefaultClient = mockClient(server)
 	SetAPIKey("test")
 
-	expectedResponse := Invitation{
+	expectedResponse := models.Invitation{
 		ID:                  "invitation_123",
 		Email:               "marcelina@foo-corp.com",
-		State:               Pending,
+		State:               models.InvitationStatePending,
 		Token:               "myToken",
 		AcceptInvitationUrl: "https://your-app.com/invite?invitation_token=myToken",
 		ExpiresAt:           "2021-06-25T19:07:33.155Z",
@@ -952,11 +952,11 @@ func TestUsersListInvitations(t *testing.T) {
 
 	expectedResponse :=
 		ListInvitationsResponse{
-			Data: []Invitation{
+			Data: []models.Invitation{
 				{
 					ID:                  "invitation_123",
 					Email:               "marcelina@foo-corp.com",
-					State:               Pending,
+					State:               models.InvitationStatePending,
 					Token:               "myToken",
 					AcceptInvitationUrl: "https://your-app.com/invite?invitation_token=myToken",
 					ExpiresAt:           "2021-06-25T19:07:33.155Z",
@@ -986,10 +986,10 @@ func TestUsersSendInvitation(t *testing.T) {
 
 	SetAPIKey("test")
 
-	expectedResponse := Invitation{
+	expectedResponse := models.Invitation{
 		ID:                  "invitation_123",
 		Email:               "marcelina@foo-corp.com",
-		State:               Pending,
+		State:               models.InvitationStatePending,
 		Token:               "myToken",
 		AcceptInvitationUrl: "https://your-app.com/invite?invitation_token=myToken",
 		ExpiresAt:           "2021-06-25T19:07:33.155Z",
@@ -1018,10 +1018,10 @@ func TestUsersRevokeInvitation(t *testing.T) {
 
 	SetAPIKey("test")
 
-	expectedResponse := Invitation{
+	expectedResponse := models.Invitation{
 		ID:                  "invitation_123",
 		Email:               "marcelina@foo-corp.com",
-		State:               Pending,
+		State:               models.InvitationStatePending,
 		Token:               "myToken",
 		AcceptInvitationUrl: "https://your-app.com/invite?invitation_token=myToken",
 		ExpiresAt:           "2021-06-25T19:07:33.155Z",

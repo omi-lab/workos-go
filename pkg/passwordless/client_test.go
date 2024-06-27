@@ -8,6 +8,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/omi-lab/workos-go/v4/pkg/models"
 	"github.com/stretchr/testify/require"
 )
 
@@ -16,7 +17,7 @@ func TestCreateSession(t *testing.T) {
 		scenario string
 		client   *Client
 		options  CreateSessionOpts
-		expected PasswordlessSession
+		expected models.PasswordlessSession
 		err      bool
 	}{
 		{
@@ -31,10 +32,10 @@ func TestCreateSession(t *testing.T) {
 			},
 			options: CreateSessionOpts{
 				Email:       "sasa@foo-corp.com",
-				Type:        MagicLink,
+				Type:        models.PasswordlessSessionTypeMagicLink,
 				RedirectURI: "https://example.com/passwordless/callback",
 			},
-			expected: PasswordlessSession{
+			expected: models.PasswordlessSession{
 				ID:        "session_id",
 				Email:     "sasa@foo-corp.com",
 				ExpiresAt: "",
@@ -79,7 +80,7 @@ func createSessionTestHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	body, err := json.Marshal(
-		PasswordlessSession{
+		models.PasswordlessSession{
 			ID:        "session_id",
 			Email:     "sasa@foo-corp.com",
 			ExpiresAt: "",

@@ -5,6 +5,8 @@ import (
 	"context"
 	"net/http"
 	"net/url"
+
+	"github.com/omi-lab/workos-go/v4/pkg/models"
 )
 
 var (
@@ -49,7 +51,7 @@ func Login(opts GetAuthorizationURLOpts) http.Handler {
 func GetConnection(
 	ctx context.Context,
 	opts GetConnectionOpts,
-) (Connection, error) {
+) (models.Connection, error) {
 	return DefaultClient.GetConnection(ctx, opts)
 }
 

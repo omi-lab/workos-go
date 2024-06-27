@@ -3,7 +3,8 @@ package directorysync
 
 import (
 	"context"
-	"errors"
+
+	"github.com/omi-lab/workos-go/v4/pkg/models"
 )
 
 // DefaultClient is the client used by SetAPIKey and Directory Sync functions.
@@ -38,7 +39,7 @@ func ListGroups(
 func GetUser(
 	ctx context.Context,
 	opts GetUserOpts,
-) (User, error) {
+) (models.DirectoryUser, error) {
 	return DefaultClient.GetUser(ctx, opts)
 }
 
@@ -46,7 +47,7 @@ func GetUser(
 func GetGroup(
 	ctx context.Context,
 	opts GetGroupOpts,
-) (Group, error) {
+) (models.DirectoryGroup, error) {
 	return DefaultClient.GetGroup(ctx, opts)
 }
 
@@ -62,7 +63,7 @@ func ListDirectories(
 func GetDirectory(
 	ctx context.Context,
 	opts GetDirectoryOpts,
-) (Directory, error) {
+) (models.Directory, error) {
 	return DefaultClient.GetDirectory(ctx, opts)
 }
 
@@ -72,14 +73,4 @@ func DeleteDirectory(
 	opts DeleteDirectoryOpts,
 ) error {
 	return DefaultClient.DeleteDirectory(ctx, opts)
-}
-
-// PrimaryEmail is a method for finding a user's primary email (when applicable)
-func (r User) PrimaryEmail() (string, error) {
-	for _, v := range r.Emails {
-		if v.Primary {
-			return v.Value, nil
-		}
-	}
-	return "", errors.New("no primary email for this user found")
 }

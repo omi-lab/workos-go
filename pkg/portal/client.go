@@ -9,9 +9,10 @@ import (
 	"sync"
 	"time"
 
-	"github.com/workos/workos-go/v4/pkg/workos_errors"
+	"github.com/omi-lab/workos-go/v4/pkg/models"
+	"github.com/omi-lab/workos-go/v4/pkg/workos_errors"
 
-	"github.com/workos/workos-go/v4/internal/workos"
+	"github.com/omi-lab/workos-go/v4/internal/workos"
 )
 
 // ResponseLimit is the default number of records to limit a response to.
@@ -58,21 +59,10 @@ func (c *Client) init() {
 	}
 }
 
-// GenerateLinkIntent represents the intent of an Admin Portal.
-type GenerateLinkIntent string
-
-// Constants that enumerate the available GenerateLinkIntent types.
-const (
-	SSO        GenerateLinkIntent = "sso"
-	DSync      GenerateLinkIntent = "dsync"
-	AuditLogs  GenerateLinkIntent = "audit_logs"
-	LogStreams GenerateLinkIntent = "log_streams"
-)
-
 // GenerateLinkOpts contains the options to request Organizations.
 type GenerateLinkOpts struct {
 	// Intent of the Admin Portal
-	Intent GenerateLinkIntent `json:"intent"`
+	Intent models.GenerateLinkIntent `json:"intent"`
 
 	// Organization identifier to scope the Portal Session
 	Organization string `json:"organization"`

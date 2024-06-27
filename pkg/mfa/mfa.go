@@ -2,6 +2,8 @@ package mfa
 
 import (
 	"context"
+
+	"github.com/omi-lab/workos-go/v4/pkg/models"
 )
 
 // DefaultClient is the client used by SetAPIKey and mfa functions.
@@ -20,7 +22,7 @@ func SetAPIKey(apiKey string) {
 func EnrollFactor(
 	ctx context.Context,
 	opts EnrollFactorOpts,
-) (Factor, error) {
+) (models.Factor, error) {
 	return DefaultClient.EnrollFactor(ctx, opts)
 }
 
@@ -28,7 +30,7 @@ func EnrollFactor(
 func ChallengeFactor(
 	ctx context.Context,
 	opts ChallengeFactorOpts,
-) (Challenge, error) {
+) (models.Challenge, error) {
 	return DefaultClient.ChallengeFactor(ctx, opts)
 }
 
@@ -60,6 +62,6 @@ func DeleteFactor(
 func GetFactor(
 	ctx context.Context,
 	opts GetFactorOpts,
-) (Factor, error) {
+) (models.Factor, error) {
 	return DefaultClient.GetFactor(ctx, opts)
 }

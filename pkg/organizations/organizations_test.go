@@ -6,8 +6,9 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"github.com/omi-lab/workos-go/v4/pkg/common"
+	"github.com/omi-lab/workos-go/v4/pkg/models"
 	"github.com/stretchr/testify/require"
-	"github.com/workos/workos-go/v4/pkg/common"
 )
 
 func TestOrganizationsGetOrganization(t *testing.T) {
@@ -20,12 +21,12 @@ func TestOrganizationsGetOrganization(t *testing.T) {
 	}
 	SetAPIKey("test")
 
-	expectedResponse := Organization{
+	expectedResponse := models.Organization{
 		ID:                               "organization_id",
 		Name:                             "Foo Corp",
 		AllowProfilesOutsideOrganization: false,
-		Domains: []OrganizationDomain{
-			OrganizationDomain{
+		Domains: []models.OrganizationDomain{
+			models.OrganizationDomain{
 				ID:     "organization_domain_id",
 				Domain: "foo-corp.com",
 			},
@@ -50,13 +51,13 @@ func TestOrganizationsListOrganizations(t *testing.T) {
 	SetAPIKey("test")
 
 	expectedResponse := ListOrganizationsResponse{
-		Data: []Organization{
-			Organization{
+		Data: []models.Organization{
+			models.Organization{
 				ID:                               "organization_id",
 				Name:                             "Foo Corp",
 				AllowProfilesOutsideOrganization: false,
-				Domains: []OrganizationDomain{
-					OrganizationDomain{
+				Domains: []models.OrganizationDomain{
+					models.OrganizationDomain{
 						ID:     "organization_domain_id",
 						Domain: "foo-corp.com",
 					},
@@ -88,12 +89,12 @@ func TestOrganizationsCreateOrganization(t *testing.T) {
 	SetAPIKey("test")
 
 	expectedResponse :=
-		Organization{
+		models.Organization{
 			ID:                               "organization_id",
 			Name:                             "Foo Corp",
 			AllowProfilesOutsideOrganization: false,
-			Domains: []OrganizationDomain{
-				OrganizationDomain{
+			Domains: []models.OrganizationDomain{
+				models.OrganizationDomain{
 					ID:     "organization_domain_id",
 					Domain: "foo-corp.com",
 				},
@@ -121,16 +122,16 @@ func TestOrganizationsUpdateOrganization(t *testing.T) {
 	SetAPIKey("test")
 
 	expectedResponse :=
-		Organization{
+		models.Organization{
 			ID:                               "organization_id",
 			Name:                             "Foo Corp",
 			AllowProfilesOutsideOrganization: false,
-			Domains: []OrganizationDomain{
-				OrganizationDomain{
+			Domains: []models.OrganizationDomain{
+				models.OrganizationDomain{
 					ID:     "organization_domain_id",
 					Domain: "foo-corp.com",
 				},
-				OrganizationDomain{
+				models.OrganizationDomain{
 					ID:     "organization_domain_id_2",
 					Domain: "foo-corp.io",
 				},

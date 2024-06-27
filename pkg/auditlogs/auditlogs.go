@@ -35,6 +35,8 @@ package auditlogs
 
 import (
 	"context"
+
+	"github.com/omi-lab/workos-go/v4/pkg/models"
 )
 
 var (
@@ -56,11 +58,11 @@ func CreateEvent(ctx context.Context, e CreateEventOpts) error {
 }
 
 // CreateEvent creates the given event.
-func CreateExport(ctx context.Context, e CreateExportOpts) (AuditLogExport, error) {
+func CreateExport(ctx context.Context, e CreateExportOpts) (models.AuditLogExport, error) {
 	return DefaultClient.CreateExport(ctx, e)
 }
 
 // CreateEvent creates the given event.
-func GetExport(ctx context.Context, e GetExportOpts) (AuditLogExport, error) {
+func GetExport(ctx context.Context, e GetExportOpts) (models.AuditLogExport, error) {
 	return DefaultClient.GetExport(ctx, e)
 }

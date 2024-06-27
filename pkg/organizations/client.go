@@ -9,11 +9,12 @@ import (
 	"sync"
 	"time"
 
-	"github.com/workos/workos-go/v4/pkg/workos_errors"
+	"github.com/omi-lab/workos-go/v4/pkg/models"
+	"github.com/omi-lab/workos-go/v4/pkg/workos_errors"
 
 	"github.com/google/go-querystring/query"
-	"github.com/workos/workos-go/v4/internal/workos"
-	"github.com/workos/workos-go/v4/pkg/common"
+	"github.com/omi-lab/workos-go/v4/internal/workos"
+	"github.com/omi-lab/workos-go/v4/pkg/common"
 )
 
 // ResponseLimit is the default number of records to limit a response to.
@@ -60,39 +61,6 @@ func (c *Client) init() {
 	}
 }
 
-// OrganizationDomain contains data about an Organization's Domains.
-type OrganizationDomain struct {
-	// The Organization Domain's unique identifier.
-	ID string `json:"id"`
-
-	// The domain value
-	Domain string `json:"domain"`
-}
-
-// Organization contains data about a WorkOS Organization.
-type Organization struct {
-	// The Organization's unique identifier.
-	ID string `json:"id"`
-
-	// The Organization's name.
-	Name string `json:"name"`
-
-	// Whether Connections within the Organization allow profiles that are
-	// outside of the Organization's configured User Email Domains.
-	//
-	// Deprecated: If you need to allow sign-ins from any email domain, contact support@workos.com.
-	AllowProfilesOutsideOrganization bool `json:"allow_profiles_outside_organization"`
-
-	// The Organization's Domains.
-	Domains []OrganizationDomain `json:"domains"`
-
-	// The timestamp of when the Organization was created.
-	CreatedAt string `json:"created_at"`
-
-	// The timestamp of when the Organization was updated.
-	UpdatedAt string `json:"updated_at"`
-}
-
 // GetOrganizationOpts contains the options to request details for an Organization.
 type GetOrganizationOpts struct {
 	// Organization unique identifier.
@@ -121,26 +89,10 @@ type ListOrganizationsOpts struct {
 // Organizations
 type ListOrganizationsResponse struct {
 	// List of provisioned Organizations.
-	Data []Organization `json:"data"`
+	Data []models.Organization `json:"data"`
 
 	// Cursor pagination options.
 	ListMetadata common.ListMetadata `json:"listMetadata"`
-}
-
-type OrganizationDomainDataState string
-
-const (
-	Verified OrganizationDomainDataState = "verified"
-	Pending  OrganizationDomainDataState = "pending"
-)
-
-// OrganizationDomainData contains data used to create an OrganizationDomain.
-type OrganizationDomainData struct {
-	// The domain's value.
-	Domain string `json:"domain"`
-
-	// The domain's state.
-	State OrganizationDomainDataState `json:"state"`
 }
 
 // CreateOrganizationOpts contains the options to create an Organization.
@@ -160,7 +112,7 @@ type CreateOrganizationOpts struct {
 	Domains []string `json:"domains"`
 
 	// Domains of the Organization.
-	DomainData []OrganizationDomainData `json:"domain_data"`
+	DomainData []models.OrganizationDomainData `json:"domain_data"`
 
 	// Optional unique identifier to ensure idempotency
 	IdempotencyKey string `json:"idempotency_iey,omitempty"`
@@ -186,14 +138,14 @@ type UpdateOrganizationOpts struct {
 	Domains []string
 
 	// Domains of the Organization.
-	DomainData []OrganizationDomainData `json:"domain_data"`
+	DomainData []models.OrganizationDomainData `json:"domain_data"`
 }
 
 // GetOrganization gets an Organization.
 func (c *Client) GetOrganization(
 	ctx context.Context,
 	opts GetOrganizationOpts,
-) (Organization, error) {
+) (models.Organization, error) {
 	c.once.Do(c.init)
 
 	endpoint := fmt.Sprintf(
@@ -207,7 +159,7 @@ func (c *Client) GetOrganization(
 		nil,
 	)
 	if err != nil {
-		return Organization{}, err
+		return models.Organization{}, err
 	}
 
 	req = req.WithContext(ctx)
@@ -217,15 +169,15 @@ func (c *Client) GetOrganization(
 
 	res, err := c.HTTPClient.Do(req)
 	if err != nil {
-		return Organization{}, err
+		return models.Organization{}, err
 	}
 	defer res.Body.Close()
 
 	if err = workos_errors.TryGetHTTPError(res); err != nil {
-		return Organization{}, err
+		return models.Organization{}, err
 	}
 
-	var body Organization
+	var body models.Organization
 	dec := json.NewDecoder(res.Body)
 	err = dec.Decode(&body)
 	return body, err
@@ -285,18 +237,18 @@ func (c *Client) ListOrganizations(
 }
 
 // CreateOrganization creates an Organization.
-func (c *Client) CreateOrganization(ctx context.Context, opts CreateOrganizationOpts) (Organization, error) {
+func (c *Client) CreateOrganization(ctx context.Context, opts CreateOrganizationOpts) (models.Organization, error) {
 	c.once.Do(c.init)
 
 	data, err := c.JSONEncode(opts)
 	if err != nil {
-		return Organization{}, err
+		return models.Organization{}, err
 	}
 
 	endpoint := fmt.Sprintf("%s/organizations", c.Endpoint)
 	req, err := http.NewRequest(http.MethodPost, endpoint, bytes.NewBuffer(data))
 	if err != nil {
-		return Organization{}, err
+		return models.Organization{}, err
 	}
 	req = req.WithContext(ctx)
 	req.Header.Set("Content-Type", "application/json")
@@ -306,22 +258,22 @@ func (c *Client) CreateOrganization(ctx context.Context, opts CreateOrganization
 
 	res, err := c.HTTPClient.Do(req)
 	if err != nil {
-		return Organization{}, err
+		return models.Organization{}, err
 	}
 	defer res.Body.Close()
 
 	if err = workos_errors.TryGetHTTPError(res); err != nil {
-		return Organization{}, err
+		return models.Organization{}, err
 	}
 
-	var body Organization
+	var body models.Organization
 	dec := json.NewDecoder(res.Body)
 	err = dec.Decode(&body)
 	return body, err
 }
 
 // UpdateOrganization updates an Organization.
-func (c *Client) UpdateOrganization(ctx context.Context, opts UpdateOrganizationOpts) (Organization, error) {
+func (c *Client) UpdateOrganization(ctx context.Context, opts UpdateOrganizationOpts) (models.Organization, error) {
 	c.once.Do(c.init)
 
 	// UpdateOrganizationChangeOpts contains the options to update an Organization minus the org ID
@@ -334,7 +286,7 @@ func (c *Client) UpdateOrganization(ctx context.Context, opts UpdateOrganization
 		AllowProfilesOutsideOrganization bool `json:"allow_profiles_outside_organization"`
 
 		// Domains of the Organization.
-		DomainData []OrganizationDomainData `json:"domain_data,omitempty"`
+		DomainData []models.OrganizationDomainData `json:"domain_data,omitempty"`
 
 		// Domains of the Organization.
 		//
@@ -346,13 +298,13 @@ func (c *Client) UpdateOrganization(ctx context.Context, opts UpdateOrganization
 
 	data, err := c.JSONEncode(update_opts)
 	if err != nil {
-		return Organization{}, err
+		return models.Organization{}, err
 	}
 
 	endpoint := fmt.Sprintf("%s/organizations/%s", c.Endpoint, opts.Organization)
 	req, err := http.NewRequest(http.MethodPut, endpoint, bytes.NewBuffer(data))
 	if err != nil {
-		return Organization{}, err
+		return models.Organization{}, err
 	}
 	req = req.WithContext(ctx)
 	req.Header.Set("Content-Type", "application/json")
@@ -361,15 +313,15 @@ func (c *Client) UpdateOrganization(ctx context.Context, opts UpdateOrganization
 
 	res, err := c.HTTPClient.Do(req)
 	if err != nil {
-		return Organization{}, err
+		return models.Organization{}, err
 	}
 	defer res.Body.Close()
 
 	if err = workos_errors.TryGetHTTPError(res); err != nil {
-		return Organization{}, err
+		return models.Organization{}, err
 	}
 
-	var body Organization
+	var body models.Organization
 	dec := json.NewDecoder(res.Body)
 	err = dec.Decode(&body)
 	return body, err

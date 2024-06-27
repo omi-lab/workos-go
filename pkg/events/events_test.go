@@ -7,8 +7,9 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"github.com/omi-lab/workos-go/v4/pkg/common"
+	"github.com/omi-lab/workos-go/v4/pkg/models"
 	"github.com/stretchr/testify/require"
-	"github.com/workos/workos-go/v4/pkg/common"
 )
 
 func TestEventsListEvents(t *testing.T) {
@@ -26,7 +27,7 @@ func TestEventsListEvents(t *testing.T) {
 	}
 
 	expectedResponse := ListEventsResponse{
-		Data: []Event{
+		Data: []models.Event{
 			{
 				ID:    "event_abcd1234",
 				Event: "dsync.user.created",

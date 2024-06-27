@@ -11,9 +11,10 @@ import (
 	"sync"
 	"time"
 
-	"github.com/workos/workos-go/v4/pkg/workos_errors"
+	"github.com/omi-lab/workos-go/v4/pkg/models"
+	"github.com/omi-lab/workos-go/v4/pkg/workos_errors"
 
-	"github.com/workos/workos-go/v4/internal/workos"
+	"github.com/omi-lab/workos-go/v4/internal/workos"
 )
 
 // This represents the list of errors that could be raised when using the mfa package
@@ -57,20 +58,11 @@ func (c *Client) init() {
 	}
 }
 
-// Type represents the type of Authentication Factor
-type FactorType string
-
-// Constants that enumerate the available Types.
-const (
-	SMS  FactorType = "sms"
-	TOTP FactorType = "totp"
-)
-
 // EnrollFactorOpts contains the options to create an Authentication Factor.
 type EnrollFactorOpts struct {
 
 	// Type of factor to be enrolled (sms or totp).
-	Type FactorType
+	Type models.FactorType
 
 	// Name of the Organization.
 	TOTPIssuer string
@@ -82,65 +74,12 @@ type EnrollFactorOpts struct {
 	PhoneNumber string
 }
 
-type Factor struct {
-	// The authentication factor's unique ID
-	ID string `json:"id"`
-
-	// The name of the response type
-	Object string `json:"object"`
-
-	// The timestamp of when the request was created.
-	CreatedAt string `json:"created_at"`
-
-	// The timestamp of when the request was updated.
-	UpdatedAt string `json:"updated_at"`
-
-	// The type of request either 'sms' or 'totp'
-	Type FactorType `json:"type"`
-
-	// Details of the totp response will be 'null' if using sms
-	TOTP TOTPDetails `json:"totp"`
-
-	// Details of the sms response will be 'null' if using totp
-	SMS SMSDetails `json:"sms"`
-}
-
-type TOTPDetails struct {
-	QRCode string `json:"qr_code"`
-	Secret string `json:"secret"`
-	URI    string `json:"uri"`
-}
-
-type SMSDetails struct {
-	PhoneNumber string `json:"phone_number"`
-}
-
 type ChallengeFactorOpts struct {
 	// ID of the authorization factor.
 	FactorID string
 
 	// Parameter to customize the message for sms type factors. Must include "{{code}}" if used (opt).
 	SMSTemplate string
-}
-
-type Challenge struct {
-	// The authentication challenge's unique ID
-	ID string `json:"id"`
-
-	// The name of the response type.
-	Object string `json:"object"`
-
-	// The timestamp of when the request was created.
-	CreatedAt string `json:"created_at"`
-
-	// The timestamp of when the request was updated.
-	UpdatedAt string `json:"updated_at"`
-
-	// The timestamp of when the request expires.
-	ExpiresAt string `json:"expires_at"`
-
-	// The authentication factor Id used to create the request.
-	FactorID string `json:"authentication_factor_id"`
 }
 
 type VerifyChallengeOpts struct {
@@ -153,7 +92,7 @@ type VerifyChallengeOpts struct {
 
 type VerifyChallengeResponse struct {
 	// Return details of the request
-	Challenge Challenge `json:"challenge"`
+	Challenge models.Challenge `json:"challenge"`
 
 	// Boolean returning if request is valid
 	Valid bool `json:"valid"`
@@ -186,19 +125,19 @@ type GetFactorOpts struct {
 func (c *Client) EnrollFactor(
 	ctx context.Context,
 	opts EnrollFactorOpts,
-) (Factor, error) {
+) (models.Factor, error) {
 	c.once.Do(c.init)
 
-	if opts.Type == "" || (opts.Type != SMS && opts.Type != TOTP) {
-		return Factor{}, ErrInvalidType
+	if opts.Type == "" || (opts.Type != models.FactorTypeSMS && opts.Type != models.FactorTypeTOTP) {
+		return models.Factor{}, ErrInvalidType
 	}
 
-	if opts.Type == TOTP && (opts.TOTPIssuer == "" || opts.TOTPUser == "") {
-		return Factor{}, ErrIncompleteArgs
+	if opts.Type == models.FactorTypeTOTP && (opts.TOTPIssuer == "" || opts.TOTPUser == "") {
+		return models.Factor{}, ErrIncompleteArgs
 	}
 
-	if opts.Type == SMS && opts.PhoneNumber == "" {
-		return Factor{}, ErrNoPhoneNumber
+	if opts.Type == models.FactorTypeSMS && opts.PhoneNumber == "" {
+		return models.Factor{}, ErrNoPhoneNumber
 	}
 
 	postBody, _ := json.Marshal(map[string]string{
@@ -212,22 +151,22 @@ func (c *Client) EnrollFactor(
 	endpoint := fmt.Sprintf("%s/auth/factors/enroll", c.Endpoint)
 	req, err := http.NewRequestWithContext(ctx, http.MethodPost, endpoint, responseBody)
 	if err != nil {
-		return Factor{}, err
+		return models.Factor{}, err
 	}
 	req.Header.Add("Content-Type", "application/json")
 	req.Header.Set("Authorization", "Bearer "+c.APIKey)
 	req.Header.Set("User-Agent", "workos-go/"+workos.Version)
 	resp, err := c.HTTPClient.Do(req)
 	if err != nil {
-		return Factor{}, err
+		return models.Factor{}, err
 	}
 	defer resp.Body.Close()
 
 	if err = workos_errors.TryGetHTTPError(resp); err != nil {
-		return Factor{}, err
+		return models.Factor{}, err
 	}
 
-	var body Factor
+	var body models.Factor
 	dec := json.NewDecoder(resp.Body)
 	err = dec.Decode(&body)
 	return body, err
@@ -237,11 +176,11 @@ func (c *Client) EnrollFactor(
 func (c *Client) ChallengeFactor(
 	ctx context.Context,
 	opts ChallengeFactorOpts,
-) (Challenge, error) {
+) (models.Challenge, error) {
 	c.once.Do(c.init)
 
 	if opts.FactorID == "" {
-		return Challenge{}, ErrMissingAuthId
+		return models.Challenge{}, ErrMissingAuthId
 	}
 
 	postBody, _ := json.Marshal(map[string]string{
@@ -252,7 +191,7 @@ func (c *Client) ChallengeFactor(
 	endpoint := fmt.Sprintf("%s/auth/factors/%s/challenge", c.Endpoint, opts.FactorID)
 	req, err := http.NewRequestWithContext(ctx, http.MethodPost, endpoint, responseBody)
 	if err != nil {
-		return Challenge{}, err
+		return models.Challenge{}, err
 	}
 	req.Header.Add("Content-Type", "application/json")
 	req.Header.Set("Authorization", "Bearer "+c.APIKey)
@@ -260,15 +199,15 @@ func (c *Client) ChallengeFactor(
 
 	resp, err := c.HTTPClient.Do(req)
 	if err != nil {
-		return Challenge{}, err
+		return models.Challenge{}, err
 	}
 	defer resp.Body.Close()
 
 	if err = workos_errors.TryGetHTTPError(resp); err != nil {
-		return Challenge{}, err
+		return models.Challenge{}, err
 	}
 
-	var body Challenge
+	var body models.Challenge
 	dec := json.NewDecoder(resp.Body)
 	err = dec.Decode(&body)
 	return body, err
@@ -371,13 +310,13 @@ func (c *Client) DeleteFactor(
 func (c *Client) GetFactor(
 	ctx context.Context,
 	opts GetFactorOpts,
-) (Factor, error) {
+) (models.Factor, error) {
 	c.once.Do(c.init)
 
 	endpoint := fmt.Sprintf("%s/auth/factors/%s", c.Endpoint, opts.FactorID)
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, endpoint, nil)
 	if err != nil {
-		return Factor{}, err
+		return models.Factor{}, err
 	}
 	req.Header.Set("Authorization", "Bearer "+c.APIKey)
 	req.Header.Set("Content-Type", "application/json")
@@ -385,15 +324,15 @@ func (c *Client) GetFactor(
 
 	res, err := c.HTTPClient.Do(req)
 	if err != nil {
-		return Factor{}, err
+		return models.Factor{}, err
 	}
 	defer res.Body.Close()
 
 	if err = workos_errors.TryGetHTTPError(res); err != nil {
-		return Factor{}, err
+		return models.Factor{}, err
 	}
 
-	var body Factor
+	var body models.Factor
 	dec := json.NewDecoder(res.Body)
 	err = dec.Decode(&body)
 	return body, err

@@ -3,32 +3,34 @@ package auditlogs
 import (
 	"context"
 	"encoding/json"
-	"github.com/workos/workos-go/v4/pkg/workos_errors"
 	"net/http"
 	"net/http/httptest"
 	"testing"
 	"time"
+
+	"github.com/omi-lab/workos-go/v4/pkg/models"
+	"github.com/omi-lab/workos-go/v4/pkg/workos_errors"
 
 	"github.com/stretchr/testify/require"
 )
 
 var event = CreateEventOpts{
 	OrganizationID: "org_123456",
-	Event: Event{
+	Event: models.AuditLogEvent{
 		Action:     "document.updated",
 		OccurredAt: time.Now(),
-		Actor: Actor{
+		Actor: models.AuditLogEventActor{
 			ID:   "user_1",
 			Name: "Jon Smith",
 			Type: "User",
 		},
-		Targets: []Target{
+		Targets: []models.AuditLogEventTarget{
 			{
 				ID:   "document_39127",
 				Type: "document",
 			},
 		},
-		Context: Context{
+		Context: models.AuditLogEventContext{
 			Location:  "192.0.0.8",
 			UserAgent: "Firefox",
 		},
@@ -159,7 +161,7 @@ func TestCreateEvent(t *testing.T) {
 func TestCreateExports(t *testing.T) {
 	t.Run("Call succeeds", func(t *testing.T) {
 		handlerFunc := func(w http.ResponseWriter, r *http.Request) {
-			body, _ := json.Marshal(AuditLogExport{
+			body, _ := json.Marshal(models.AuditLogExport{
 				ID: "test",
 			})
 			w.WriteHeader(http.StatusCreated)
@@ -175,7 +177,7 @@ func TestCreateExports(t *testing.T) {
 		SetAPIKey("test")
 
 		body, err := CreateExport(context.TODO(), CreateExportOpts{})
-		require.Equal(t, body, AuditLogExport{
+		require.Equal(t, body, models.AuditLogExport{
 			ID: "test",
 		})
 		require.NoError(t, err)
@@ -192,7 +194,7 @@ func TestCreateExports(t *testing.T) {
 			require.Equal(t, opts.ActorNames, []string{"Jon", "Smith"})
 			require.Equal(t, opts.ActorIds, []string{"user:1234"})
 
-			body, _ := json.Marshal(AuditLogExport{
+			body, _ := json.Marshal(models.AuditLogExport{
 				ID: "test123",
 			})
 
@@ -215,7 +217,7 @@ func TestCreateExports(t *testing.T) {
 			ActorNames: []string{"Jon", "Smith"},
 			ActorIds:   []string{"user:1234"},
 		})
-		require.Equal(t, body, AuditLogExport{
+		require.Equal(t, body, models.AuditLogExport{
 			ID: "test123",
 		})
 		require.NoError(t, err)
@@ -241,7 +243,7 @@ func TestCreateExports(t *testing.T) {
 func TestGetExports(t *testing.T) {
 	t.Run("Call succeeds", func(t *testing.T) {
 		handlerFunc := func(w http.ResponseWriter, r *http.Request) {
-			body, _ := json.Marshal(AuditLogExport{
+			body, _ := json.Marshal(models.AuditLogExport{
 				ID: "test",
 			})
 			w.WriteHeader(http.StatusCreated)
@@ -257,7 +259,7 @@ func TestGetExports(t *testing.T) {
 		SetAPIKey("test")
 
 		body, err := GetExport(context.TODO(), GetExportOpts{})
-		require.Equal(t, body, AuditLogExport{
+		require.Equal(t, body, models.AuditLogExport{
 			ID: "test",
 		})
 		require.NoError(t, err)

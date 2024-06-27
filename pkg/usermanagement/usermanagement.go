@@ -5,6 +5,8 @@ import (
 	"context"
 	"net/http"
 	"net/url"
+
+	"github.com/omi-lab/workos-go/v4/pkg/models"
 )
 
 var (
@@ -44,7 +46,7 @@ func SetAPIKey(apiKey string) {
 func GetUser(
 	ctx context.Context,
 	opts GetUserOpts,
-) (User, error) {
+) (models.User, error) {
 	return DefaultClient.GetUser(ctx, opts)
 }
 
@@ -60,7 +62,7 @@ func ListUsers(
 func CreateUser(
 	ctx context.Context,
 	opts CreateUserOpts,
-) (User, error) {
+) (models.User, error) {
 	return DefaultClient.CreateUser(ctx, opts)
 }
 
@@ -68,7 +70,7 @@ func CreateUser(
 func UpdateUser(
 	ctx context.Context,
 	opts UpdateUserOpts,
-) (User, error) {
+) (models.User, error) {
 	return DefaultClient.UpdateUser(ctx, opts)
 }
 
@@ -148,7 +150,7 @@ func AuthenticateWithOrganizationSelection(
 func GetEmailVerification(
 	ctx context.Context,
 	opts GetEmailVerificationOpts,
-) (EmailVerification, error) {
+) (models.EmailVerification, error) {
 	return DefaultClient.GetEmailVerification(ctx, opts)
 }
 
@@ -172,7 +174,7 @@ func VerifyEmail(
 func GetPasswordReset(
 	ctx context.Context,
 	opts GetPasswordResetOpts,
-) (PasswordReset, error) {
+) (models.PasswordReset, error) {
 	return DefaultClient.GetPasswordReset(ctx, opts)
 }
 
@@ -180,7 +182,7 @@ func GetPasswordReset(
 func CreatePasswordReset(
 	ctx context.Context,
 	opts CreatePasswordResetOpts,
-) (PasswordReset, error) {
+) (models.PasswordReset, error) {
 	return DefaultClient.CreatePasswordReset(ctx, opts)
 }
 
@@ -204,7 +206,7 @@ func ResetPassword(
 func GetMagicAuth(
 	ctx context.Context,
 	opts GetMagicAuthOpts,
-) (MagicAuth, error) {
+) (models.MagicAuth, error) {
 	return DefaultClient.GetMagicAuth(ctx, opts)
 }
 
@@ -212,7 +214,7 @@ func GetMagicAuth(
 func CreateMagicAuth(
 	ctx context.Context,
 	opts CreateMagicAuthOpts,
-) (MagicAuth, error) {
+) (models.MagicAuth, error) {
 	return DefaultClient.CreateMagicAuth(ctx, opts)
 }
 
@@ -244,7 +246,7 @@ func ListAuthFactors(
 func GetOrganizationMembership(
 	ctx context.Context,
 	opts GetOrganizationMembershipOpts,
-) (OrganizationMembership, error) {
+) (models.OrganizationMembership, error) {
 	return DefaultClient.GetOrganizationMembership(ctx, opts)
 }
 
@@ -260,7 +262,7 @@ func ListOrganizationMemberships(
 func CreateOrganizationMembership(
 	ctx context.Context,
 	opts CreateOrganizationMembershipOpts,
-) (OrganizationMembership, error) {
+) (models.OrganizationMembership, error) {
 	return DefaultClient.CreateOrganizationMembership(ctx, opts)
 }
 
@@ -269,7 +271,7 @@ func UpdateOrganizationMembership(
 	ctx context.Context,
 	organizationMembershipId string,
 	opts UpdateOrganizationMembershipOpts,
-) (OrganizationMembership, error) {
+) (models.OrganizationMembership, error) {
 	return DefaultClient.UpdateOrganizationMembership(ctx, organizationMembershipId, opts)
 }
 
@@ -285,7 +287,7 @@ func DeleteOrganizationMembership(
 func DeactivateOrganizationMembership(
 	ctx context.Context,
 	opts DeactivateOrganizationMembershipOpts,
-) (OrganizationMembership, error) {
+) (models.OrganizationMembership, error) {
 	return DefaultClient.DeactivateOrganizationMembership(ctx, opts)
 }
 
@@ -293,21 +295,21 @@ func DeactivateOrganizationMembership(
 func ReactivateOrganizationMembership(
 	ctx context.Context,
 	opts ReactivateOrganizationMembershipOpts,
-) (OrganizationMembership, error) {
+) (models.OrganizationMembership, error) {
 	return DefaultClient.ReactivateOrganizationMembership(ctx, opts)
 }
 
 func GetInvitation(
 	ctx context.Context,
 	opts GetInvitationOpts,
-) (Invitation, error) {
+) (models.Invitation, error) {
 	return DefaultClient.GetInvitation(ctx, opts)
 }
 
 func FindInvitationByToken(
 	ctx context.Context,
 	opts FindInvitationByTokenOpts,
-) (Invitation, error) {
+) (models.Invitation, error) {
 	return DefaultClient.FindInvitationByToken(ctx, opts)
 }
 
@@ -321,14 +323,14 @@ func ListInvitations(
 func SendInvitation(
 	ctx context.Context,
 	opts SendInvitationOpts,
-) (Invitation, error) {
+) (models.Invitation, error) {
 	return DefaultClient.SendInvitation(ctx, opts)
 }
 
 func RevokeInvitation(
 	ctx context.Context,
 	opts RevokeInvitationOpts,
-) (Invitation, error) {
+) (models.Invitation, error) {
 	return DefaultClient.RevokeInvitation(ctx, opts)
 }
 

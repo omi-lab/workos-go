@@ -7,8 +7,9 @@ import (
 	"sync"
 	"testing"
 
+	"github.com/omi-lab/workos-go/v4/pkg/common"
+	"github.com/omi-lab/workos-go/v4/pkg/models"
 	"github.com/stretchr/testify/require"
-	"github.com/workos/workos-go/v4/pkg/common"
 )
 
 func TestLogin(t *testing.T) {
@@ -30,7 +31,7 @@ func TestLogin(t *testing.T) {
 		IdpID:          "123",
 		OrganizationID: "org_123",
 		ConnectionID:   "conn_123",
-		ConnectionType: OktaSAML,
+		ConnectionType: models.ConnectionTypeOktaSAML,
 		Email:          "foo@test.com",
 		FirstName:      "foo",
 		LastName:       "bar",
@@ -99,11 +100,11 @@ func TestSsoGetConnection(t *testing.T) {
 	}
 	Configure("test", "client_123")
 
-	expectedResponse := Connection{
+	expectedResponse := models.Connection{
 		ID:             "conn_id",
 		ConnectionType: "GoogleOAuth",
-		State:          Active,
-		Status:         Linked,
+		State:          models.ConnectionStateActive,
+		Status:         models.ConnectionStatusLinked,
 		Name:           "Foo Corp",
 	}
 	connectionResponse, err := GetConnection(context.Background(), GetConnectionOpts{
@@ -125,12 +126,12 @@ func TestSsoListConnections(t *testing.T) {
 	Configure("test", "client_123")
 
 	expectedResponse := ListConnectionsResponse{
-		Data: []Connection{
-			Connection{
+		Data: []models.Connection{
+			models.Connection{
 				ID:             "conn_id",
 				ConnectionType: "GoogleOAuth",
-				State:          Active,
-				Status:         Linked,
+				State:          models.ConnectionStateActive,
+				Status:         models.ConnectionStatusLinked,
 				Name:           "Foo Corp",
 			},
 		},
@@ -162,7 +163,7 @@ func TestSsoGetProfile(t *testing.T) {
 		IdpID:          "123",
 		OrganizationID: "org_123",
 		ConnectionID:   "conn_123",
-		ConnectionType: OktaSAML,
+		ConnectionType: models.ConnectionTypeOktaSAML,
 		Email:          "foo@test.com",
 		FirstName:      "foo",
 		LastName:       "bar",

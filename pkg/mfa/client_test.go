@@ -8,6 +8,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/omi-lab/workos-go/v4/pkg/models"
 	"github.com/stretchr/testify/require"
 )
 
@@ -16,7 +17,7 @@ func TestGetFactor(t *testing.T) {
 		scenario string
 		client   *Client
 		options  GetFactorOpts
-		expected Factor
+		expected models.Factor
 		err      bool
 	}{
 		{
@@ -32,7 +33,7 @@ func TestGetFactor(t *testing.T) {
 			options: GetFactorOpts{
 				FactorID: "auth_factor_test123",
 			},
-			expected: Factor{
+			expected: models.Factor{
 				ID:        "auth_factor_test123",
 				CreatedAt: "2022-02-17T22:39:26.616Z",
 				UpdatedAt: "2022-02-17T22:39:26.616Z",
@@ -99,7 +100,7 @@ func TestEnrollFactor(t *testing.T) {
 		scenario string
 		client   *Client
 		options  EnrollFactorOpts
-		expected Factor
+		expected models.Factor
 		err      bool
 	}{
 		{
@@ -117,7 +118,7 @@ func TestEnrollFactor(t *testing.T) {
 				TOTPIssuer: "WorkOS",
 				TOTPUser:   "some_user",
 			},
-			expected: Factor{
+			expected: models.Factor{
 				ID:        "auth_factor_test123",
 				CreatedAt: "2022-02-17T22:39:26.616Z",
 				UpdatedAt: "2022-02-17T22:39:26.616Z",
@@ -133,7 +134,7 @@ func TestEnrollFactor(t *testing.T) {
 				Type:        "sms",
 				PhoneNumber: "0000000000",
 			},
-			expected: Factor{
+			expected: models.Factor{
 				ID:        "auth_factor_test123",
 				CreatedAt: "2022-02-17T22:39:26.616Z",
 				UpdatedAt: "2022-02-17T22:39:26.616Z",
@@ -174,7 +175,7 @@ func enrollFactorTestHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	body, err := json.Marshal(Factor{
+	body, err := json.Marshal(models.Factor{
 		ID:        "auth_factor_test123",
 		CreatedAt: "2022-02-17T22:39:26.616Z",
 		UpdatedAt: "2022-02-17T22:39:26.616Z",
@@ -194,7 +195,7 @@ func TestChallengeFactor(t *testing.T) {
 		scenario string
 		client   *Client
 		options  ChallengeFactorOpts
-		expected Challenge
+		expected models.Challenge
 		err      bool
 	}{
 		{
@@ -210,7 +211,7 @@ func TestChallengeFactor(t *testing.T) {
 			options: ChallengeFactorOpts{
 				FactorID: "auth_factor_id",
 			},
-			expected: Challenge{
+			expected: models.Challenge{
 				ID:        "auth_challenge_test123",
 				CreatedAt: "2022-02-17T22:39:26.616Z",
 				UpdatedAt: "2022-02-17T22:39:26.616Z",
@@ -252,7 +253,7 @@ func challengeFactorTestHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	body, err := json.Marshal(Challenge{
+	body, err := json.Marshal(models.Challenge{
 		ID:        "auth_challenge_test123",
 		CreatedAt: "2022-02-17T22:39:26.616Z",
 		UpdatedAt: "2022-02-17T22:39:26.616Z",
@@ -323,7 +324,7 @@ func getFactorTestHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	body, err := json.Marshal(Factor{
+	body, err := json.Marshal(models.Factor{
 		ID:        "auth_factor_test123",
 		CreatedAt: "2022-02-17T22:39:26.616Z",
 		UpdatedAt: "2022-02-17T22:39:26.616Z",

@@ -6,6 +6,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"github.com/omi-lab/workos-go/v4/pkg/models"
 	"github.com/stretchr/testify/require"
 )
 
@@ -19,7 +20,7 @@ func TestMfaEnrollFactors(t *testing.T) {
 	}
 	SetAPIKey("test")
 
-	expectedResponse := Factor{
+	expectedResponse := models.Factor{
 		ID:        "auth_factor_test123",
 		CreatedAt: "2022-02-17T22:39:26.616Z",
 		UpdatedAt: "2022-02-17T22:39:26.616Z",
@@ -45,7 +46,7 @@ func TestMfaChallengeFactors(t *testing.T) {
 	}
 	SetAPIKey("test")
 
-	expectedResponse := Challenge{
+	expectedResponse := models.Challenge{
 		ID:        "auth_challenge_test123",
 		CreatedAt: "2022-02-17T22:39:26.616Z",
 		UpdatedAt: "2022-02-17T22:39:26.616Z",
@@ -92,7 +93,7 @@ func TestGetFactors(t *testing.T) {
 	}
 	SetAPIKey("test")
 
-	expectedResponse := Factor{
+	expectedResponse := models.Factor{
 		ID:        "auth_factor_test123",
 		CreatedAt: "2022-02-17T22:39:26.616Z",
 		UpdatedAt: "2022-02-17T22:39:26.616Z",

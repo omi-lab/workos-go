@@ -7,6 +7,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"github.com/omi-lab/workos-go/v4/pkg/models"
 	"github.com/stretchr/testify/require"
 )
 
@@ -29,7 +30,7 @@ func TestGenerateLink(t *testing.T) {
 				APIKey: "test",
 			},
 			options: GenerateLinkOpts{
-				Intent:       SSO,
+				Intent:       models.GenerateLinkIntentSSO,
 				Organization: "organization_id",
 				ReturnURL:    "https://foo-corp.app.com/settings",
 			},
@@ -41,7 +42,7 @@ func TestGenerateLink(t *testing.T) {
 				APIKey: "test",
 			},
 			options: GenerateLinkOpts{
-				Intent:       DSync,
+				Intent:       models.GenerateLinkIntentDSync,
 				Organization: "organization_id",
 				ReturnURL:    "https://foo-corp.app.com/settings",
 			},
@@ -53,7 +54,7 @@ func TestGenerateLink(t *testing.T) {
 				APIKey: "test",
 			},
 			options: GenerateLinkOpts{
-				Intent:       AuditLogs,
+				Intent:       models.GenerateLinkIntentAuditLogs,
 				Organization: "organization_id",
 				ReturnURL:    "https://foo-corp.app.com/settings",
 			},
@@ -65,7 +66,7 @@ func TestGenerateLink(t *testing.T) {
 				APIKey: "test",
 			},
 			options: GenerateLinkOpts{
-				Intent:       LogStreams,
+				Intent:       models.GenerateLinkIntentLogStreams,
 				Organization: "organization_id",
 				ReturnURL:    "https://foo-corp.app.com/settings",
 			},

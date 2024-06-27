@@ -9,10 +9,11 @@ import (
 	"time"
 
 	"github.com/google/go-querystring/query"
-	"github.com/workos/workos-go/v4/pkg/workos_errors"
+	"github.com/omi-lab/workos-go/v4/pkg/models"
+	"github.com/omi-lab/workos-go/v4/pkg/workos_errors"
 
-	"github.com/workos/workos-go/v4/internal/workos"
-	"github.com/workos/workos-go/v4/pkg/common"
+	"github.com/omi-lab/workos-go/v4/internal/workos"
+	"github.com/omi-lab/workos-go/v4/pkg/common"
 )
 
 // ResponseLimit is the default number of records to limit a response to.
@@ -52,90 +53,6 @@ func (c *Client) init() {
 	}
 }
 
-// UserEmail contains data about a Directory User's e-mail address.
-type UserEmail struct {
-	// Flag to indicate if this e-mail is primary.
-	Primary bool
-
-	// Directory User's e-mail.
-	Value string
-
-	// Type of e-mail (ex. work).
-	Type string
-}
-
-// UserGroup contains data about a Directory User's groups.
-type UserGroup struct {
-	// Description of the record.
-	Object string
-
-	// The Group's identifier.
-	ID string
-
-	// The Group's Name.
-	Name string
-}
-
-// UserState represents the active state of a Directory User.
-type UserState string
-
-// Constants that enumerate the state of a Directory User.
-const (
-	Active   UserState = "active"
-	Inactive UserState = "inactive"
-)
-
-// User contains data about a provisioned Directory User.
-type User struct {
-	// The User's unique identifier.
-	ID string `json:"id"`
-
-	// The User's unique identifier assigned by the Directory Provider.
-	IdpID string `json:"idp_id"`
-
-	// The identifier of the Directory the Directory User belongs to.
-	DirectoryID string `json:"directory_id"`
-
-	// The identifier for the Organization in which the Directory resides.
-	OrganizationID string `json:"organization_id"`
-
-	// The User's username.
-	Username string `json:"username"`
-
-	// The User's e-mails.
-	Emails []UserEmail `json:"emails"`
-
-	// The User's groups.
-	Groups []UserGroup `json:"groups"`
-
-	// The User's first name.
-	FirstName string `json:"first_name"`
-
-	// The User's last name.
-	LastName string `json:"last_name"`
-
-	// The User's job title.
-	JobTitle string `json:"job_title"`
-
-	// The User's state.
-	State UserState `json:"state"`
-
-	// The User's raw attributes in raw encoded JSON.
-	RawAttributes json.RawMessage `json:"raw_attributes"`
-
-	// The User's custom attributes in raw encoded JSON.
-	CustomAttributes json.RawMessage `json:"custom_attributes"`
-
-	// The User's created at date
-	CreatedAt string `json:"created_at"`
-
-	// The User's updated at date
-	UpdatedAt string `json:"updated_at"`
-
-	// The role given to this Directory User
-	Role common.RoleResponse `json:"role,omitempty"`
-}
-
 // ListUsersOpts contains the options to request provisioned Directory Users.
 type ListUsersOpts struct {
 	// Directory unique identifier.
@@ -161,7 +78,7 @@ type ListUsersOpts struct {
 // provisioned Directory Users.
 type ListUsersResponse struct {
 	// List of provisioned Users.
-	Data []User `json:"data"`
+	Data []models.DirectoryUser `json:"data"`
 
 	// Cursor pagination options.
 	ListMetadata common.ListMetadata `json:"listMetadata"`
@@ -218,33 +135,6 @@ func (c *Client) ListUsers(
 	return body, err
 }
 
-// Group contains data about a provisioned Directory Group.
-type Group struct {
-	// The Group's unique identifier.
-	ID string `json:"id"`
-
-	// The Group's name.
-	Name string `json:"name"`
-
-	// The Group's unique identifier assigned by the Directory Provider.
-	IdpID string `json:"idp_id"`
-
-	// The identifier of the Directory the group belongs to.
-	DirectoryID string `json:"directory_id"`
-
-	// The identifier for the Organization in which the Directory resides.
-	OrganizationID string `json:"organization_id"`
-
-	// The Group's created at date.
-	CreatedAt string `json:"created_at"`
-
-	// The Group's updated at date.
-	UpdatedAt string `json:"updated_at"`
-
-	// The Group's raw attributes in raw encoded JSON.
-	RawAttributes json.RawMessage `json:"raw_attributes"`
-}
-
 // ListGroupsOpts contains the options to request provisioned Directory Groups.
 type ListGroupsOpts struct {
 	// Directory unique identifier.
@@ -270,7 +160,7 @@ type ListGroupsOpts struct {
 // provisioned Directory Groups.
 type ListGroupsResponse struct {
 	// List of provisioned Users.
-	Data []Group `json:"data"`
+	Data []models.DirectoryGroup `json:"data"`
 
 	// Cursor pagination options.
 	ListMetadata common.ListMetadata `json:"listMetadata"`
@@ -338,7 +228,7 @@ type GetUserOpts struct {
 func (c *Client) GetUser(
 	ctx context.Context,
 	opts GetUserOpts,
-) (User, error) {
+) (models.DirectoryUser, error) {
 	c.once.Do(c.init)
 
 	endpoint := fmt.Sprintf(
@@ -352,7 +242,7 @@ func (c *Client) GetUser(
 		nil,
 	)
 	if err != nil {
-		return User{}, err
+		return models.DirectoryUser{}, err
 	}
 
 	req = req.WithContext(ctx)
@@ -362,15 +252,15 @@ func (c *Client) GetUser(
 
 	res, err := c.HTTPClient.Do(req)
 	if err != nil {
-		return User{}, err
+		return models.DirectoryUser{}, err
 	}
 	defer res.Body.Close()
 
 	if err = workos_errors.TryGetHTTPError(res); err != nil {
-		return User{}, err
+		return models.DirectoryUser{}, err
 	}
 
-	var body User
+	var body models.DirectoryUser
 	dec := json.NewDecoder(res.Body)
 	err = dec.Decode(&body)
 	return body, err
@@ -386,7 +276,7 @@ type GetGroupOpts struct {
 func (c *Client) GetGroup(
 	ctx context.Context,
 	opts GetGroupOpts,
-) (Group, error) {
+) (models.DirectoryGroup, error) {
 	c.once.Do(c.init)
 
 	endpoint := fmt.Sprintf(
@@ -400,7 +290,7 @@ func (c *Client) GetGroup(
 		nil,
 	)
 	if err != nil {
-		return Group{}, err
+		return models.DirectoryGroup{}, err
 	}
 
 	req = req.WithContext(ctx)
@@ -410,87 +300,18 @@ func (c *Client) GetGroup(
 
 	res, err := c.HTTPClient.Do(req)
 	if err != nil {
-		return Group{}, err
+		return models.DirectoryGroup{}, err
 	}
 	defer res.Body.Close()
 
 	if err = workos_errors.TryGetHTTPError(res); err != nil {
-		return Group{}, err
+		return models.DirectoryGroup{}, err
 	}
 
-	var body Group
+	var body models.DirectoryGroup
 	dec := json.NewDecoder(res.Body)
 	err = dec.Decode(&body)
 	return body, err
-}
-
-// DirectoryType represents a Directory type.
-type DirectoryType string
-
-// Constants that enumerate the available Directory types.
-const (
-	AzureSCIMV2_0   DirectoryType = "azure scim v2.0"
-	BambooHr        DirectoryType = "bamboohr"
-	BreatheHr       DirectoryType = "breathe hr"
-	CezanneHr       DirectoryType = "cezanne hr"
-	CyberArk        DirectoryType = "cyberark scim v2.0"
-	FourthHr        DirectoryType = "fourth hr"
-	GSuiteDirectory DirectoryType = "gsuite directory"
-	GenericSCIMV2_0 DirectoryType = "generic scim v2.0"
-	Hibob           DirectoryType = "hibob"
-	JumpCloud       DirectoryType = "jump cloud scim v2.0"
-	OktaSCIMV2_0    DirectoryType = "okta scim v2.0"
-	OneLogin        DirectoryType = "onelogin scim v2.0"
-	PeopleHr        DirectoryType = "people hr"
-	Personio        DirectoryType = "personio"
-	PingFederate    DirectoryType = "pingfederate scim v2.0"
-	Rippling        DirectoryType = "rippling scim v2.0"
-	SFTP            DirectoryType = "sftp"
-	SFTPWorkday     DirectoryType = "sftp workday"
-	Workday         DirectoryType = "workday"
-)
-
-// DirectoryState represents if a Directory is linked or unlinked.
-type DirectoryState string
-
-// Constants that enumerate the linked status of a Directory.
-const (
-	Linked             DirectoryState = "linked"
-	Unlinked           DirectoryState = "unlinked"
-	InvalidCredentials DirectoryState = "invalid_credentials"
-)
-
-// Directory contains data about a project's directory.
-type Directory struct {
-	// Directory unique identifier.
-	ID string `json:"id"`
-
-	// Directory name.
-	Name string `json:"name"`
-
-	// Directory domain.
-	Domain string `json:"domain"`
-
-	// Externally used identifier for the Directory.
-	ExternalKey string `json:"external_key"`
-
-	// Type of the directory.
-	Type DirectoryType `json:"type"`
-
-	// Linked status for the Directory.
-	State DirectoryState `json:"state"`
-
-	// The user's directory provider's Identifier
-	IdpID string `json:"idp_id"`
-
-	// Identifier for the Directory's Organization.
-	OrganizationID string `json:"organization_id"`
-
-	// The timestamp of when the Directory was created.
-	CreatedAt string `json:"created_at"`
-
-	// The timestamp of when the Directory was updated.
-	UpdatedAt string `json:"updated_at"`
 }
 
 // ListDirectoriesOpts contains the options to request a Project's Directories.
@@ -521,7 +342,7 @@ type ListDirectoriesOpts struct {
 // existing Directories.
 type ListDirectoriesResponse struct {
 	// List of Directories.
-	Data []Directory `json:"data"`
+	Data []models.Directory `json:"data"`
 
 	// Cursor pagination options.
 	ListMetadata common.ListMetadata `json:"listMetadata"`
@@ -587,7 +408,7 @@ type GetDirectoryOpts struct {
 func (c *Client) GetDirectory(
 	ctx context.Context,
 	opts GetDirectoryOpts,
-) (Directory, error) {
+) (models.Directory, error) {
 	c.once.Do(c.init)
 
 	endpoint := fmt.Sprintf(
@@ -601,7 +422,7 @@ func (c *Client) GetDirectory(
 		nil,
 	)
 	if err != nil {
-		return Directory{}, err
+		return models.Directory{}, err
 	}
 
 	req = req.WithContext(ctx)
@@ -611,15 +432,15 @@ func (c *Client) GetDirectory(
 
 	res, err := c.HTTPClient.Do(req)
 	if err != nil {
-		return Directory{}, err
+		return models.Directory{}, err
 	}
 	defer res.Body.Close()
 
 	if err = workos_errors.TryGetHTTPError(res); err != nil {
-		return Directory{}, err
+		return models.Directory{}, err
 	}
 
-	var body Directory
+	var body models.Directory
 	dec := json.NewDecoder(res.Body)
 	err = dec.Decode(&body)
 	return body, err

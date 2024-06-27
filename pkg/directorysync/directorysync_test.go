@@ -7,8 +7,9 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"github.com/omi-lab/workos-go/v4/pkg/common"
+	"github.com/omi-lab/workos-go/v4/pkg/models"
 	"github.com/stretchr/testify/require"
-	"github.com/workos/workos-go/v4/pkg/common"
 )
 
 func TestDirectorySyncListUsers(t *testing.T) {
@@ -26,27 +27,27 @@ func TestDirectorySyncListUsers(t *testing.T) {
 	}
 
 	expectedResponse := ListUsersResponse{
-		Data: []User{
-			User{
+		Data: []models.DirectoryUser{
+			models.DirectoryUser{
 				ID:        "directory_user_id",
 				FirstName: "Rick",
 				LastName:  "Sanchez",
 				JobTitle:  "Software Engineer",
-				Emails: []UserEmail{
-					UserEmail{
+				Emails: []models.DirectoryUserEmail{
+					models.DirectoryUserEmail{
 						Primary: true,
 						Type:    "work",
 						Value:   "rick@sanchez.com",
 					},
 				},
-				Groups: []UserGroup{
-					UserGroup{
+				Groups: []models.DirectoryUserGroup{
+					models.DirectoryUserGroup{
 						Object: "user_group_object",
 						ID:     "directory_group_123",
 						Name:   "Group Name",
 					},
 				},
-				State:            Active,
+				State:            models.DirectoryUserStateActive,
 				RawAttributes:    json.RawMessage(`{"foo":"bar"}`),
 				CustomAttributes: json.RawMessage(`{"foo":"bar"}`),
 				Role:             expectedRole,
@@ -76,8 +77,8 @@ func TestDirectorySyncListGroups(t *testing.T) {
 	SetAPIKey("test")
 
 	expectedResponse := ListGroupsResponse{
-		Data: []Group{
-			Group{
+		Data: []models.DirectoryGroup{
+			models.DirectoryGroup{
 				ID:             "directory_group_id",
 				Name:           "Scientists",
 				IdpID:          "123",
@@ -118,26 +119,26 @@ func TestDirectorySyncGetUser(t *testing.T) {
 		Slug: "member",
 	}
 
-	expectedResponse := User{
+	expectedResponse := models.DirectoryUser{
 		ID:        "directory_user_id",
 		FirstName: "Rick",
 		LastName:  "Sanchez",
 		JobTitle:  "Software Engineer",
-		Emails: []UserEmail{
-			UserEmail{
+		Emails: []models.DirectoryUserEmail{
+			models.DirectoryUserEmail{
 				Primary: true,
 				Type:    "work",
 				Value:   "rick@sanchez.com",
 			},
 		},
-		Groups: []UserGroup{
-			UserGroup{
+		Groups: []models.DirectoryUserGroup{
+			models.DirectoryUserGroup{
 				Object: "user_group_object",
 				ID:     "directory_group_123",
 				Name:   "Group Name",
 			},
 		},
-		State:            Active,
+		State:            models.DirectoryUserStateActive,
 		RawAttributes:    json.RawMessage(`{"foo":"bar"}`),
 		CustomAttributes: json.RawMessage(`{"foo":"bar"}`),
 		Role:             expectedRole,
@@ -160,7 +161,7 @@ func TestDirectorySyncGetGroup(t *testing.T) {
 	}
 	SetAPIKey("test")
 
-	expectedResponse := Group{
+	expectedResponse := models.DirectoryGroup{
 		ID:             "directory_group_id",
 		Name:           "Scientists",
 		IdpID:          "123",
@@ -189,8 +190,8 @@ func TestDirectorySyncListDirectories(t *testing.T) {
 	SetAPIKey("test")
 
 	expectedResponse := ListDirectoriesResponse{
-		Data: []Directory{
-			Directory{
+		Data: []models.Directory{
+			models.Directory{
 				ID:          "directory_id",
 				Name:        "Ri Jeong Hyeok",
 				Domain:      "crashlandingyou.com",
@@ -238,7 +239,7 @@ func TestGetDirectory(t *testing.T) {
 		scenario string
 		client   *Client
 		options  GetDirectoryOpts
-		expected Directory
+		expected models.Directory
 		err      bool
 	}{
 		{
@@ -254,7 +255,7 @@ func TestGetDirectory(t *testing.T) {
 			options: GetDirectoryOpts{
 				Directory: "Directory_id",
 			},
-			expected: Directory{
+			expected: models.Directory{
 				ID:          "directory_id",
 				Name:        "Ri Jeong Hyeok",
 				Domain:      "crashlandingyou.com",
@@ -292,7 +293,7 @@ func getDirectoryTestHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	body, err := json.Marshal(Directory{
+	body, err := json.Marshal(models.Directory{
 		ID:          "directory_id",
 		Name:        "Ri Jeong Hyeok",
 		Domain:      "crashlandingyou.com",
@@ -312,31 +313,31 @@ func getDirectoryTestHandler(w http.ResponseWriter, r *http.Request) {
 func TestPrimaryEmail(t *testing.T) {
 	tests := []struct {
 		scenario string
-		user     User
+		user     models.DirectoryUser
 		expected string
 		err      bool
 	}{
 		{
 			scenario: "One primary email returns primary email",
-			user: User{
+			user: models.DirectoryUser{
 				ID:        "directory_user_id",
 				FirstName: "WorkOS",
 				LastName:  "Testz",
-				Emails: []UserEmail{
-					UserEmail{
+				Emails: []models.DirectoryUserEmail{
+					models.DirectoryUserEmail{
 						Primary: true,
 						Type:    "work",
 						Value:   "primaryemail@foo-corp.com",
 					},
 				},
-				Groups: []UserGroup{
-					UserGroup{
+				Groups: []models.DirectoryUserGroup{
+					models.DirectoryUserGroup{
 						Object: "user_group_object",
 						ID:     "directory_group_123",
 						Name:   "Group Name",
 					},
 				},
-				State:            Active,
+				State:            models.DirectoryUserStateActive,
 				RawAttributes:    json.RawMessage(`{"foo":"bar"}`),
 				CustomAttributes: json.RawMessage(`{"foo":"bar"}`),
 			},
@@ -344,30 +345,30 @@ func TestPrimaryEmail(t *testing.T) {
 		},
 		{
 			scenario: "Multiple primary emails returns the first primary email",
-			user: User{
+			user: models.DirectoryUser{
 				ID:        "directory_user_id",
 				FirstName: "WorkOS",
 				LastName:  "Testz",
-				Emails: []UserEmail{
-					UserEmail{
+				Emails: []models.DirectoryUserEmail{
+					models.DirectoryUserEmail{
 						Primary: true,
 						Type:    "work",
 						Value:   "firstprimaryemail@foo-corp.com",
 					},
-					UserEmail{
+					models.DirectoryUserEmail{
 						Primary: true,
 						Type:    "work",
 						Value:   "primaryemail@foo-corp.com",
 					},
 				},
-				Groups: []UserGroup{
-					UserGroup{
+				Groups: []models.DirectoryUserGroup{
+					models.DirectoryUserGroup{
 						Object: "user_group_object",
 						ID:     "directory_group_123",
 						Name:   "Group Name",
 					},
 				},
-				State:            Active,
+				State:            models.DirectoryUserStateActive,
 				RawAttributes:    json.RawMessage(`{"foo":"bar"}`),
 				CustomAttributes: json.RawMessage(`{"foo":"bar"}`),
 			},
@@ -375,24 +376,24 @@ func TestPrimaryEmail(t *testing.T) {
 		},
 		{
 			scenario: "No primary emails returns null and an error",
-			user: User{
+			user: models.DirectoryUser{
 				ID:        "directory_user_id",
 				FirstName: "WorkOS",
 				LastName:  "Testz",
-				Emails: []UserEmail{
-					UserEmail{
+				Emails: []models.DirectoryUserEmail{
+					models.DirectoryUserEmail{
 						Type:  "work",
 						Value: "firstprimaryemail@foo-corp.com",
 					},
 				},
-				Groups: []UserGroup{
-					UserGroup{
+				Groups: []models.DirectoryUserGroup{
+					models.DirectoryUserGroup{
 						Object: "user_group_object",
 						ID:     "directory_group_123",
 						Name:   "Group Name",
 					},
 				},
-				State:            Active,
+				State:            models.DirectoryUserStateActive,
 				RawAttributes:    json.RawMessage(`{"foo":"bar"}`),
 				CustomAttributes: json.RawMessage(`{"foo":"bar"}`),
 			},
@@ -400,18 +401,18 @@ func TestPrimaryEmail(t *testing.T) {
 		},
 		{
 			scenario: "No emails returns null",
-			user: User{
+			user: models.DirectoryUser{
 				ID:        "directory_user_id",
 				FirstName: "WorkOS",
 				LastName:  "Testz",
-				Groups: []UserGroup{
-					UserGroup{
+				Groups: []models.DirectoryUserGroup{
+					models.DirectoryUserGroup{
 						Object: "user_group_object",
 						ID:     "directory_group_123",
 						Name:   "Group Name",
 					},
 				},
-				State:            Active,
+				State:            models.DirectoryUserStateActive,
 				RawAttributes:    json.RawMessage(`{"foo":"bar"}`),
 				CustomAttributes: json.RawMessage(`{"foo":"bar"}`),
 			},

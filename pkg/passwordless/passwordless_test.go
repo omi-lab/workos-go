@@ -6,6 +6,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"github.com/omi-lab/workos-go/v4/pkg/models"
 	"github.com/stretchr/testify/require"
 )
 
@@ -20,7 +21,7 @@ func TestPasswordlessCreateSession(t *testing.T) {
 	SetAPIKey("test")
 
 	expectedResponse :=
-		PasswordlessSession{
+		models.PasswordlessSession{
 			ID:        "session_id",
 			Email:     "sasa@foo-corp.com",
 			ExpiresAt: "",
@@ -29,7 +30,7 @@ func TestPasswordlessCreateSession(t *testing.T) {
 
 	session, err := CreateSession(context.Background(), CreateSessionOpts{
 		Email: "sasa@foo-corp.com",
-		Type:  MagicLink,
+		Type:  models.PasswordlessSessionTypeMagicLink,
 	})
 
 	require.NoError(t, err)

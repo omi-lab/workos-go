@@ -9,8 +9,9 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/omi-lab/workos-go/v4/pkg/common"
+	"github.com/omi-lab/workos-go/v4/pkg/models"
 	"github.com/stretchr/testify/require"
-	"github.com/workos/workos-go/v4/pkg/common"
 )
 
 func TestClientAuthorizeURL(t *testing.T) {
@@ -151,7 +152,7 @@ func TestClientGetProfileAndToken(t *testing.T) {
 				IdpID:          "123",
 				OrganizationID: "org_123",
 				ConnectionID:   "conn_123",
-				ConnectionType: OktaSAML,
+				ConnectionType: models.ConnectionTypeOktaSAML,
 				Email:          "foo@test.com",
 				FirstName:      "foo",
 				LastName:       "bar",
@@ -213,7 +214,7 @@ func profileAndTokenTestHandler(w http.ResponseWriter, r *http.Request) {
 			IdpID:          "123",
 			OrganizationID: "org_123",
 			ConnectionID:   "conn_123",
-			ConnectionType: OktaSAML,
+			ConnectionType: models.ConnectionTypeOktaSAML,
 			Email:          "foo@test.com",
 			FirstName:      "foo",
 			LastName:       "bar",
@@ -257,7 +258,7 @@ func TestClientGetProfile(t *testing.T) {
 				IdpID:          "123",
 				OrganizationID: "org_123",
 				ConnectionID:   "conn_123",
-				ConnectionType: OktaSAML,
+				ConnectionType: models.ConnectionTypeOktaSAML,
 				Email:          "foo@test.com",
 				FirstName:      "foo",
 				LastName:       "bar",
@@ -309,7 +310,7 @@ func profileTestHandler(w http.ResponseWriter, r *http.Request) {
 		IdpID:          "123",
 		OrganizationID: "org_123",
 		ConnectionID:   "conn_123",
-		ConnectionType: OktaSAML,
+		ConnectionType: models.ConnectionTypeOktaSAML,
 		Email:          "foo@test.com",
 		FirstName:      "foo",
 		LastName:       "bar",
@@ -336,7 +337,7 @@ func TestGetConnection(t *testing.T) {
 		scenario string
 		client   *Client
 		options  GetConnectionOpts
-		expected Connection
+		expected models.Connection
 		err      bool
 	}{
 		{
@@ -352,11 +353,11 @@ func TestGetConnection(t *testing.T) {
 			options: GetConnectionOpts{
 				Connection: "connection_id",
 			},
-			expected: Connection{
+			expected: models.Connection{
 				ID:             "conn_id",
 				ConnectionType: "GoogleOAuth",
-				State:          Active,
-				Status:         Linked,
+				State:          models.ConnectionStateActive,
+				Status:         models.ConnectionStatusLinked,
 				Name:           "Foo Corp",
 			},
 		},
@@ -389,11 +390,11 @@ func getConnectionTestHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	body, err := json.Marshal(Connection{
+	body, err := json.Marshal(models.Connection{
 		ID:             "conn_id",
 		ConnectionType: "GoogleOAuth",
-		State:          Active,
-		Status:         Linked,
+		State:          models.ConnectionStateActive,
+		Status:         models.ConnectionStatusLinked,
 		Name:           "Foo Corp",
 	})
 	if err != nil {
@@ -425,12 +426,12 @@ func TestListConnections(t *testing.T) {
 			},
 			options: ListConnectionsOpts{},
 			expected: ListConnectionsResponse{
-				Data: []Connection{
-					Connection{
+				Data: []models.Connection{
+					models.Connection{
 						ID:             "conn_id",
 						ConnectionType: "GoogleOAuth",
-						State:          Active,
-						Status:         Linked,
+						State:          models.ConnectionStateActive,
+						Status:         models.ConnectionStatusLinked,
 						Name:           "Foo Corp",
 					},
 				},
@@ -475,12 +476,12 @@ func listConnectionsTestHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	body, err := json.Marshal(ListConnectionsResponse{
-		Data: []Connection{
-			Connection{
+		Data: []models.Connection{
+			models.Connection{
 				ID:             "conn_id",
 				ConnectionType: "GoogleOAuth",
-				State:          Active,
-				Status:         Linked,
+				State:          models.ConnectionStateActive,
+				Status:         models.ConnectionStatusLinked,
 				Name:           "Foo Corp",
 			},
 		},

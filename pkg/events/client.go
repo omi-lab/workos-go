@@ -9,48 +9,15 @@ import (
 	"time"
 
 	"github.com/google/go-querystring/query"
-	"github.com/workos/workos-go/v4/pkg/workos_errors"
+	"github.com/omi-lab/workos-go/v4/pkg/models"
+	"github.com/omi-lab/workos-go/v4/pkg/workos_errors"
 
-	"github.com/workos/workos-go/v4/internal/workos"
-	"github.com/workos/workos-go/v4/pkg/common"
+	"github.com/omi-lab/workos-go/v4/internal/workos"
+	"github.com/omi-lab/workos-go/v4/pkg/common"
 )
 
 // ResponseLimit is the default number of records to limit a response to.
 const ResponseLimit = 10
-
-const (
-	// Connection Events
-	ConnectionActivated   = "connection.activated"
-	ConnectionDeactivated = "connection.deactived"
-	ConnectionDeleted     = "connection.deleted"
-	// Directory Events
-	DirectoryActivated = "dsync.activated"
-	DirectoryDeleted   = "dsync.deleted"
-	// Directory User Events
-	DirectoryUserCreated = "dsync.user.created"
-	DirectoryUserUpdated = "dsync.user.updated"
-	DirectoryUserDeleted = "dsync.user.deleted"
-	// Directory Group Events
-	DirectoryGroupCreated     = "dsync.group.created"
-	DirectoryGroupUpdated     = "dsync.group.updated"
-	DirectoryGroupDeleted     = "dsync.group.deleted"
-	DirectoryGroupUserAdded   = "dsync.group.user_added"
-	DirectroyGroupUserRemoved = "dsync.group.user_removed"
-	// User Management Events
-	UserCreated                   = "user.created"
-	UserUpdated                   = "user.updated"
-	UserDeleted                   = "user.deleted"
-	OrganizationMembershipAdded   = "organization_membership.added" // Deprecated: use OrganizationMembershipCreated instead
-	OrganizationMembershipCreated = "organization_membership.created"
-	OrganizationMembershipDeleted = "organization_membership.deleted"
-	OrganizationMembershipUpdated = "organization_membership.updated"
-	OrganizationMembershipRemoved = "organization_membership.removed" // Deprecated: use OrganizationMembershipDeleted instead
-	SessionCreated                = "session.created"
-	EmailVerificationCreated      = "email_verification.created"
-	InvitationCreated             = "invitation.created"
-	MagicAuthCreated              = "magic_auth.created"
-	PasswordResetCreated          = "password_reset.created"
-)
 
 // Client represents a client that performs Event requests to the WorkOS API.
 type Client struct {
@@ -77,21 +44,6 @@ func (c *Client) init() {
 	}
 }
 
-// Event contains data about a particular Event.
-type Event struct {
-	// The Event's unique identifier.
-	ID string `json:"id"`
-
-	// The type of Event.
-	Event string `json:"event"`
-
-	// The Event's data in raw encoded JSON.
-	Data json.RawMessage `json:"data"`
-
-	// The Event's created at date.
-	CreatedAt time.Time `json:"created_at"`
-}
-
 // ListEventsOpts contains the options to request provisioned Events.
 type ListEventsOpts struct {
 	// Filter to only return Events of particular types.
@@ -116,7 +68,7 @@ type ListEventsOpts struct {
 // Events.
 type ListEventsResponse struct {
 	// List of Events.
-	Data []Event `json:"data"`
+	Data []models.Event `json:"data"`
 
 	// Cursor pagination options.
 	ListMetadata common.ListMetadata `json:"list_metadata"`

@@ -7,6 +7,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"github.com/omi-lab/workos-go/v4/pkg/models"
 	"github.com/stretchr/testify/require"
 )
 
@@ -31,7 +32,7 @@ func TestAuditLogsCreateEvent(t *testing.T) {
 
 func TestAuditLogsCreateExport(t *testing.T) {
 	handlerFunc := func(w http.ResponseWriter, r *http.Request) {
-		body := AuditLogExport{}
+		body := models.AuditLogExport{}
 		payload, _ := json.Marshal(body)
 		w.Write(payload)
 		w.WriteHeader(http.StatusOK)
@@ -53,7 +54,7 @@ func TestAuditLogsCreateExport(t *testing.T) {
 
 func TestAuditLogsGetExport(t *testing.T) {
 	handlerFunc := func(w http.ResponseWriter, r *http.Request) {
-		body := AuditLogExport{}
+		body := models.AuditLogExport{}
 		payload, _ := json.Marshal(body)
 		w.Write(payload)
 		w.WriteHeader(http.StatusOK)

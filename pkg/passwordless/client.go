@@ -9,9 +9,10 @@ import (
 	"sync"
 	"time"
 
-	"github.com/workos/workos-go/v4/pkg/workos_errors"
+	"github.com/omi-lab/workos-go/v4/pkg/models"
+	"github.com/omi-lab/workos-go/v4/pkg/workos_errors"
 
-	"github.com/workos/workos-go/v4/internal/workos"
+	"github.com/omi-lab/workos-go/v4/internal/workos"
 )
 
 // Client represents a client that performs Passwordless requests to the WorkOS API.
@@ -52,29 +53,6 @@ func (c *Client) init() {
 	}
 }
 
-// PasswordlessSession contains data about a WorkOS Passwordless Session.
-type PasswordlessSession struct {
-	// The Passwordless Session's unique identifier.
-	ID string `json:"id"`
-
-	// The email of the user to authenticate.
-	Email string `json:"email"`
-
-	// ISO-8601 datetime at which the Passwordless Session link expires.
-	ExpiresAt string `json:"expires_at"`
-
-	// The link for the user to authenticate with.
-	Link string `json:"link"`
-}
-
-// CreateSessionType represents the type of a Passwordless Session.
-type PasswordlessSessionType string
-
-// Constants that enumerate the available PasswordlessSessionType values.
-const (
-	MagicLink PasswordlessSessionType = "MagicLink"
-)
-
 // CreateSessionOpts contains the options to create a Passowordless Session.
 type CreateSessionOpts struct {
 	// The email of the user to authenticate.
@@ -85,7 +63,7 @@ type CreateSessionOpts struct {
 	// The type of Passwordless Session to create.
 	//
 	// REQUIRED
-	Type PasswordlessSessionType `json:"type"`
+	Type models.PasswordlessSessionType `json:"type"`
 
 	// Optional The unique identifier for a WorkOS Connection.
 	Connection string `json:"connection"`
@@ -104,18 +82,18 @@ type CreateSessionOpts struct {
 }
 
 // CreateSession creates a a PasswordlessSession.
-func (c *Client) CreateSession(ctx context.Context, opts CreateSessionOpts) (PasswordlessSession, error) {
+func (c *Client) CreateSession(ctx context.Context, opts CreateSessionOpts) (models.PasswordlessSession, error) {
 	c.once.Do(c.init)
 
 	data, err := c.JSONEncode(opts)
 	if err != nil {
-		return PasswordlessSession{}, err
+		return models.PasswordlessSession{}, err
 	}
 
 	endpoint := fmt.Sprintf("%s/passwordless/sessions", c.Endpoint)
 	req, err := http.NewRequest(http.MethodPost, endpoint, bytes.NewBuffer(data))
 	if err != nil {
-		return PasswordlessSession{}, err
+		return models.PasswordlessSession{}, err
 	}
 	req = req.WithContext(ctx)
 	req.Header.Set("Content-Type", "application/json")
@@ -124,15 +102,15 @@ func (c *Client) CreateSession(ctx context.Context, opts CreateSessionOpts) (Pas
 
 	res, err := c.HTTPClient.Do(req)
 	if err != nil {
-		return PasswordlessSession{}, err
+		return models.PasswordlessSession{}, err
 	}
 	defer res.Body.Close()
 
 	if err = workos_errors.TryGetHTTPError(res); err != nil {
-		return PasswordlessSession{}, err
+		return models.PasswordlessSession{}, err
 	}
 
-	var body PasswordlessSession
+	var body models.PasswordlessSession
 	dec := json.NewDecoder(res.Body)
 	err = dec.Decode(&body)
 	return body, err

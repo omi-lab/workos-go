@@ -5,16 +5,18 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/google/go-querystring/query"
-	"github.com/workos/workos-go/v4/pkg/workos_errors"
 	"net/http"
 	"net/url"
 	"strings"
 	"sync"
 	"time"
 
-	"github.com/workos/workos-go/v4/internal/workos"
-	"github.com/workos/workos-go/v4/pkg/common"
+	"github.com/google/go-querystring/query"
+	"github.com/omi-lab/workos-go/v4/pkg/workos_errors"
+
+	"github.com/omi-lab/workos-go/v4/internal/workos"
+	"github.com/omi-lab/workos-go/v4/pkg/common"
+	"github.com/omi-lab/workos-go/v4/pkg/models"
 )
 
 // ResponseLimit is the default number of records to limit a response to.
@@ -27,45 +29,6 @@ type Order string
 const (
 	Asc  Order = "asc"
 	Desc Order = "desc"
-)
-
-// ConnectionType represents a connection type.
-type ConnectionType string
-
-// Constants that enumerate the available connection types.
-const (
-	ADFSSAML              ConnectionType = "ADFSSAML"
-	AdpOidc               ConnectionType = "AdpOidc"
-	Auth0SAML             ConnectionType = "Auth0SAML"
-	AzureSAML             ConnectionType = "AzureSAML"
-	CasSAML               ConnectionType = "CasSAML"
-	CloudflareSAML        ConnectionType = "CloudflareSAML"
-	ClassLinkSAML         ConnectionType = "ClassLinkSAML"
-	CyberArkSAML          ConnectionType = "CyberArkSAML"
-	DuoSAML               ConnectionType = "DuoSAML"
-	GenericOIDC           ConnectionType = "GenericOIDC"
-	GenericSAML           ConnectionType = "GenericSAML"
-	GoogleOAuth           ConnectionType = "GoogleOAuth"
-	GoogleSAML            ConnectionType = "GoogleSAML"
-	JumpCloudSAML         ConnectionType = "JumpCloudSAML"
-	KeycloakSAML          ConnectionType = "KeycloakSAML"
-	LastPassSAML          ConnectionType = "LastPassSAML"
-	LoginGovOidc          ConnectionType = "LoginGovOidc"
-	MagicLink             ConnectionType = "MagicLink"
-	MicrosoftOAuth        ConnectionType = "MicrosoftOAuth"
-	MiniOrangeSAML        ConnectionType = "MiniOrangeSAML"
-	NetIqSAML             ConnectionType = "NetIqSAML"
-	OktaSAML              ConnectionType = "OktaSAML"
-	OneLoginSAML          ConnectionType = "OneLoginSAML"
-	OracleSAML            ConnectionType = "OracleSAML"
-	PingFederateSAML      ConnectionType = "PingFederateSAML"
-	PingOneSAML           ConnectionType = "PingOneSAML"
-	RipplingSAML          ConnectionType = "RipplingSAML"
-	SalesforceSAML        ConnectionType = "SalesforceSAML"
-	ShibbolethSAML        ConnectionType = "ShibbolethSAML"
-	ShibbolethGenericSAML ConnectionType = "ShibbolethGenericSAML"
-	SimpleSamlPhpSAML     ConnectionType = "SimpleSamlPhpSAML"
-	VMwareSAML            ConnectionType = "VMwareSAML"
 )
 
 // Client represents a client that fetch SSO data from WorkOS API.
@@ -144,7 +107,7 @@ type GetAuthorizationURLOpts struct {
 
 	// Authentication service provider descriptor.
 	// Provider is currently only used when the connection type is GoogleOAuth.
-	Provider ConnectionType
+	Provider models.ConnectionType
 
 	// The unique identifier for a WorkOS Connection.
 	Connection string
@@ -236,7 +199,7 @@ type Profile struct {
 	ConnectionID string `json:"connection_id"`
 
 	// The connection type.
-	ConnectionType ConnectionType `json:"connection_type"`
+	ConnectionType models.ConnectionType `json:"connection_type"`
 
 	// The user email.
 	Email string `json:"email"`
@@ -344,67 +307,6 @@ func (c *Client) GetProfile(ctx context.Context, opts GetProfileOpts) (Profile, 
 	return body, err
 }
 
-// ConnectionDomain represents the domain records associated with a Connection.
-type ConnectionDomain struct {
-	// Connection Domain unique identifier.
-	ID string `json:"id"`
-
-	// Domain for a Connection record.
-	Domain string `json:"domain"`
-}
-
-// ConnectionStatus represents a Connection's linked status.
-//
-// Deprecated: Please use ConnectionState instead.
-type ConnectionStatus string
-
-// Constants that enumerate the available Connection's linked statuses.
-const (
-	Linked   ConnectionStatus = "linked"
-	Unlinked ConnectionStatus = "unlinked"
-)
-
-// ConnectionState indicates whether a Connection is able to authenticate users.
-type ConnectionState string
-
-// Constants that enumerate a Connection's possible states.
-const (
-	Draft      ConnectionState = "draft"
-	Active     ConnectionState = "active"
-	Inactive   ConnectionState = "inactive"
-	Validating ConnectionState = "validating"
-)
-
-// Connection represents a Connection record.
-type Connection struct {
-	// Connection unique identifier.
-	ID string `json:"id"`
-
-	// Connection linked status. Deprecated; use State instead.
-	Status ConnectionStatus `json:"status"`
-
-	// Connection linked state.
-	State ConnectionState `json:"state"`
-
-	// Connection name.
-	Name string `json:"name"`
-
-	// Connection provider type.
-	ConnectionType ConnectionType `json:"connection_type"`
-
-	// Organization ID.
-	OrganizationID string `json:"organization_id"`
-
-	// Domain records for the Connection.
-	Domains []ConnectionDomain `json:"domains"`
-
-	// The timestamp of when the Connection was created.
-	CreatedAt string `json:"created_at"`
-
-	// The timestamp of when the Connection was updated.
-	UpdatedAt string `json:"updated_at"`
-}
-
 // GetConnectionOpts contains the options to request details for a Connection.
 type GetConnectionOpts struct {
 	// Connection unique identifier.
@@ -415,7 +317,7 @@ type GetConnectionOpts struct {
 func (c *Client) GetConnection(
 	ctx context.Context,
 	opts GetConnectionOpts,
-) (Connection, error) {
+) (models.Connection, error) {
 	c.once.Do(c.init)
 
 	endpoint := fmt.Sprintf(
@@ -429,7 +331,7 @@ func (c *Client) GetConnection(
 		nil,
 	)
 	if err != nil {
-		return Connection{}, err
+		return models.Connection{}, err
 	}
 
 	req = req.WithContext(ctx)
@@ -439,15 +341,15 @@ func (c *Client) GetConnection(
 
 	res, err := c.HTTPClient.Do(req)
 	if err != nil {
-		return Connection{}, err
+		return models.Connection{}, err
 	}
 	defer res.Body.Close()
 
 	if err = workos_errors.TryGetHTTPError(res); err != nil {
-		return Connection{}, err
+		return models.Connection{}, err
 	}
 
-	var body Connection
+	var body models.Connection
 	dec := json.NewDecoder(res.Body)
 	err = dec.Decode(&body)
 	return body, err
@@ -456,7 +358,7 @@ func (c *Client) GetConnection(
 // ListConnectionsOpts contains the options to request a list of Connections.
 type ListConnectionsOpts struct {
 	// Authentication service provider descriptor. Can be empty.
-	ConnectionType ConnectionType `url:"connection_type,omitempty"`
+	ConnectionType models.ConnectionType `url:"connection_type,omitempty"`
 
 	// Organization ID of the Connection(s). Can be empty.
 	OrganizationID string `url:"organization_id,omitempty"`
@@ -481,7 +383,7 @@ type ListConnectionsOpts struct {
 // existing Connections.
 type ListConnectionsResponse struct {
 	// List of Connections
-	Data []Connection `json:"data"`
+	Data []models.Connection `json:"data"`
 
 	// Cursor pagination options.
 	ListMetadata common.ListMetadata `json:"listMetadata"`

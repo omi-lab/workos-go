@@ -1,4 +1,4 @@
-module github.com/workos/workos-go/v4
+module github.com/omi-lab/workos-go/v4
 
 go 1.13
 

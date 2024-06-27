@@ -11,10 +11,10 @@ import (
 	"time"
 
 	"github.com/google/go-querystring/query"
-	"github.com/workos/workos-go/v4/internal/workos"
-	"github.com/workos/workos-go/v4/pkg/common"
-	"github.com/workos/workos-go/v4/pkg/mfa"
-	"github.com/workos/workos-go/v4/pkg/workos_errors"
+	"github.com/omi-lab/workos-go/v4/internal/workos"
+	"github.com/omi-lab/workos-go/v4/pkg/common"
+	"github.com/omi-lab/workos-go/v4/pkg/models"
+	"github.com/omi-lab/workos-go/v4/pkg/workos_errors"
 )
 
 // ResponseLimit is the default number of records to limit a response to.
@@ -38,143 +38,6 @@ const (
 	Desc Order = "desc"
 )
 
-type EmailVerification struct {
-	ID        string `json:"id"`
-	UserId    string `json:"user_id"`
-	Email     string `json:"email"`
-	ExpiresAt string `json:"expires_at"`
-	Code      string `json:"code"`
-	CreatedAt string `json:"created_at"`
-	UpdatedAt string `json:"updated_at"`
-}
-
-// InvitationState represents the state of an Invitation.
-type InvitationState string
-
-// Constants that enumerate the state of an Invitation.
-const (
-	Pending  InvitationState = "pending"
-	Accepted InvitationState = "accepted"
-	Expired  InvitationState = "expired"
-	Revoked  InvitationState = "revoked"
-)
-
-type Invitation struct {
-	ID                  string          `json:"id"`
-	Email               string          `json:"email"`
-	State               InvitationState `json:"state"`
-	AcceptedAt          string          `json:"accepted_at,omitempty"`
-	RevokedAt           string          `json:"revoked_at,omitempty"`
-	Token               string          `json:"token"`
-	AcceptInvitationUrl string          `json:"accept_invitation_url"`
-	OrganizationID      string          `json:"organization_id,omitempty"`
-	InviterUserID       string          `json:"inviter_user_id,omitempty"`
-	ExpiresAt           string          `json:"expires_at"`
-	CreatedAt           string          `json:"created_at"`
-	UpdatedAt           string          `json:"updated_at"`
-}
-
-type MagicAuth struct {
-	ID        string `json:"id"`
-	UserId    string `json:"user_id"`
-	Email     string `json:"email"`
-	ExpiresAt string `json:"expires_at"`
-	Code      string `json:"code"`
-	CreatedAt string `json:"created_at"`
-	UpdatedAt string `json:"updated_at"`
-}
-
-type PasswordReset struct {
-	ID                 string `json:"id"`
-	UserId             string `json:"user_id"`
-	Email              string `json:"email"`
-	PasswordResetToken string `json:"password_reset_token"`
-	PasswordResetUrl   string `json:"password_reset_url"`
-	ExpiresAt          string `json:"expires_at"`
-	CreatedAt          string `json:"created_at"`
-}
-
-// Organization contains data about a particular Organization.
-type Organization struct {
-	// The Organization's unique identifier.
-	ID string `json:"id"`
-
-	// The Organization's name.
-	Name string `json:"name"`
-}
-
-// OrganizationMembershipStatus represents the status of an Organization Membership.
-type OrganizationMembershipStatus string
-
-// Constants that enumerate the status of an Organization Membership.
-const (
-	Active                        OrganizationMembershipStatus = "active"
-	Inactive                      OrganizationMembershipStatus = "inactive"
-	PendingOrganizationMembership OrganizationMembershipStatus = "pending"
-)
-
-// OrganizationMembership contains data about a particular OrganizationMembership.
-type OrganizationMembership struct {
-	// The Organization Membership's unique identifier.
-	ID string `json:"id"`
-
-	// The ID of the User.
-	UserID string `json:"user_id"`
-
-	// The ID of the Organization.
-	OrganizationID string `json:"organization_id"`
-
-	// The role given to this Organization Membership
-	Role common.RoleResponse `json:"role"`
-
-	// The Status of the Organization.
-	Status OrganizationMembershipStatus `json:"status"`
-
-	// CreatedAt is the timestamp of when the OrganizationMembership was created.
-	CreatedAt string `json:"created_at"`
-
-	// UpdatedAt is the timestamp of when the OrganizationMembership was updated.
-	UpdatedAt string `json:"updated_at"`
-}
-
-// User contains data about a particular User.
-type User struct {
-
-	// The User's unique identifier.
-	ID string `json:"id"`
-
-	// The User's first name.
-	FirstName string `json:"first_name"`
-
-	// The User's last name.
-	LastName string `json:"last_name"`
-
-	// The User's email.
-	Email string `json:"email"`
-
-	// The timestamp of when the User was created.
-	CreatedAt string `json:"created_at"`
-
-	// The timestamp of when the User was updated.
-	UpdatedAt string `json:"updated_at"`
-
-	// Whether the User email is verified.
-	EmailVerified bool `json:"email_verified"`
-
-	// A URL reference to an image representing the User.
-	ProfilePictureURL string `json:"profile_picture_url"`
-}
-
-// Represents User identities obtained from external identity providers.
-type Identity struct {
-	// The unique ID of the user in the external identity provider.
-	IdpID string `json:"idp_id"`
-	// The type of the identity.
-	Type string `json:"type"`
-	// The type of OAuth provider for the identity.
-	Provider string `json:"provider"`
-}
-
 // GetUserOpts contains the options to pass in order to get a user profile.
 type GetUserOpts struct {
 	// User unique identifier
@@ -184,7 +47,7 @@ type GetUserOpts struct {
 // ListUsersResponse contains the response from the ListUsers call.
 type ListUsersResponse struct {
 	// List of Users
-	Data []User `json:"data"`
+	Data []models.User `json:"data"`
 
 	// Cursor to paginate through the list of Users
 	ListMetadata common.ListMetadata `json:"list_metadata"`
@@ -311,7 +174,7 @@ type Impersonator struct {
 }
 
 type AuthenticateResponse struct {
-	User User `json:"user"`
+	User models.User `json:"user"`
 
 	// Which Organization the user is signing in to.
 	// If the user is a member of multiple organizations, this is the organization the user selected
@@ -384,7 +247,7 @@ type ResetPasswordOpts struct {
 }
 
 type UserResponse struct {
-	User User `json:"user"`
+	User models.User `json:"user"`
 }
 
 type GetMagicAuthOpts struct {
@@ -404,15 +267,15 @@ type SendMagicAuthCodeOpts struct {
 
 type EnrollAuthFactorOpts struct {
 	User       string
-	Type       mfa.FactorType `json:"type"`
-	TOTPIssuer string         `json:"totp_issuer,omitempty"`
-	TOTPUser   string         `json:"totp_user,omitempty"`
-	TOTPSecret string         `json:"totp_secret,omitempty"`
+	Type       models.FactorType `json:"type"`
+	TOTPIssuer string            `json:"totp_issuer,omitempty"`
+	TOTPUser   string            `json:"totp_user,omitempty"`
+	TOTPSecret string            `json:"totp_secret,omitempty"`
 }
 
 type EnrollAuthFactorResponse struct {
-	Factor    mfa.Factor    `json:"authentication_factor"`
-	Challenge mfa.Challenge `json:"authentication_challenge"`
+	Factor    models.Factor    `json:"authentication_factor"`
+	Challenge models.Challenge `json:"authentication_challenge"`
 }
 
 type ListAuthFactorsOpts struct {
@@ -420,7 +283,7 @@ type ListAuthFactorsOpts struct {
 }
 
 type ListAuthFactorsResponse struct {
-	Data []mfa.Factor `json:"data"`
+	Data []models.Factor `json:"data"`
 
 	ListMetadata common.ListMetadata `json:"list_metadata"`
 }
@@ -438,7 +301,7 @@ type ListOrganizationMembershipsOpts struct {
 	UserID string `url:"user_id,omitempty"`
 
 	// Filter memberships by status
-	Statuses []OrganizationMembershipStatus `url:"statuses,omitempty"`
+	Statuses []models.OrganizationMembershipStatus `url:"statuses,omitempty"`
 
 	// Maximum number of records to return.
 	Limit int `url:"limit"`
@@ -456,7 +319,7 @@ type ListOrganizationMembershipsOpts struct {
 }
 
 type ListOrganizationMembershipsResponse struct {
-	Data []OrganizationMembership `json:"data"`
+	Data []models.OrganizationMembership `json:"data"`
 
 	ListMetadata common.ListMetadata `json:"list_metadata"`
 }
@@ -505,7 +368,7 @@ type FindInvitationByTokenOpts struct {
 // ListInvitations contains the response from the ListInvitations call.
 type ListInvitationsResponse struct {
 	// List of Invitations
-	Data []Invitation `json:"data"`
+	Data []models.Invitation `json:"data"`
 
 	// Cursor to paginate through the list of Invitations
 	ListMetadata common.ListMetadata `json:"listMetadata"`
@@ -546,7 +409,7 @@ type RevokeSessionOpts struct {
 }
 
 type ListIdentitiesResult struct {
-	Identities []Identity `json:"identities"`
+	Identities []models.Identity `json:"identities"`
 }
 
 type ListIdentitiesOpts struct {
@@ -563,7 +426,7 @@ func NewClient(apiKey string) *Client {
 }
 
 // GetUser returns details of an existing user
-func (c *Client) GetUser(ctx context.Context, opts GetUserOpts) (User, error) {
+func (c *Client) GetUser(ctx context.Context, opts GetUserOpts) (models.User, error) {
 	endpoint := fmt.Sprintf(
 		"%s/user_management/users/%s",
 		c.Endpoint,
@@ -576,7 +439,7 @@ func (c *Client) GetUser(ctx context.Context, opts GetUserOpts) (User, error) {
 		nil,
 	)
 	if err != nil {
-		return User{}, err
+		return models.User{}, err
 	}
 	req = req.WithContext(ctx)
 	req.Header.Set("User-Agent", "workos-go/"+workos.Version)
@@ -585,15 +448,15 @@ func (c *Client) GetUser(ctx context.Context, opts GetUserOpts) (User, error) {
 
 	res, err := c.HTTPClient.Do(req)
 	if err != nil {
-		return User{}, err
+		return models.User{}, err
 	}
 	defer res.Body.Close()
 
 	if err = workos_errors.TryGetHTTPError(res); err != nil {
-		return User{}, err
+		return models.User{}, err
 	}
 
-	var body User
+	var body models.User
 	dec := json.NewDecoder(res.Body)
 	err = dec.Decode(&body)
 
@@ -654,7 +517,7 @@ func (c *Client) ListUsers(ctx context.Context, opts ListUsersOpts) (ListUsersRe
 
 // CreateUser create a new user with email password authentication.
 // Only unmanaged users can be created directly using the User Management API.
-func (c *Client) CreateUser(ctx context.Context, opts CreateUserOpts) (User, error) {
+func (c *Client) CreateUser(ctx context.Context, opts CreateUserOpts) (models.User, error) {
 	endpoint := fmt.Sprintf(
 		"%s/user_management/users",
 		c.Endpoint,
@@ -662,7 +525,7 @@ func (c *Client) CreateUser(ctx context.Context, opts CreateUserOpts) (User, err
 
 	data, err := c.JSONEncode(opts)
 	if err != nil {
-		return User{}, err
+		return models.User{}, err
 	}
 
 	req, err := http.NewRequest(
@@ -671,7 +534,7 @@ func (c *Client) CreateUser(ctx context.Context, opts CreateUserOpts) (User, err
 		bytes.NewBuffer(data),
 	)
 	if err != nil {
-		return User{}, err
+		return models.User{}, err
 	}
 	req = req.WithContext(ctx)
 	req.Header.Set("User-Agent", "workos-go/"+workos.Version)
@@ -680,15 +543,15 @@ func (c *Client) CreateUser(ctx context.Context, opts CreateUserOpts) (User, err
 
 	res, err := c.HTTPClient.Do(req)
 	if err != nil {
-		return User{}, err
+		return models.User{}, err
 	}
 	defer res.Body.Close()
 
 	if err = workos_errors.TryGetHTTPError(res); err != nil {
-		return User{}, err
+		return models.User{}, err
 	}
 
-	var body User
+	var body models.User
 	dec := json.NewDecoder(res.Body)
 	err = dec.Decode(&body)
 
@@ -696,7 +559,7 @@ func (c *Client) CreateUser(ctx context.Context, opts CreateUserOpts) (User, err
 }
 
 // UpdateUser updates User attributes.
-func (c *Client) UpdateUser(ctx context.Context, opts UpdateUserOpts) (User, error) {
+func (c *Client) UpdateUser(ctx context.Context, opts UpdateUserOpts) (models.User, error) {
 	endpoint := fmt.Sprintf(
 		"%s/user_management/users/%s",
 		c.Endpoint,
@@ -705,7 +568,7 @@ func (c *Client) UpdateUser(ctx context.Context, opts UpdateUserOpts) (User, err
 
 	data, err := c.JSONEncode(opts)
 	if err != nil {
-		return User{}, err
+		return models.User{}, err
 	}
 
 	req, err := http.NewRequest(
@@ -714,7 +577,7 @@ func (c *Client) UpdateUser(ctx context.Context, opts UpdateUserOpts) (User, err
 		bytes.NewBuffer(data),
 	)
 	if err != nil {
-		return User{}, err
+		return models.User{}, err
 	}
 	req = req.WithContext(ctx)
 	req.Header.Set("User-Agent", "workos-go/"+workos.Version)
@@ -723,15 +586,15 @@ func (c *Client) UpdateUser(ctx context.Context, opts UpdateUserOpts) (User, err
 
 	res, err := c.HTTPClient.Do(req)
 	if err != nil {
-		return User{}, err
+		return models.User{}, err
 	}
 	defer res.Body.Close()
 
 	if err = workos_errors.TryGetHTTPError(res); err != nil {
-		return User{}, err
+		return models.User{}, err
 	}
 
-	var body User
+	var body models.User
 	dec := json.NewDecoder(res.Body)
 	err = dec.Decode(&body)
 
@@ -1266,12 +1129,12 @@ func (c *Client) AuthenticateWithOrganizationSelection(ctx context.Context, opts
 }
 
 // GetEmailVerification fetches an EmailVerification object by its ID.
-func (c *Client) GetEmailVerification(ctx context.Context, opts GetEmailVerificationOpts) (EmailVerification, error) {
+func (c *Client) GetEmailVerification(ctx context.Context, opts GetEmailVerificationOpts) (models.EmailVerification, error) {
 	endpoint := fmt.Sprintf("%s/user_management/email_verification/%s", c.Endpoint, opts.EmailVerification)
 
 	req, err := http.NewRequest(http.MethodGet, endpoint, nil)
 	if err != nil {
-		return EmailVerification{}, err
+		return models.EmailVerification{}, err
 	}
 	req = req.WithContext(ctx)
 	req.Header.Set("User-Agent", "workos-go/"+workos.Version)
@@ -1280,15 +1143,15 @@ func (c *Client) GetEmailVerification(ctx context.Context, opts GetEmailVerifica
 
 	res, err := c.HTTPClient.Do(req)
 	if err != nil {
-		return EmailVerification{}, err
+		return models.EmailVerification{}, err
 	}
 	defer res.Body.Close()
 
 	if err = workos_errors.TryGetHTTPError(res); err != nil {
-		return EmailVerification{}, err
+		return models.EmailVerification{}, err
 	}
 
-	var body EmailVerification
+	var body models.EmailVerification
 	dec := json.NewDecoder(res.Body)
 	err = dec.Decode(&body)
 
@@ -1376,12 +1239,12 @@ func (c *Client) VerifyEmail(ctx context.Context, opts VerifyEmailOpts) (UserRes
 }
 
 // GetPasswordReset fetches a PasswordReset object by its ID.
-func (c *Client) GetPasswordReset(ctx context.Context, opts GetPasswordResetOpts) (PasswordReset, error) {
+func (c *Client) GetPasswordReset(ctx context.Context, opts GetPasswordResetOpts) (models.PasswordReset, error) {
 	endpoint := fmt.Sprintf("%s/user_management/password_reset/%s", c.Endpoint, opts.PasswordReset)
 
 	req, err := http.NewRequest(http.MethodGet, endpoint, nil)
 	if err != nil {
-		return PasswordReset{}, err
+		return models.PasswordReset{}, err
 	}
 	req = req.WithContext(ctx)
 	req.Header.Set("User-Agent", "workos-go/"+workos.Version)
@@ -1390,15 +1253,15 @@ func (c *Client) GetPasswordReset(ctx context.Context, opts GetPasswordResetOpts
 
 	res, err := c.HTTPClient.Do(req)
 	if err != nil {
-		return PasswordReset{}, err
+		return models.PasswordReset{}, err
 	}
 	defer res.Body.Close()
 
 	if err = workos_errors.TryGetHTTPError(res); err != nil {
-		return PasswordReset{}, err
+		return models.PasswordReset{}, err
 	}
 
-	var body PasswordReset
+	var body models.PasswordReset
 	dec := json.NewDecoder(res.Body)
 	err = dec.Decode(&body)
 
@@ -1406,12 +1269,12 @@ func (c *Client) GetPasswordReset(ctx context.Context, opts GetPasswordResetOpts
 }
 
 // CreatePasswordReset creates a PasswordReset token that can be emailed to the user.
-func (c *Client) CreatePasswordReset(ctx context.Context, opts CreatePasswordResetOpts) (PasswordReset, error) {
+func (c *Client) CreatePasswordReset(ctx context.Context, opts CreatePasswordResetOpts) (models.PasswordReset, error) {
 	endpoint := fmt.Sprintf("%s/user_management/password_reset", c.Endpoint)
 
 	data, err := json.Marshal(opts)
 	if err != nil {
-		return PasswordReset{}, err
+		return models.PasswordReset{}, err
 	}
 
 	req, err := http.NewRequest(
@@ -1420,7 +1283,7 @@ func (c *Client) CreatePasswordReset(ctx context.Context, opts CreatePasswordRes
 		bytes.NewBuffer(data),
 	)
 	if err != nil {
-		return PasswordReset{}, err
+		return models.PasswordReset{}, err
 	}
 	req = req.WithContext(ctx)
 	req.Header.Set("User-Agent", "workos-go/"+workos.Version)
@@ -1429,15 +1292,15 @@ func (c *Client) CreatePasswordReset(ctx context.Context, opts CreatePasswordRes
 
 	res, err := c.HTTPClient.Do(req)
 	if err != nil {
-		return PasswordReset{}, err
+		return models.PasswordReset{}, err
 	}
 	defer res.Body.Close()
 
 	if err = workos_errors.TryGetHTTPError(res); err != nil {
-		return PasswordReset{}, err
+		return models.PasswordReset{}, err
 	}
 
-	var body PasswordReset
+	var body models.PasswordReset
 	dec := json.NewDecoder(res.Body)
 	err = dec.Decode(&body)
 
@@ -1521,12 +1384,12 @@ func (c *Client) ResetPassword(ctx context.Context, opts ResetPasswordOpts) (Use
 }
 
 // GetMagicAuth fetches a Magic Auth object by its ID.
-func (c *Client) GetMagicAuth(ctx context.Context, opts GetMagicAuthOpts) (MagicAuth, error) {
+func (c *Client) GetMagicAuth(ctx context.Context, opts GetMagicAuthOpts) (models.MagicAuth, error) {
 	endpoint := fmt.Sprintf("%s/user_management/magic_auth/%s", c.Endpoint, opts.MagicAuth)
 
 	req, err := http.NewRequest(http.MethodGet, endpoint, nil)
 	if err != nil {
-		return MagicAuth{}, err
+		return models.MagicAuth{}, err
 	}
 	req = req.WithContext(ctx)
 	req.Header.Set("User-Agent", "workos-go/"+workos.Version)
@@ -1535,15 +1398,15 @@ func (c *Client) GetMagicAuth(ctx context.Context, opts GetMagicAuthOpts) (Magic
 
 	res, err := c.HTTPClient.Do(req)
 	if err != nil {
-		return MagicAuth{}, err
+		return models.MagicAuth{}, err
 	}
 	defer res.Body.Close()
 
 	if err = workos_errors.TryGetHTTPError(res); err != nil {
-		return MagicAuth{}, err
+		return models.MagicAuth{}, err
 	}
 
-	var body MagicAuth
+	var body models.MagicAuth
 	dec := json.NewDecoder(res.Body)
 	err = dec.Decode(&body)
 
@@ -1551,12 +1414,12 @@ func (c *Client) GetMagicAuth(ctx context.Context, opts GetMagicAuthOpts) (Magic
 }
 
 // CreateMagicAuth creates a one-time Magic Auth code that can be emailed to the user.
-func (c *Client) CreateMagicAuth(ctx context.Context, opts CreateMagicAuthOpts) (MagicAuth, error) {
+func (c *Client) CreateMagicAuth(ctx context.Context, opts CreateMagicAuthOpts) (models.MagicAuth, error) {
 	endpoint := fmt.Sprintf("%s/user_management/magic_auth", c.Endpoint)
 
 	data, err := json.Marshal(opts)
 	if err != nil {
-		return MagicAuth{}, err
+		return models.MagicAuth{}, err
 	}
 
 	req, err := http.NewRequest(
@@ -1565,7 +1428,7 @@ func (c *Client) CreateMagicAuth(ctx context.Context, opts CreateMagicAuthOpts) 
 		bytes.NewBuffer(data),
 	)
 	if err != nil {
-		return MagicAuth{}, err
+		return models.MagicAuth{}, err
 	}
 	req = req.WithContext(ctx)
 	req.Header.Set("User-Agent", "workos-go/"+workos.Version)
@@ -1574,15 +1437,15 @@ func (c *Client) CreateMagicAuth(ctx context.Context, opts CreateMagicAuthOpts) 
 
 	res, err := c.HTTPClient.Do(req)
 	if err != nil {
-		return MagicAuth{}, err
+		return models.MagicAuth{}, err
 	}
 	defer res.Body.Close()
 
 	if err = workos_errors.TryGetHTTPError(res); err != nil {
-		return MagicAuth{}, err
+		return models.MagicAuth{}, err
 	}
 
-	var body MagicAuth
+	var body models.MagicAuth
 	dec := json.NewDecoder(res.Body)
 	err = dec.Decode(&body)
 
@@ -1705,7 +1568,7 @@ func (c *Client) ListAuthFactors(ctx context.Context, opts ListAuthFactorsOpts) 
 }
 
 // GetOrganizationMembership returns details of an existing Organization Membership
-func (c *Client) GetOrganizationMembership(ctx context.Context, opts GetOrganizationMembershipOpts) (OrganizationMembership, error) {
+func (c *Client) GetOrganizationMembership(ctx context.Context, opts GetOrganizationMembershipOpts) (models.OrganizationMembership, error) {
 	endpoint := fmt.Sprintf(
 		"%s/user_management/organization_memberships/%s",
 		c.Endpoint,
@@ -1718,7 +1581,7 @@ func (c *Client) GetOrganizationMembership(ctx context.Context, opts GetOrganiza
 		nil,
 	)
 	if err != nil {
-		return OrganizationMembership{}, err
+		return models.OrganizationMembership{}, err
 	}
 	req = req.WithContext(ctx)
 	req.Header.Set("User-Agent", "workos-go/"+workos.Version)
@@ -1727,15 +1590,15 @@ func (c *Client) GetOrganizationMembership(ctx context.Context, opts GetOrganiza
 
 	res, err := c.HTTPClient.Do(req)
 	if err != nil {
-		return OrganizationMembership{}, err
+		return models.OrganizationMembership{}, err
 	}
 	defer res.Body.Close()
 
 	if err = workos_errors.TryGetHTTPError(res); err != nil {
-		return OrganizationMembership{}, err
+		return models.OrganizationMembership{}, err
 	}
 
-	var body OrganizationMembership
+	var body models.OrganizationMembership
 	dec := json.NewDecoder(res.Body)
 	err = dec.Decode(&body)
 
@@ -1795,7 +1658,7 @@ func (c *Client) ListOrganizationMemberships(ctx context.Context, opts ListOrgan
 }
 
 // Create an Organization Membership. Adds a User to an Organization.
-func (c *Client) CreateOrganizationMembership(ctx context.Context, opts CreateOrganizationMembershipOpts) (OrganizationMembership, error) {
+func (c *Client) CreateOrganizationMembership(ctx context.Context, opts CreateOrganizationMembershipOpts) (models.OrganizationMembership, error) {
 	endpoint := fmt.Sprintf(
 		"%s/user_management/organization_memberships",
 		c.Endpoint,
@@ -1803,7 +1666,7 @@ func (c *Client) CreateOrganizationMembership(ctx context.Context, opts CreateOr
 
 	data, err := c.JSONEncode(opts)
 	if err != nil {
-		return OrganizationMembership{}, err
+		return models.OrganizationMembership{}, err
 	}
 
 	req, err := http.NewRequest(
@@ -1812,7 +1675,7 @@ func (c *Client) CreateOrganizationMembership(ctx context.Context, opts CreateOr
 		bytes.NewBuffer(data),
 	)
 	if err != nil {
-		return OrganizationMembership{}, err
+		return models.OrganizationMembership{}, err
 	}
 	req = req.WithContext(ctx)
 	req.Header.Set("User-Agent", "workos-go/"+workos.Version)
@@ -1821,15 +1684,15 @@ func (c *Client) CreateOrganizationMembership(ctx context.Context, opts CreateOr
 
 	res, err := c.HTTPClient.Do(req)
 	if err != nil {
-		return OrganizationMembership{}, err
+		return models.OrganizationMembership{}, err
 	}
 	defer res.Body.Close()
 
 	if err = workos_errors.TryGetHTTPError(res); err != nil {
-		return OrganizationMembership{}, err
+		return models.OrganizationMembership{}, err
 	}
 
-	var body OrganizationMembership
+	var body models.OrganizationMembership
 	dec := json.NewDecoder(res.Body)
 	err = dec.Decode(&body)
 
@@ -1871,7 +1734,7 @@ func (c *Client) UpdateOrganizationMembership(
 	ctx context.Context,
 	organizationMembershipId string,
 	opts UpdateOrganizationMembershipOpts,
-) (OrganizationMembership, error) {
+) (models.OrganizationMembership, error) {
 	endpoint := fmt.Sprintf(
 		"%s/user_management/organization_memberships/%s",
 		c.Endpoint,
@@ -1880,7 +1743,7 @@ func (c *Client) UpdateOrganizationMembership(
 
 	data, err := c.JSONEncode(opts)
 	if err != nil {
-		return OrganizationMembership{}, err
+		return models.OrganizationMembership{}, err
 	}
 
 	req, err := http.NewRequest(
@@ -1889,7 +1752,7 @@ func (c *Client) UpdateOrganizationMembership(
 		bytes.NewBuffer(data),
 	)
 	if err != nil {
-		return OrganizationMembership{}, err
+		return models.OrganizationMembership{}, err
 	}
 	req = req.WithContext(ctx)
 	req.Header.Set("User-Agent", "workos-go/"+workos.Version)
@@ -1898,15 +1761,15 @@ func (c *Client) UpdateOrganizationMembership(
 
 	res, err := c.HTTPClient.Do(req)
 	if err != nil {
-		return OrganizationMembership{}, err
+		return models.OrganizationMembership{}, err
 	}
 	defer res.Body.Close()
 
 	if err = workos_errors.TryGetHTTPError(res); err != nil {
-		return OrganizationMembership{}, err
+		return models.OrganizationMembership{}, err
 	}
 
-	var body OrganizationMembership
+	var body models.OrganizationMembership
 	dec := json.NewDecoder(res.Body)
 	err = dec.Decode(&body)
 
@@ -1914,7 +1777,7 @@ func (c *Client) UpdateOrganizationMembership(
 }
 
 // DeactivateOrganizationMembership deactivates an Organization Membership
-func (c *Client) DeactivateOrganizationMembership(ctx context.Context, opts DeactivateOrganizationMembershipOpts) (OrganizationMembership, error) {
+func (c *Client) DeactivateOrganizationMembership(ctx context.Context, opts DeactivateOrganizationMembershipOpts) (models.OrganizationMembership, error) {
 	endpoint := fmt.Sprintf(
 		"%s/user_management/organization_memberships/%s/deactivate",
 		c.Endpoint,
@@ -1927,7 +1790,7 @@ func (c *Client) DeactivateOrganizationMembership(ctx context.Context, opts Deac
 		nil,
 	)
 	if err != nil {
-		return OrganizationMembership{}, err
+		return models.OrganizationMembership{}, err
 	}
 	req = req.WithContext(ctx)
 	req.Header.Set("User-Agent", "workos-go/"+workos.Version)
@@ -1936,15 +1799,15 @@ func (c *Client) DeactivateOrganizationMembership(ctx context.Context, opts Deac
 
 	res, err := c.HTTPClient.Do(req)
 	if err != nil {
-		return OrganizationMembership{}, err
+		return models.OrganizationMembership{}, err
 	}
 	defer res.Body.Close()
 
 	if err = workos_errors.TryGetHTTPError(res); err != nil {
-		return OrganizationMembership{}, err
+		return models.OrganizationMembership{}, err
 	}
 
-	var body OrganizationMembership
+	var body models.OrganizationMembership
 	dec := json.NewDecoder(res.Body)
 	err = dec.Decode(&body)
 
@@ -1952,7 +1815,7 @@ func (c *Client) DeactivateOrganizationMembership(ctx context.Context, opts Deac
 }
 
 // ReactivateOrganizationMembership reactivates an Organization Membership
-func (c *Client) ReactivateOrganizationMembership(ctx context.Context, opts ReactivateOrganizationMembershipOpts) (OrganizationMembership, error) {
+func (c *Client) ReactivateOrganizationMembership(ctx context.Context, opts ReactivateOrganizationMembershipOpts) (models.OrganizationMembership, error) {
 	endpoint := fmt.Sprintf(
 		"%s/user_management/organization_memberships/%s/reactivate",
 		c.Endpoint,
@@ -1965,7 +1828,7 @@ func (c *Client) ReactivateOrganizationMembership(ctx context.Context, opts Reac
 		nil,
 	)
 	if err != nil {
-		return OrganizationMembership{}, err
+		return models.OrganizationMembership{}, err
 	}
 	req = req.WithContext(ctx)
 	req.Header.Set("User-Agent", "workos-go/"+workos.Version)
@@ -1974,15 +1837,15 @@ func (c *Client) ReactivateOrganizationMembership(ctx context.Context, opts Reac
 
 	res, err := c.HTTPClient.Do(req)
 	if err != nil {
-		return OrganizationMembership{}, err
+		return models.OrganizationMembership{}, err
 	}
 	defer res.Body.Close()
 
 	if err = workos_errors.TryGetHTTPError(res); err != nil {
-		return OrganizationMembership{}, err
+		return models.OrganizationMembership{}, err
 	}
 
-	var body OrganizationMembership
+	var body models.OrganizationMembership
 	dec := json.NewDecoder(res.Body)
 	err = dec.Decode(&body)
 
@@ -1990,12 +1853,12 @@ func (c *Client) ReactivateOrganizationMembership(ctx context.Context, opts Reac
 }
 
 // GetInvitation fetches an Invitation by its ID.
-func (c *Client) GetInvitation(ctx context.Context, opts GetInvitationOpts) (Invitation, error) {
+func (c *Client) GetInvitation(ctx context.Context, opts GetInvitationOpts) (models.Invitation, error) {
 	endpoint := fmt.Sprintf("%s/user_management/invitations/%s", c.Endpoint, opts.Invitation)
 
 	req, err := http.NewRequest(http.MethodGet, endpoint, nil)
 	if err != nil {
-		return Invitation{}, err
+		return models.Invitation{}, err
 	}
 	req = req.WithContext(ctx)
 	req.Header.Set("User-Agent", "workos-go/"+workos.Version)
@@ -2004,15 +1867,15 @@ func (c *Client) GetInvitation(ctx context.Context, opts GetInvitationOpts) (Inv
 
 	res, err := c.HTTPClient.Do(req)
 	if err != nil {
-		return Invitation{}, err
+		return models.Invitation{}, err
 	}
 	defer res.Body.Close()
 
 	if err = workos_errors.TryGetHTTPError(res); err != nil {
-		return Invitation{}, err
+		return models.Invitation{}, err
 	}
 
-	var body Invitation
+	var body models.Invitation
 	dec := json.NewDecoder(res.Body)
 	err = dec.Decode(&body)
 
@@ -2020,12 +1883,12 @@ func (c *Client) GetInvitation(ctx context.Context, opts GetInvitationOpts) (Inv
 }
 
 // FindInvitationByToken fetches an Invitation by its token.
-func (c *Client) FindInvitationByToken(ctx context.Context, opts FindInvitationByTokenOpts) (Invitation, error) {
+func (c *Client) FindInvitationByToken(ctx context.Context, opts FindInvitationByTokenOpts) (models.Invitation, error) {
 	endpoint := fmt.Sprintf("%s/user_management/invitations/by_token/%s", c.Endpoint, opts.InvitationToken)
 
 	req, err := http.NewRequest(http.MethodGet, endpoint, nil)
 	if err != nil {
-		return Invitation{}, err
+		return models.Invitation{}, err
 	}
 	req = req.WithContext(ctx)
 	req.Header.Set("User-Agent", "workos-go/"+workos.Version)
@@ -2034,15 +1897,15 @@ func (c *Client) FindInvitationByToken(ctx context.Context, opts FindInvitationB
 
 	res, err := c.HTTPClient.Do(req)
 	if err != nil {
-		return Invitation{}, err
+		return models.Invitation{}, err
 	}
 	defer res.Body.Close()
 
 	if err = workos_errors.TryGetHTTPError(res); err != nil {
-		return Invitation{}, err
+		return models.Invitation{}, err
 	}
 
-	var body Invitation
+	var body models.Invitation
 	dec := json.NewDecoder(res.Body)
 	err = dec.Decode(&body)
 
@@ -2101,12 +1964,12 @@ func (c *Client) ListInvitations(ctx context.Context, opts ListInvitationsOpts) 
 	return body, err
 }
 
-func (c *Client) SendInvitation(ctx context.Context, opts SendInvitationOpts) (Invitation, error) {
+func (c *Client) SendInvitation(ctx context.Context, opts SendInvitationOpts) (models.Invitation, error) {
 	endpoint := fmt.Sprintf("%s/user_management/invitations", c.Endpoint)
 
 	data, err := json.Marshal(opts)
 	if err != nil {
-		return Invitation{}, err
+		return models.Invitation{}, err
 	}
 
 	req, err := http.NewRequest(
@@ -2115,7 +1978,7 @@ func (c *Client) SendInvitation(ctx context.Context, opts SendInvitationOpts) (I
 		bytes.NewBuffer(data),
 	)
 	if err != nil {
-		return Invitation{}, err
+		return models.Invitation{}, err
 	}
 	req = req.WithContext(ctx)
 	req.Header.Set("User-Agent", "workos-go/"+workos.Version)
@@ -2124,27 +1987,27 @@ func (c *Client) SendInvitation(ctx context.Context, opts SendInvitationOpts) (I
 
 	res, err := c.HTTPClient.Do(req)
 	if err != nil {
-		return Invitation{}, err
+		return models.Invitation{}, err
 	}
 	defer res.Body.Close()
 
 	if err = workos_errors.TryGetHTTPError(res); err != nil {
-		return Invitation{}, err
+		return models.Invitation{}, err
 	}
 
-	var body Invitation
+	var body models.Invitation
 	dec := json.NewDecoder(res.Body)
 	err = dec.Decode(&body)
 
 	return body, err
 }
 
-func (c *Client) RevokeInvitation(ctx context.Context, opts RevokeInvitationOpts) (Invitation, error) {
+func (c *Client) RevokeInvitation(ctx context.Context, opts RevokeInvitationOpts) (models.Invitation, error) {
 	endpoint := fmt.Sprintf("%s/user_management/invitations/%s/revoke", c.Endpoint, opts.Invitation)
 
 	req, err := http.NewRequest(http.MethodPost, endpoint, nil)
 	if err != nil {
-		return Invitation{}, err
+		return models.Invitation{}, err
 	}
 	req = req.WithContext(ctx)
 	req.Header.Set("User-Agent", "workos-go/"+workos.Version)
@@ -2153,15 +2016,15 @@ func (c *Client) RevokeInvitation(ctx context.Context, opts RevokeInvitationOpts
 
 	res, err := c.HTTPClient.Do(req)
 	if err != nil {
-		return Invitation{}, err
+		return models.Invitation{}, err
 	}
 	defer res.Body.Close()
 
 	if err = workos_errors.TryGetHTTPError(res); err != nil {
-		return Invitation{}, err
+		return models.Invitation{}, err
 	}
 
-	var body Invitation
+	var body models.Invitation
 	dec := json.NewDecoder(res.Body)
 	err = dec.Decode(&body)
 

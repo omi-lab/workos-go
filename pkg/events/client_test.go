@@ -9,8 +9,9 @@ import (
 	"testing"
 	"time"
 
+	"github.com/omi-lab/workos-go/v4/pkg/common"
+	"github.com/omi-lab/workos-go/v4/pkg/models"
 	"github.com/stretchr/testify/require"
-	"github.com/workos/workos-go/v4/pkg/common"
 )
 
 func TestListEvents(t *testing.T) {
@@ -24,7 +25,7 @@ func TestListEvents(t *testing.T) {
 		}
 
 		expectedResponse := ListEventsResponse{
-			Data: []Event{
+			Data: []models.Event{
 				{
 					ID:    "event_abcd1234",
 					Event: "dsync.user.created",
@@ -65,7 +66,7 @@ func TestListEvents(t *testing.T) {
 		}
 
 		expectedResponse := ListEventsResponse{
-			Data: []Event{
+			Data: []models.Event{
 				{
 					ID:    "event_abcd1234",
 					Event: "dsync.user.created",
@@ -98,7 +99,7 @@ func TestListEvents(t *testing.T) {
 		}
 
 		expectedResponse := ListEventsResponse{
-			Data: []Event{
+			Data: []models.Event{
 				{
 					ID:    "event_abcd1234",
 					Event: "dsync.user.created",
@@ -133,7 +134,7 @@ func ListEventsTestHandler(w http.ResponseWriter, r *http.Request) {
 		ListEventsResponse
 	}{
 		ListEventsResponse: ListEventsResponse{
-			Data: []Event{
+			Data: []models.Event{
 				{
 					ID:    "event_abcd1234",
 					Event: "dsync.user.created",

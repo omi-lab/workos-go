@@ -3,6 +3,8 @@ package organizations
 
 import (
 	"context"
+
+	"github.com/omi-lab/workos-go/v4/pkg/models"
 )
 
 // DefaultClient is the client used by SetAPIKey and Organizations functions.
@@ -21,7 +23,7 @@ func SetAPIKey(apiKey string) {
 func GetOrganization(
 	ctx context.Context,
 	opts GetOrganizationOpts,
-) (Organization, error) {
+) (models.Organization, error) {
 	return DefaultClient.GetOrganization(ctx, opts)
 }
 
@@ -37,7 +39,7 @@ func ListOrganizations(
 func CreateOrganization(
 	ctx context.Context,
 	opts CreateOrganizationOpts,
-) (Organization, error) {
+) (models.Organization, error) {
 	return DefaultClient.CreateOrganization(ctx, opts)
 }
 
@@ -45,7 +47,7 @@ func CreateOrganization(
 func UpdateOrganization(
 	ctx context.Context,
 	opts UpdateOrganizationOpts,
-) (Organization, error) {
+) (models.Organization, error) {
 	return DefaultClient.UpdateOrganization(ctx, opts)
 }
 
