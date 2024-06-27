@@ -1,11 +1,9 @@
-package workos_errors_test
+package workos_errors
 
 import (
 	"fmt"
 	"net/http"
 	"testing"
-
-	"github.com/omi-lab/workos-go/v4/pkg/workos_errors"
 )
 
 func TestIsBadRequest(t *testing.T) {
@@ -19,14 +17,14 @@ func TestIsBadRequest(t *testing.T) {
 	}{
 		{
 			name: "bad request",
-			args: args{err: workos_errors.HTTPError{
+			args: args{err: HTTPError{
 				Code: http.StatusBadRequest,
 			}},
 			want: true,
 		},
 		{
 			name: "internal server error",
-			args: args{err: workos_errors.HTTPError{
+			args: args{err: HTTPError{
 				Code: http.StatusInternalServerError,
 			}},
 			want: false,
@@ -44,8 +42,57 @@ func TestIsBadRequest(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := workos_errors.IsBadRequest(tt.args.err); got != tt.want {
+			if got := IsBadRequest(tt.args.err); got != tt.want {
 				t.Errorf("IsBadRequest() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestIsAuthenticationError(t *testing.T) {
+	type args struct {
+		err error
+	}
+	tests := []struct {
+		name string
+		args args
+		want bool
+	}{
+		{
+			name: "email verification required",
+			args: args{err: ErrorEmailVerificationRequired{}},
+			want: true,
+		},
+		{
+			name: "mfa enrollment",
+			args: args{err: ErrorMFAEnrollment{}},
+			want: true,
+		},
+		{
+			name: "mfa challenge",
+			args: args{err: ErrorMFAChallenge{}},
+			want: true,
+		},
+		{
+			name: "organization selection required",
+			args: args{err: ErrorOrganizationSelectionRequired{}},
+			want: true,
+		},
+		{
+			name: "sso required",
+			args: args{err: ErrorSSORequired{}},
+			want: true,
+		},
+		{
+			name: "organization authentication methods required",
+			args: args{err: ErrorOrganizationAuthenticationMethodsRequired{}},
+			want: true,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := IsAuthenticationError(tt.args.err); got != tt.want {
+				t.Errorf("IsAuthenticationError() = %v, want %v", got, tt.want)
 			}
 		})
 	}
