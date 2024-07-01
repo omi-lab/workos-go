@@ -117,6 +117,8 @@ func getJsonErrorMessage(b []byte, statusCode int, status string, requestID stri
 		e = ErrorOrganizationSelectionRequired{}
 	case HTTPErrorCodeInvalidCredentials:
 		e = ErrorInvalidCredentials{}
+	case HTTPErrorCodeUserCreationError:
+		e = ErrorUserCreationError{}
 	}
 
 	switch payload.Error {

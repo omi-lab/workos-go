@@ -95,3 +95,11 @@ type ErrorInvalidCredentials struct {
 func (e ErrorInvalidCredentials) Error() string {
 	return e.Message
 }
+
+type ErrorUserCreationError struct {
+	Message string `json:"error"`
+}
+
+func (e ErrorUserCreationError) Error() string {
+	return e.Message
+}

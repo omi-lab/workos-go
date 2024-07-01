@@ -8,4 +8,5 @@ const (
 	HTTPErrorCodeSSORequired                               = "sso_required"
 	HTTPErrorCodeOrganizationAuthenticationMethodsRequired = "organization_authentication_methods_required"
 	HTTPErrorCodeInvalidCredentials                        = "invalid_credentials"
+	HTTPErrorCodeUserCreationError                         = "user_creation_error"
 )
