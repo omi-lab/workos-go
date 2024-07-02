@@ -65,10 +65,10 @@ type ErrorOrganizationSelectionRequired struct {
 	Code                       string `json:"code"`
 	Message                    string `json:"message"`
 	PendingAuthenticationToken string `json:"pending_authentication_token"`
-	Organization               []struct {
+	Organizations              []struct {
 		ID   string `json:"id"`
 		Name string `json:"name"`
-	} `json:"organization"`
+	} `json:"organizations"`
 	User models.User `json:"user"`
 }
 
