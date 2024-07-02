@@ -108,24 +108,24 @@ func getJsonErrorMessage(b []byte, statusCode int, status string, requestID stri
 	var e error
 	switch payload.Code {
 	case HTTPErrorCodeEmailVerificationRequired:
-		e = ErrorEmailVerificationRequired{}
+		e = &ErrorEmailVerificationRequired{}
 	case HTTPErrorCodeMFAEnrollment:
-		e = ErrorMFAEnrollment{}
+		e = &ErrorMFAEnrollment{}
 	case HTTPErrorCodeMFAChallenge:
-		e = ErrorMFAChallenge{}
+		e = &ErrorMFAChallenge{}
 	case HTTPErrorCodeOrganizationSelectionRequired:
-		e = ErrorOrganizationSelectionRequired{}
+		e = &ErrorOrganizationSelectionRequired{}
 	case HTTPErrorCodeInvalidCredentials:
-		e = ErrorInvalidCredentials{}
+		e = &ErrorInvalidCredentials{}
 	case HTTPErrorCodeUserCreationError:
-		e = ErrorUserCreationError{}
+		e = &ErrorUserCreationError{}
 	}
 
 	switch payload.Error {
 	case HTTPErrorCodeSSORequired:
-		e = ErrorSSORequired{}
+		e = &ErrorSSORequired{}
 	case HTTPErrorCodeOrganizationAuthenticationMethodsRequired:
-		e = ErrorOrganizationAuthenticationMethodsRequired{}
+		e = &ErrorOrganizationAuthenticationMethodsRequired{}
 	}
 
 	if e != nil {

@@ -11,11 +11,9 @@ func IsBadRequest(err error) bool {
 }
 
 func IsAuthenticationError(err error) bool {
-	return errors.As(err, &ErrorEmailVerificationRequired{}) ||
-		errors.As(err, &ErrorMFAChallenge{}) ||
-		errors.As(err, &ErrorMFAEnrollment{}) ||
-		errors.As(err, &ErrorOrganizationAuthenticationMethodsRequired{}) ||
-		errors.As(err, &ErrorOrganizationSelectionRequired{}) ||
-		errors.As(err, &ErrorSSORequired{}) ||
-		errors.As(err, &ErrorInvalidCredentials{})
+	switch err.(type) {
+	case *ErrorEmailVerificationRequired, *ErrorMFAChallenge, *ErrorMFAEnrollment, *ErrorOrganizationAuthenticationMethodsRequired, *ErrorOrganizationSelectionRequired, *ErrorSSORequired, *ErrorInvalidCredentials:
+		return true
+	}
+	return false
 }
