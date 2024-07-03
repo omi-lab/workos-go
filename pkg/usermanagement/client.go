@@ -173,6 +173,19 @@ type Impersonator struct {
 	Reason string `json:"reason"`
 }
 
+type AuthenticationMethod = string
+
+const (
+	AuthenticationMethodSSO            AuthenticationMethod = "SSO"
+	AuthenticationMethodPassword       AuthenticationMethod = "Password"
+	AuthenticationMethodAppleOAuth     AuthenticationMethod = "AppleOAuth"
+	AuthenticationMethodGitHubOAuth    AuthenticationMethod = "GitHubOAuth"
+	AuthenticationMethodGoogleOAuth    AuthenticationMethod = "GoogleOAuth"
+	AuthenticationMethodMicrosoftOAuth AuthenticationMethod = "MicrosoftOAuth"
+	AuthenticationMethodMagicAuth      AuthenticationMethod = "MagicAuth"
+	AuthenticationMethodImpersonation  AuthenticationMethod = "Impersonation"
+)
+
 type AuthenticateResponse struct {
 	User models.User `json:"user"`
 
@@ -192,6 +205,9 @@ type AuthenticateResponse struct {
 
 	// Present if the authenticated user is being impersonated.
 	Impersonator *Impersonator `json:"impersonator"`
+
+	// The authentication method that was used used.
+	AuthenticationMethod AuthenticationMethod `json:"authentication_method"`
 }
 
 type RefreshAuthenticationResponse struct {
