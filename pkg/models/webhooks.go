@@ -10,6 +10,7 @@ const (
 	WebhookEventNameConnectionActivated      WebhookEventName = "connection.activated"
 	WebhookEventNameConnectionDeactivated    WebhookEventName = "connection.deactivated"
 	WebhookEventNameConnectionDeleted        WebhookEventName = "connection.deleted"
+	WebhookEventNameInvitationCreated        WebhookEventName = "invitations.created"
 )
 
 type WebhookEvent struct {
@@ -90,5 +91,22 @@ type WebhookEventConnectionDeleted struct {
 		Status         ConnectionStatus `json:"status"`
 		ExpiresAt      time.Time        `json:"expires_at"`
 		CreatedAt      time.Time        `json:"created_at"`
+	}
+}
+
+type WebhookEventInvitationCreated struct {
+	WebhookEvent
+	Data struct {
+		Object         string          `json:"object"`
+		ID             string          `json:"id"`
+		Email          string          `json:"email"`
+		State          InvitationState `json:"state"`
+		OrganizationID string          `json:"organization_id"`
+		InviterUserID  string          `json:"inviter_user_id"`
+		AcceptedAt     *time.Time      `json:"accepted_at"`
+		RevokedAt      *time.Time      `json:"revoked_at"`
+		ExpiresAt      time.Time       `json:"expires_at"`
+		CreatedAt      time.Time       `json:"created_at"`
+		UpdatedAt      time.Time       `json:"updated_at"`
 	}
 }
