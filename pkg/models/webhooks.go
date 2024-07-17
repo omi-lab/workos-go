@@ -50,7 +50,7 @@ type WebhookEventConnectionDomain struct {
 	Domain string `json:"domain"`
 }
 
-type WebhookEventConnectionActivated struct {
+type WebhookEventConnection struct {
 	WebhookEvent
 	Data struct {
 		Object         string                         `json:"object"`
@@ -62,35 +62,6 @@ type WebhookEventConnectionActivated struct {
 		Domains        []WebhookEventConnectionDomain `json:"domains"`
 		ExpiresAt      time.Time                      `json:"expires_at"`
 		CreatedAt      time.Time                      `json:"created_at"`
-	}
-}
-
-type WebhookEventConnectionDeactivated struct {
-	WebhookEvent
-	Data struct {
-		Object         string                         `json:"object"`
-		ID             string                         `json:"id"`
-		OrganizationID string                         `json:"organization_id"`
-		ExternalKey    string                         `json:"external_key"`
-		State          ConnectionState                `json:"state"`
-		Status         ConnectionStatus               `json:"status"`
-		Domains        []WebhookEventConnectionDomain `json:"domains"`
-		ExpiresAt      time.Time                      `json:"expires_at"`
-		CreatedAt      time.Time                      `json:"created_at"`
-	}
-}
-
-type WebhookEventConnectionDeleted struct {
-	WebhookEvent
-	Data struct {
-		Object         string           `json:"object"`
-		ID             string           `json:"id"`
-		OrganizationID string           `json:"organization_id"`
-		ExternalKey    string           `json:"external_key"`
-		State          ConnectionState  `json:"state"`
-		Status         ConnectionStatus `json:"status"`
-		ExpiresAt      time.Time        `json:"expires_at"`
-		CreatedAt      time.Time        `json:"created_at"`
 	}
 }
 
