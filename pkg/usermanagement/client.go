@@ -106,11 +106,12 @@ type DeleteUserOpts struct {
 }
 
 type AuthenticateWithPasswordOpts struct {
-	ClientID  string `json:"client_id"`
-	Email     string `json:"email"`
-	Password  string `json:"password"`
-	IPAddress string `json:"ip_address,omitempty"`
-	UserAgent string `json:"user_agent,omitempty"`
+	ClientID        string `json:"client_id"`
+	Email           string `json:"email"`
+	Password        string `json:"password"`
+	IPAddress       string `json:"ip_address,omitempty"`
+	UserAgent       string `json:"user_agent,omitempty"`
+	InvitationToken string `json:"invitation_token,omitempty"`
 }
 
 type AuthenticateWithCodeOpts struct {
