@@ -10,7 +10,7 @@ const (
 	WebhookEventNameConnectionActivated      WebhookEventName = "connection.activated"
 	WebhookEventNameConnectionDeactivated    WebhookEventName = "connection.deactivated"
 	WebhookEventNameConnectionDeleted        WebhookEventName = "connection.deleted"
-	WebhookEventNameInvitationCreated        WebhookEventName = "invitations.created"
+	WebhookEventNameInvitationCreated        WebhookEventName = "invitation.created"
 )
 
 type WebhookEvent struct {
