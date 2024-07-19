@@ -3,6 +3,7 @@ package models
 import (
 	"encoding/json"
 	"errors"
+	"time"
 
 	"github.com/omi-lab/workos-go/v4/pkg/common"
 )
@@ -82,10 +83,10 @@ type DirectoryUser struct {
 	CustomAttributes json.RawMessage `json:"custom_attributes"`
 
 	// The User's created at date
-	CreatedAt string `json:"created_at"`
+	CreatedAt time.Time `json:"created_at"`
 
 	// The User's updated at date
-	UpdatedAt string `json:"updated_at"`
+	UpdatedAt time.Time `json:"updated_at"`
 
 	// The role given to this Directory User
 	Role common.RoleResponse `json:"role,omitempty"`
@@ -119,10 +120,10 @@ type DirectoryGroup struct {
 	OrganizationID string `json:"organization_id"`
 
 	// The Group's created at date.
-	CreatedAt string `json:"created_at"`
+	CreatedAt time.Time `json:"created_at"`
 
 	// The Group's updated at date.
-	UpdatedAt string `json:"updated_at"`
+	UpdatedAt time.Time `json:"updated_at"`
 
 	// The Group's raw attributes in raw encoded JSON.
 	RawAttributes json.RawMessage `json:"raw_attributes"`
@@ -191,8 +192,8 @@ type Directory struct {
 	OrganizationID string `json:"organization_id"`
 
 	// The timestamp of when the Directory was created.
-	CreatedAt string `json:"created_at"`
+	CreatedAt time.Time `json:"created_at"`
 
 	// The timestamp of when the Directory was updated.
-	UpdatedAt string `json:"updated_at"`
+	UpdatedAt time.Time `json:"updated_at"`
 }

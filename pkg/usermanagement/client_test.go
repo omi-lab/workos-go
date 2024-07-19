@@ -39,8 +39,8 @@ func TestGetUser(t *testing.T) {
 				FirstName:     "Marcelina",
 				LastName:      "Davis",
 				EmailVerified: true,
-				CreatedAt:     "2021-06-25T19:07:33.155Z",
-				UpdatedAt:     "2021-06-25T19:07:33.155Z",
+				CreatedAt:     time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+				UpdatedAt:     time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 			},
 		},
 		{
@@ -56,8 +56,8 @@ func TestGetUser(t *testing.T) {
 				LastName:          "Davis",
 				EmailVerified:     true,
 				ProfilePictureURL: "https://workoscdn.com/images/v1/123abc",
-				CreatedAt:         "2021-06-25T19:07:33.155Z",
-				UpdatedAt:         "2021-06-25T19:07:33.155Z",
+				CreatedAt:         time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+				UpdatedAt:         time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 			},
 		},
 	}
@@ -99,8 +99,8 @@ func getUserTestHandler(w http.ResponseWriter, r *http.Request) {
 			FirstName:     "Marcelina",
 			LastName:      "Davis",
 			EmailVerified: true,
-			CreatedAt:     "2021-06-25T19:07:33.155Z",
-			UpdatedAt:     "2021-06-25T19:07:33.155Z",
+			CreatedAt:     time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+			UpdatedAt:     time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 		})
 	}
 
@@ -112,8 +112,8 @@ func getUserTestHandler(w http.ResponseWriter, r *http.Request) {
 			LastName:          "Davis",
 			EmailVerified:     true,
 			ProfilePictureURL: "https://workoscdn.com/images/v1/123abc",
-			CreatedAt:         "2021-06-25T19:07:33.155Z",
-			UpdatedAt:         "2021-06-25T19:07:33.155Z",
+			CreatedAt:         time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+			UpdatedAt:         time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 		})
 	}
 
@@ -144,8 +144,8 @@ func TestListUsers(t *testing.T) {
 					FirstName:     "Marcelina",
 					LastName:      "Davis",
 					EmailVerified: true,
-					CreatedAt:     "2021-06-25T19:07:33.155Z",
-					UpdatedAt:     "2021-06-25T19:07:33.155Z",
+					CreatedAt:     time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+					UpdatedAt:     time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 				},
 			},
 			ListMetadata: common.ListMetadata{
@@ -176,8 +176,8 @@ func TestListUsers(t *testing.T) {
 					FirstName:     "Marcelina",
 					LastName:      "Davis",
 					EmailVerified: true,
-					CreatedAt:     "2021-06-25T19:07:33.155Z",
-					UpdatedAt:     "2021-06-25T19:07:33.155Z",
+					CreatedAt:     time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+					UpdatedAt:     time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 				},
 			},
 			ListMetadata: common.ListMetadata{
@@ -215,8 +215,8 @@ func TestListUsers(t *testing.T) {
 					FirstName:     "Marcelina",
 					LastName:      "Davis",
 					EmailVerified: true,
-					CreatedAt:     "2021-06-25T19:07:33.155Z",
-					UpdatedAt:     "2021-06-25T19:07:33.155Z",
+					CreatedAt:     time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+					UpdatedAt:     time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 				},
 			},
 			ListMetadata: common.ListMetadata{
@@ -254,8 +254,8 @@ func listUsersTestHandler(w http.ResponseWriter, r *http.Request) {
 					FirstName:     "Marcelina",
 					LastName:      "Davis",
 					EmailVerified: true,
-					CreatedAt:     "2021-06-25T19:07:33.155Z",
-					UpdatedAt:     "2021-06-25T19:07:33.155Z",
+					CreatedAt:     time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+					UpdatedAt:     time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 				},
 			},
 			ListMetadata: common.ListMetadata{
@@ -301,8 +301,8 @@ func TestCreateUser(t *testing.T) {
 				FirstName:     "Marcelina",
 				LastName:      "Davis",
 				EmailVerified: true,
-				CreatedAt:     "2021-06-25T19:07:33.155Z",
-				UpdatedAt:     "2021-06-25T19:07:33.155Z",
+				CreatedAt:     time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+				UpdatedAt:     time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 			},
 		},
 	}
@@ -344,8 +344,8 @@ func createUserTestHandler(w http.ResponseWriter, r *http.Request) {
 			FirstName:     "Marcelina",
 			LastName:      "Davis",
 			EmailVerified: true,
-			CreatedAt:     "2021-06-25T19:07:33.155Z",
-			UpdatedAt:     "2021-06-25T19:07:33.155Z",
+			CreatedAt:     time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+			UpdatedAt:     time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 		})
 	}
 
@@ -386,8 +386,8 @@ func TestUpdateUser(t *testing.T) {
 				FirstName:     "Marcelina",
 				LastName:      "Davis",
 				EmailVerified: true,
-				CreatedAt:     "2021-06-25T19:07:33.155Z",
-				UpdatedAt:     "2021-06-25T19:07:33.155Z",
+				CreatedAt:     time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+				UpdatedAt:     time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 			},
 		},
 	}
@@ -429,8 +429,8 @@ func updateUserTestHandler(w http.ResponseWriter, r *http.Request) {
 			FirstName:     "Marcelina",
 			LastName:      "Davis",
 			EmailVerified: true,
-			CreatedAt:     "2021-06-25T19:07:33.155Z",
-			UpdatedAt:     "2021-06-25T19:07:33.155Z",
+			CreatedAt:     time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+			UpdatedAt:     time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 		})
 	}
 
@@ -1212,10 +1212,10 @@ func TestGetEmailVerification(t *testing.T) {
 				ID:        "email_verification_123",
 				UserId:    "user_123",
 				Email:     "marcelina@foo-corp.com",
-				ExpiresAt: "2021-06-25T19:07:33.155Z",
+				ExpiresAt: time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 				Code:      "123456",
-				CreatedAt: "2021-06-25T19:07:33.155Z",
-				UpdatedAt: "2021-06-25T19:07:33.155Z",
+				CreatedAt: time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+				UpdatedAt: time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 			},
 		},
 	}
@@ -1255,10 +1255,10 @@ func getEmailVerificationTestHandler(w http.ResponseWriter, r *http.Request) {
 			ID:        "email_verification_123",
 			UserId:    "user_123",
 			Email:     "marcelina@foo-corp.com",
-			ExpiresAt: "2021-06-25T19:07:33.155Z",
+			ExpiresAt: time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 			Code:      "123456",
-			CreatedAt: "2021-06-25T19:07:33.155Z",
-			UpdatedAt: "2021-06-25T19:07:33.155Z",
+			CreatedAt: time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+			UpdatedAt: time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 		}
 		body, err = json.Marshal(emailVerification)
 	}
@@ -1298,8 +1298,8 @@ func TestSendVerificationEmail(t *testing.T) {
 					FirstName:     "Marcelina",
 					LastName:      "Davis",
 					EmailVerified: true,
-					CreatedAt:     "2021-06-25T19:07:33.155Z",
-					UpdatedAt:     "2021-06-25T19:07:33.155Z",
+					CreatedAt:     time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+					UpdatedAt:     time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 				},
 			},
 		},
@@ -1344,8 +1344,8 @@ func sendVerificationEmailTestHandler(w http.ResponseWriter, r *http.Request) {
 				FirstName:     "Marcelina",
 				LastName:      "Davis",
 				EmailVerified: true,
-				CreatedAt:     "2021-06-25T19:07:33.155Z",
-				UpdatedAt:     "2021-06-25T19:07:33.155Z",
+				CreatedAt:     time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+				UpdatedAt:     time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 			},
 		})
 	}
@@ -1465,8 +1465,8 @@ func TestGetPasswordReset(t *testing.T) {
 				Email:              "marcelina@foo-corp.com",
 				PasswordResetToken: "myToken",
 				PasswordResetUrl:   "https://your-app.com/reset-password?token=myToken",
-				ExpiresAt:          "2021-06-25T19:07:33.155Z",
-				CreatedAt:          "2021-06-25T19:07:33.155Z",
+				ExpiresAt:          time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+				CreatedAt:          time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 			},
 		},
 	}
@@ -1508,8 +1508,8 @@ func getPasswordResetTestHandler(w http.ResponseWriter, r *http.Request) {
 			Email:              "marcelina@foo-corp.com",
 			PasswordResetToken: "myToken",
 			PasswordResetUrl:   "https://your-app.com/reset-password?token=myToken",
-			ExpiresAt:          "2021-06-25T19:07:33.155Z",
-			CreatedAt:          "2021-06-25T19:07:33.155Z",
+			ExpiresAt:          time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+			CreatedAt:          time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 		}
 		body, err = json.Marshal(passwordReset)
 	}
@@ -1548,8 +1548,8 @@ func TestCreatePasswordReset(t *testing.T) {
 				Email:              "marcelina@foo-corp.com",
 				PasswordResetToken: "myToken",
 				PasswordResetUrl:   "https://your-app.com/reset-password?token=myToken",
-				ExpiresAt:          "2021-06-25T19:07:33.155Z",
-				CreatedAt:          "2021-06-25T19:07:33.155Z",
+				ExpiresAt:          time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+				CreatedAt:          time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 			},
 		},
 	}
@@ -1592,8 +1592,8 @@ func CreatePasswordResetTestHandler(w http.ResponseWriter, r *http.Request) {
 				Email:              "marcelina@foo-corp.com",
 				PasswordResetToken: "myToken",
 				PasswordResetUrl:   "https://your-app.com/reset-password?token=myToken",
-				ExpiresAt:          "2021-06-25T19:07:33.155Z",
-				CreatedAt:          "2021-06-25T19:07:33.155Z",
+				ExpiresAt:          time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+				CreatedAt:          time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 			})
 	}
 
@@ -1762,10 +1762,10 @@ func TestGetMagicAuth(t *testing.T) {
 				ID:        "magic_auth_123",
 				UserId:    "user_123",
 				Email:     "marcelina@foo-corp.com",
-				ExpiresAt: "2021-06-25T19:07:33.155Z",
+				ExpiresAt: time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 				Code:      "123456",
-				CreatedAt: "2021-06-25T19:07:33.155Z",
-				UpdatedAt: "2021-06-25T19:07:33.155Z",
+				CreatedAt: time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+				UpdatedAt: time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 			},
 		},
 	}
@@ -1805,10 +1805,10 @@ func getMagicAuthTestHandler(w http.ResponseWriter, r *http.Request) {
 			ID:        "magic_auth_123",
 			UserId:    "user_123",
 			Email:     "marcelina@foo-corp.com",
-			ExpiresAt: "2021-06-25T19:07:33.155Z",
+			ExpiresAt: time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 			Code:      "123456",
-			CreatedAt: "2021-06-25T19:07:33.155Z",
-			UpdatedAt: "2021-06-25T19:07:33.155Z",
+			CreatedAt: time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+			UpdatedAt: time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 		}
 		body, err = json.Marshal(magicAuth)
 	}
@@ -1845,10 +1845,10 @@ func TestCreateMagicAuth(t *testing.T) {
 				ID:        "magic_auth_123",
 				UserId:    "user_123",
 				Email:     "marcelina@foo-corp.com",
-				ExpiresAt: "2021-06-25T19:07:33.155Z",
+				ExpiresAt: time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 				Code:      "123456",
-				CreatedAt: "2021-06-25T19:07:33.155Z",
-				UpdatedAt: "2021-06-25T19:07:33.155Z",
+				CreatedAt: time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+				UpdatedAt: time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 			},
 		},
 	}
@@ -1889,10 +1889,10 @@ func CreateMagicAuthTestHandler(w http.ResponseWriter, r *http.Request) {
 				ID:        "magic_auth_123",
 				UserId:    "user_123",
 				Email:     "marcelina@foo-corp.com",
-				ExpiresAt: "2021-06-25T19:07:33.155Z",
+				ExpiresAt: time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 				Code:      "123456",
-				CreatedAt: "2021-06-25T19:07:33.155Z",
-				UpdatedAt: "2021-06-25T19:07:33.155Z",
+				CreatedAt: time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+				UpdatedAt: time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 			})
 	}
 
@@ -1977,16 +1977,16 @@ func TestEnrollAuthFactor(t *testing.T) {
 			expected: EnrollAuthFactorResponse{
 				Factor: models.Factor{
 					ID:        "auth_factor_test123",
-					CreatedAt: "2022-02-17T22:39:26.616Z",
-					UpdatedAt: "2022-02-17T22:39:26.616Z",
+					CreatedAt: time.Date(2022, 2, 17, 22, 39, 26, 616, time.UTC),
+					UpdatedAt: time.Date(2022, 2, 17, 22, 39, 26, 616, time.UTC),
 					Type:      "generic_otp",
 				},
 				Challenge: models.Challenge{
 					ID:        "auth_challenge_test123",
-					CreatedAt: "2022-02-17T22:39:26.616Z",
-					UpdatedAt: "2022-02-17T22:39:26.616Z",
+					CreatedAt: time.Date(2022, 2, 17, 22, 39, 26, 616, time.UTC),
+					UpdatedAt: time.Date(2022, 2, 17, 22, 39, 26, 616, time.UTC),
 					FactorID:  "auth_factor_test123",
-					ExpiresAt: "2022-02-17T22:39:26.616Z",
+					ExpiresAt: time.Date(2022, 2, 17, 22, 39, 26, 616, time.UTC),
 				},
 			},
 		},
@@ -2026,16 +2026,16 @@ func enrollAuthFactorTestHandler(w http.ResponseWriter, r *http.Request) {
 		body, err = json.Marshal(EnrollAuthFactorResponse{
 			Factor: models.Factor{
 				ID:        "auth_factor_test123",
-				CreatedAt: "2022-02-17T22:39:26.616Z",
-				UpdatedAt: "2022-02-17T22:39:26.616Z",
+				CreatedAt: time.Date(2022, 2, 17, 22, 39, 26, 616, time.UTC),
+				UpdatedAt: time.Date(2022, 2, 17, 22, 39, 26, 616, time.UTC),
 				Type:      "generic_otp",
 			},
 			Challenge: models.Challenge{
 				ID:        "auth_challenge_test123",
-				CreatedAt: "2022-02-17T22:39:26.616Z",
-				UpdatedAt: "2022-02-17T22:39:26.616Z",
+				CreatedAt: time.Date(2022, 2, 17, 22, 39, 26, 616, time.UTC),
+				UpdatedAt: time.Date(2022, 2, 17, 22, 39, 26, 616, time.UTC),
 				FactorID:  "auth_factor_test123",
-				ExpiresAt: "2022-02-17T22:39:26.616Z",
+				ExpiresAt: time.Date(2022, 2, 17, 22, 39, 26, 616, time.UTC),
 			},
 		})
 	}
@@ -2072,14 +2072,14 @@ func TestListAuthFactor(t *testing.T) {
 				Data: []models.Factor{
 					{
 						ID:        "auth_factor_test123",
-						CreatedAt: "2022-02-17T22:39:26.616Z",
-						UpdatedAt: "2022-02-17T22:39:26.616Z",
+						CreatedAt: time.Date(2022, 2, 17, 22, 39, 26, 616, time.UTC),
+						UpdatedAt: time.Date(2022, 2, 17, 22, 39, 26, 616, time.UTC),
 						Type:      "generic_otp",
 					},
 					{
 						ID:        "auth_factor_test234",
-						CreatedAt: "2022-02-17T22:39:26.616Z",
-						UpdatedAt: "2022-02-17T22:39:26.616Z",
+						CreatedAt: time.Date(2022, 2, 17, 22, 39, 26, 616, time.UTC),
+						UpdatedAt: time.Date(2022, 2, 17, 22, 39, 26, 616, time.UTC),
 						Type:      "generic_otp",
 					},
 				},
@@ -2122,14 +2122,14 @@ func listAuthFactorsTestHandler(w http.ResponseWriter, r *http.Request) {
 			Data: []models.Factor{
 				{
 					ID:        "auth_factor_test123",
-					CreatedAt: "2022-02-17T22:39:26.616Z",
-					UpdatedAt: "2022-02-17T22:39:26.616Z",
+					CreatedAt: time.Date(2022, 2, 17, 22, 39, 26, 616, time.UTC),
+					UpdatedAt: time.Date(2022, 2, 17, 22, 39, 26, 616, time.UTC),
 					Type:      "generic_otp",
 				},
 				{
 					ID:        "auth_factor_test234",
-					CreatedAt: "2022-02-17T22:39:26.616Z",
-					UpdatedAt: "2022-02-17T22:39:26.616Z",
+					CreatedAt: time.Date(2022, 2, 17, 22, 39, 26, 616, time.UTC),
+					UpdatedAt: time.Date(2022, 2, 17, 22, 39, 26, 616, time.UTC),
 					Type:      "generic_otp",
 				},
 			},
@@ -2169,8 +2169,8 @@ func TestGetOrganizationMembership(t *testing.T) {
 				UserID:         "user_01E4ZCR3C5A4QZ2Z2JQXGKZJ9E",
 				OrganizationID: "org_01E4ZCR3C56J083X43JQXF3JK5",
 				Status:         models.OrganizationMembershipStatusActive,
-				CreatedAt:      "2021-06-25T19:07:33.155Z",
-				UpdatedAt:      "2021-06-25T19:07:33.155Z",
+				CreatedAt:      time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+				UpdatedAt:      time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 			},
 		},
 	}
@@ -2211,8 +2211,8 @@ func getOrganizationMembershipTestHandler(w http.ResponseWriter, r *http.Request
 			UserID:         "user_01E4ZCR3C5A4QZ2Z2JQXGKZJ9E",
 			OrganizationID: "org_01E4ZCR3C56J083X43JQXF3JK5",
 			Status:         models.OrganizationMembershipStatusActive,
-			CreatedAt:      "2021-06-25T19:07:33.155Z",
-			UpdatedAt:      "2021-06-25T19:07:33.155Z",
+			CreatedAt:      time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+			UpdatedAt:      time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 		})
 	}
 
@@ -2242,8 +2242,8 @@ func TestListOrganizationMemberships(t *testing.T) {
 					UserID:         "user_01E4ZCR3C5A4QZ2Z2JQXGKZJ9E",
 					OrganizationID: "org_01E4ZCR3C56J083X43JQXF3JK5",
 					Status:         models.OrganizationMembershipStatusActive,
-					CreatedAt:      "2021-06-25T19:07:33.155Z",
-					UpdatedAt:      "2021-06-25T19:07:33.155Z",
+					CreatedAt:      time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+					UpdatedAt:      time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 				},
 			},
 			ListMetadata: common.ListMetadata{
@@ -2276,8 +2276,8 @@ func TestListOrganizationMemberships(t *testing.T) {
 					UserID:         "user_01E4ZCR3C5A4QZ2Z2JQXGKZJ9E",
 					OrganizationID: "org_01E4ZCR3C56J083X43JQXF3JK5",
 					Status:         models.OrganizationMembershipStatusActive,
-					CreatedAt:      "2021-06-25T19:07:33.155Z",
-					UpdatedAt:      "2021-06-25T19:07:33.155Z",
+					CreatedAt:      time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+					UpdatedAt:      time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 				},
 			},
 			ListMetadata: common.ListMetadata{
@@ -2310,8 +2310,8 @@ func TestListOrganizationMemberships(t *testing.T) {
 					UserID:         "user_01E4ZCR3C5A4QZ2Z2JQXGKZJ9E",
 					OrganizationID: "org_01E4ZCR3C56J083X43JQXF3JK5",
 					Status:         models.OrganizationMembershipStatusActive,
-					CreatedAt:      "2021-06-25T19:07:33.155Z",
-					UpdatedAt:      "2021-06-25T19:07:33.155Z",
+					CreatedAt:      time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+					UpdatedAt:      time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 				},
 			},
 			ListMetadata: common.ListMetadata{
@@ -2355,8 +2355,8 @@ func listOrganizationMembershipsTestHandler(w http.ResponseWriter, r *http.Reque
 						UserID:         "user_01E4ZCR3C5A4QZ2Z2JQXGKZJ9E",
 						OrganizationID: "org_01E4ZCR3C56J083X43JQXF3JK5",
 						Status:         models.OrganizationMembershipStatusActive,
-						CreatedAt:      "2021-06-25T19:07:33.155Z",
-						UpdatedAt:      "2021-06-25T19:07:33.155Z",
+						CreatedAt:      time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+						UpdatedAt:      time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 					},
 				},
 				ListMetadata: common.ListMetadata{
@@ -2402,8 +2402,8 @@ func TestCreateOrganizationMembership(t *testing.T) {
 				Role: common.RoleResponse{
 					Slug: "member",
 				},
-				CreatedAt: "2021-06-25T19:07:33.155Z",
-				UpdatedAt: "2021-06-25T19:07:33.155Z",
+				CreatedAt: time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+				UpdatedAt: time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 			},
 		},
 	}
@@ -2447,8 +2447,8 @@ func createOrganizationMembershipTestHandler(w http.ResponseWriter, r *http.Requ
 			Role: common.RoleResponse{
 				Slug: "member",
 			},
-			CreatedAt: "2021-06-25T19:07:33.155Z",
-			UpdatedAt: "2021-06-25T19:07:33.155Z",
+			CreatedAt: time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+			UpdatedAt: time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 		})
 	}
 
@@ -2490,8 +2490,8 @@ func TestUpdateOrganizationMembership(t *testing.T) {
 				Role: common.RoleResponse{
 					Slug: "member",
 				},
-				CreatedAt: "2021-06-25T19:07:33.155Z",
-				UpdatedAt: "2021-06-25T19:07:33.155Z",
+				CreatedAt: time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+				UpdatedAt: time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 			},
 		},
 	}
@@ -2535,8 +2535,8 @@ func updateOrganizationMembershipTestHandler(w http.ResponseWriter, r *http.Requ
 			Role: common.RoleResponse{
 				Slug: "member",
 			},
-			CreatedAt: "2021-06-25T19:07:33.155Z",
-			UpdatedAt: "2021-06-25T19:07:33.155Z",
+			CreatedAt: time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+			UpdatedAt: time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 		})
 	}
 
@@ -2639,8 +2639,8 @@ func TestDeactivateOrganizationMembership(t *testing.T) {
 				UserID:         "user_01E4ZCR3C5A4QZ2Z2JQXGKZJ9E",
 				OrganizationID: "org_01E4ZCR3C56J083X43JQXF3JK5",
 				Status:         models.OrganizationMembershipStatusInactive,
-				CreatedAt:      "2021-06-25T19:07:33.155Z",
-				UpdatedAt:      "2021-06-25T19:07:33.155Z",
+				CreatedAt:      time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+				UpdatedAt:      time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 			},
 		},
 	}
@@ -2681,8 +2681,8 @@ func deactivateOrganizationMembershipTestHandler(w http.ResponseWriter, r *http.
 			UserID:         "user_01E4ZCR3C5A4QZ2Z2JQXGKZJ9E",
 			OrganizationID: "org_01E4ZCR3C56J083X43JQXF3JK5",
 			Status:         models.OrganizationMembershipStatusInactive,
-			CreatedAt:      "2021-06-25T19:07:33.155Z",
-			UpdatedAt:      "2021-06-25T19:07:33.155Z",
+			CreatedAt:      time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+			UpdatedAt:      time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 		})
 	}
 
@@ -2719,8 +2719,8 @@ func TestReactivateOrganizationMembership(t *testing.T) {
 				UserID:         "user_01E4ZCR3C5A4QZ2Z2JQXGKZJ9E",
 				OrganizationID: "org_01E4ZCR3C56J083X43JQXF3JK5",
 				Status:         models.OrganizationMembershipStatusActive,
-				CreatedAt:      "2021-06-25T19:07:33.155Z",
-				UpdatedAt:      "2021-06-25T19:07:33.155Z",
+				CreatedAt:      time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+				UpdatedAt:      time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 			},
 		},
 	}
@@ -2761,8 +2761,8 @@ func reactivateOrganizationMembershipTestHandler(w http.ResponseWriter, r *http.
 			UserID:         "user_01E4ZCR3C5A4QZ2Z2JQXGKZJ9E",
 			OrganizationID: "org_01E4ZCR3C56J083X43JQXF3JK5",
 			Status:         models.OrganizationMembershipStatusActive,
-			CreatedAt:      "2021-06-25T19:07:33.155Z",
-			UpdatedAt:      "2021-06-25T19:07:33.155Z",
+			CreatedAt:      time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+			UpdatedAt:      time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 		})
 	}
 
@@ -2798,9 +2798,9 @@ func TestGetInvitation(t *testing.T) {
 				State:               models.InvitationStatePending,
 				Token:               "myToken",
 				AcceptInvitationUrl: "https://your-app.com/invite?invitation_token=myToken",
-				ExpiresAt:           "2021-06-25T19:07:33.155Z",
-				CreatedAt:           "2021-06-25T19:07:33.155Z",
-				UpdatedAt:           "2021-06-25T19:07:33.155Z",
+				ExpiresAt:           time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+				CreatedAt:           time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+				UpdatedAt:           time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 			},
 		},
 	}
@@ -2842,9 +2842,9 @@ func getInvitationTestHandler(w http.ResponseWriter, r *http.Request) {
 			State:               models.InvitationStatePending,
 			Token:               "myToken",
 			AcceptInvitationUrl: "https://your-app.com/invite?invitation_token=myToken",
-			ExpiresAt:           "2021-06-25T19:07:33.155Z",
-			CreatedAt:           "2021-06-25T19:07:33.155Z",
-			UpdatedAt:           "2021-06-25T19:07:33.155Z",
+			ExpiresAt:           time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+			CreatedAt:           time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+			UpdatedAt:           time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 		}
 		body, err = json.Marshal(invitations)
 	}
@@ -2881,9 +2881,9 @@ func TestFindInvitationByToken(t *testing.T) {
 				State:               models.InvitationStatePending,
 				Token:               "myToken",
 				AcceptInvitationUrl: "https://your-app.com/invite?invitation_token=myToken",
-				ExpiresAt:           "2021-06-25T19:07:33.155Z",
-				CreatedAt:           "2021-06-25T19:07:33.155Z",
-				UpdatedAt:           "2021-06-25T19:07:33.155Z",
+				ExpiresAt:           time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+				CreatedAt:           time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+				UpdatedAt:           time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 			},
 		},
 	}
@@ -2925,9 +2925,9 @@ func findInvitationByTokenTestHandler(w http.ResponseWriter, r *http.Request) {
 			State:               models.InvitationStatePending,
 			Token:               "myToken",
 			AcceptInvitationUrl: "https://your-app.com/invite?invitation_token=myToken",
-			ExpiresAt:           "2021-06-25T19:07:33.155Z",
-			CreatedAt:           "2021-06-25T19:07:33.155Z",
-			UpdatedAt:           "2021-06-25T19:07:33.155Z",
+			ExpiresAt:           time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+			CreatedAt:           time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+			UpdatedAt:           time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 		}
 		body, err = json.Marshal(invitation)
 	}
@@ -2968,9 +2968,9 @@ func TestListInvitations(t *testing.T) {
 						State:               models.InvitationStatePending,
 						Token:               "myToken",
 						AcceptInvitationUrl: "https://your-app.com/invite?invitation_token=myToken",
-						ExpiresAt:           "2021-06-25T19:07:33.155Z",
-						CreatedAt:           "2021-06-25T19:07:33.155Z",
-						UpdatedAt:           "2021-06-25T19:07:33.155Z",
+						ExpiresAt:           time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+						CreatedAt:           time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+						UpdatedAt:           time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 					},
 				},
 				ListMetadata: common.ListMetadata{
@@ -3019,9 +3019,9 @@ func listInvitationsTestHandler(w http.ResponseWriter, r *http.Request) {
 					State:               models.InvitationStatePending,
 					Token:               "myToken",
 					AcceptInvitationUrl: "https://your-app.com/invite?invitation_token=myToken",
-					ExpiresAt:           "2021-06-25T19:07:33.155Z",
-					CreatedAt:           "2021-06-25T19:07:33.155Z",
-					UpdatedAt:           "2021-06-25T19:07:33.155Z",
+					ExpiresAt:           time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+					CreatedAt:           time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+					UpdatedAt:           time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 				},
 			},
 			ListMetadata: common.ListMetadata{
@@ -3069,9 +3069,9 @@ func TestSendInvitation(t *testing.T) {
 				State:               models.InvitationStatePending,
 				Token:               "myToken",
 				AcceptInvitationUrl: "https://your-app.com/invite?invitation_token=myToken",
-				ExpiresAt:           "2021-06-25T19:07:33.155Z",
-				CreatedAt:           "2021-06-25T19:07:33.155Z",
-				UpdatedAt:           "2021-06-25T19:07:33.155Z",
+				ExpiresAt:           time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+				CreatedAt:           time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+				UpdatedAt:           time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 			},
 		},
 	}
@@ -3114,9 +3114,9 @@ func SendInvitationTestHandler(w http.ResponseWriter, r *http.Request) {
 				State:               models.InvitationStatePending,
 				Token:               "myToken",
 				AcceptInvitationUrl: "https://your-app.com/invite?invitation_token=myToken",
-				ExpiresAt:           "2021-06-25T19:07:33.155Z",
-				CreatedAt:           "2021-06-25T19:07:33.155Z",
-				UpdatedAt:           "2021-06-25T19:07:33.155Z",
+				ExpiresAt:           time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+				CreatedAt:           time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+				UpdatedAt:           time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 			})
 	}
 
@@ -3155,9 +3155,9 @@ func TestRevokeInvitation(t *testing.T) {
 				State:               models.InvitationStatePending,
 				Token:               "myToken",
 				AcceptInvitationUrl: "https://your-app.com/invite?invitation_token=myToken",
-				ExpiresAt:           "2021-06-25T19:07:33.155Z",
-				CreatedAt:           "2021-06-25T19:07:33.155Z",
-				UpdatedAt:           "2021-06-25T19:07:33.155Z",
+				ExpiresAt:           time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+				CreatedAt:           time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+				UpdatedAt:           time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 			},
 		},
 	}
@@ -3200,9 +3200,9 @@ func RevokeInvitationTestHandler(w http.ResponseWriter, r *http.Request) {
 				State:               models.InvitationStatePending,
 				Token:               "myToken",
 				AcceptInvitationUrl: "https://your-app.com/invite?invitation_token=myToken",
-				ExpiresAt:           "2021-06-25T19:07:33.155Z",
-				CreatedAt:           "2021-06-25T19:07:33.155Z",
-				UpdatedAt:           "2021-06-25T19:07:33.155Z",
+				ExpiresAt:           time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+				CreatedAt:           time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+				UpdatedAt:           time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 			})
 	}
 

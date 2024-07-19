@@ -7,6 +7,7 @@ import (
 	"net/http/httptest"
 	"strings"
 	"testing"
+	"time"
 
 	"github.com/omi-lab/workos-go/v4/pkg/common"
 	"github.com/omi-lab/workos-go/v4/pkg/models"
@@ -177,8 +178,8 @@ func TestListGroups(t *testing.T) {
 						IdpID:          "123",
 						DirectoryID:    "456",
 						OrganizationID: "789",
-						CreatedAt:      "2022-06-08T17:05:58.051Z",
-						UpdatedAt:      "2022-06-08T17:05:58.051Z",
+						CreatedAt:      time.Date(2022, 2, 17, 22, 39, 26, 616, time.UTC),
+						UpdatedAt:      time.Date(2022, 2, 17, 22, 39, 26, 616, time.UTC),
 						RawAttributes:  json.RawMessage(`{"foo":"bar"}`),
 					},
 				},
@@ -233,8 +234,8 @@ func listGroupsTestHandler(w http.ResponseWriter, r *http.Request) {
 					IdpID:          "123",
 					DirectoryID:    "456",
 					OrganizationID: "789",
-					CreatedAt:      "2022-06-08T17:05:58.051Z",
-					UpdatedAt:      "2022-06-08T17:05:58.051Z",
+					CreatedAt:      time.Date(2022, 2, 17, 22, 39, 26, 616, time.UTC),
+					UpdatedAt:      time.Date(2022, 2, 17, 22, 39, 26, 616, time.UTC),
 					RawAttributes:  json.RawMessage(`{"foo":"bar"}`),
 				},
 			},
@@ -393,8 +394,8 @@ func TestGetGroup(t *testing.T) {
 				IdpID:          "123",
 				DirectoryID:    "456",
 				OrganizationID: "789",
-				CreatedAt:      "2022-06-08T17:05:58.051Z",
-				UpdatedAt:      "2022-06-08T17:05:58.051Z",
+				CreatedAt:      time.Date(2022, 2, 17, 22, 39, 26, 616, time.UTC),
+				UpdatedAt:      time.Date(2022, 2, 17, 22, 39, 26, 616, time.UTC),
 				RawAttributes:  json.RawMessage(`{"foo":"bar"}`),
 			},
 		},
@@ -438,8 +439,8 @@ func getGroupTestHandler(w http.ResponseWriter, r *http.Request) {
 		IdpID:          "123",
 		DirectoryID:    "456",
 		OrganizationID: "789",
-		CreatedAt:      "2022-06-08T17:05:58.051Z",
-		UpdatedAt:      "2022-06-08T17:05:58.051Z",
+		CreatedAt:      time.Date(2022, 2, 17, 22, 39, 26, 616, time.UTC),
+		UpdatedAt:      time.Date(2022, 2, 17, 22, 39, 26, 616, time.UTC),
 		RawAttributes:  json.RawMessage(`{"foo":"bar"}`),
 	})
 	if err != nil {

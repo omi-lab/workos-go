@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+	"time"
 
 	"github.com/omi-lab/workos-go/v4/pkg/models"
 	"github.com/stretchr/testify/require"
@@ -22,8 +23,8 @@ func TestMfaEnrollFactors(t *testing.T) {
 
 	expectedResponse := models.Factor{
 		ID:        "auth_factor_test123",
-		CreatedAt: "2022-02-17T22:39:26.616Z",
-		UpdatedAt: "2022-02-17T22:39:26.616Z",
+		CreatedAt: time.Date(2022, 2, 17, 22, 39, 26, 616, time.UTC),
+		UpdatedAt: time.Date(2022, 2, 17, 22, 39, 26, 616, time.UTC),
 		Type:      "generic_otp",
 	}
 	factor, err := EnrollFactor(context.Background(), EnrollFactorOpts{
@@ -48,10 +49,10 @@ func TestMfaChallengeFactors(t *testing.T) {
 
 	expectedResponse := models.Challenge{
 		ID:        "auth_challenge_test123",
-		CreatedAt: "2022-02-17T22:39:26.616Z",
-		UpdatedAt: "2022-02-17T22:39:26.616Z",
+		CreatedAt: time.Date(2022, 2, 17, 22, 39, 26, 616, time.UTC),
+		UpdatedAt: time.Date(2022, 2, 17, 22, 39, 26, 616, time.UTC),
 		FactorID:  "auth_factor_test123",
-		ExpiresAt: "2022-02-17T22:39:26.616Z",
+		ExpiresAt: time.Date(2022, 2, 17, 22, 39, 26, 616, time.UTC),
 	}
 	challenge, err := ChallengeFactor(context.Background(), ChallengeFactorOpts{
 		FactorID: "auth_factor_id",
@@ -95,8 +96,8 @@ func TestGetFactors(t *testing.T) {
 
 	expectedResponse := models.Factor{
 		ID:        "auth_factor_test123",
-		CreatedAt: "2022-02-17T22:39:26.616Z",
-		UpdatedAt: "2022-02-17T22:39:26.616Z",
+		CreatedAt: time.Date(2022, 2, 17, 22, 39, 26, 616, time.UTC),
+		UpdatedAt: time.Date(2022, 2, 17, 22, 39, 26, 616, time.UTC),
 		Type:      "generic_otp",
 	}
 	factorResponse, err := GetFactor(context.Background(), GetFactorOpts{

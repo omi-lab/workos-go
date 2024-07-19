@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+	"time"
 
 	"github.com/omi-lab/workos-go/v4/pkg/common"
 	"github.com/omi-lab/workos-go/v4/pkg/models"
@@ -33,8 +34,8 @@ func TestUserManagementGetUser(t *testing.T) {
 		FirstName:     "Marcelina",
 		LastName:      "Davis",
 		EmailVerified: true,
-		CreatedAt:     "2021-06-25T19:07:33.155Z",
-		UpdatedAt:     "2021-06-25T19:07:33.155Z",
+		CreatedAt:     time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+		UpdatedAt:     time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 	}
 
 	userRes, err := GetUser(context.Background(), GetUserOpts{
@@ -62,8 +63,8 @@ func TestUserManagementListUsers(t *testing.T) {
 				FirstName:     "Marcelina",
 				LastName:      "Davis",
 				EmailVerified: true,
-				CreatedAt:     "2021-06-25T19:07:33.155Z",
-				UpdatedAt:     "2021-06-25T19:07:33.155Z",
+				CreatedAt:     time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+				UpdatedAt:     time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 			},
 		},
 		ListMetadata: common.ListMetadata{
@@ -91,8 +92,8 @@ func TestUserManagementCreateUser(t *testing.T) {
 		FirstName:     "Marcelina",
 		LastName:      "Davis",
 		EmailVerified: true,
-		CreatedAt:     "2021-06-25T19:07:33.155Z",
-		UpdatedAt:     "2021-06-25T19:07:33.155Z",
+		CreatedAt:     time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+		UpdatedAt:     time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 	}
 
 	userRes, err := CreateUser(context.Background(), CreateUserOpts{
@@ -121,8 +122,8 @@ func TestUserManagementCreateUserPasswordHash(t *testing.T) {
 		FirstName:     "Marcelina",
 		LastName:      "Davis",
 		EmailVerified: true,
-		CreatedAt:     "2021-06-25T19:07:33.155Z",
-		UpdatedAt:     "2021-06-25T19:07:33.155Z",
+		CreatedAt:     time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+		UpdatedAt:     time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 	}
 
 	userRes, err := CreateUser(context.Background(), CreateUserOpts{
@@ -152,8 +153,8 @@ func TestUserManagementUpdateUser(t *testing.T) {
 		FirstName:     "Marcelina",
 		LastName:      "Davis",
 		EmailVerified: true,
-		CreatedAt:     "2021-06-25T19:07:33.155Z",
-		UpdatedAt:     "2021-06-25T19:07:33.155Z",
+		CreatedAt:     time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+		UpdatedAt:     time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 	}
 
 	userRes, err := UpdateUser(context.Background(), UpdateUserOpts{
@@ -182,8 +183,8 @@ func TestUserManagementUpdateUserPasswordHash(t *testing.T) {
 		FirstName:     "Marcelina",
 		LastName:      "Davis",
 		EmailVerified: true,
-		CreatedAt:     "2021-06-25T19:07:33.155Z",
-		UpdatedAt:     "2021-06-25T19:07:33.155Z",
+		CreatedAt:     time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+		UpdatedAt:     time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 	}
 
 	userRes, err := UpdateUser(context.Background(), UpdateUserOpts{
@@ -226,10 +227,10 @@ func TestUsersGetEmailVerification(t *testing.T) {
 		ID:        "email_verification_123",
 		UserId:    "user_123",
 		Email:     "marcelina@foo-corp.com",
-		ExpiresAt: "2021-06-25T19:07:33.155Z",
+		ExpiresAt: time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 		Code:      "123456",
-		CreatedAt: "2021-06-25T19:07:33.155Z",
-		UpdatedAt: "2021-06-25T19:07:33.155Z",
+		CreatedAt: time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+		UpdatedAt: time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 	}
 
 	getByIDRes, err := GetEmailVerification(context.Background(), GetEmailVerificationOpts{
@@ -255,8 +256,8 @@ func TestUsersSendVerificationEmail(t *testing.T) {
 			FirstName:     "Marcelina",
 			LastName:      "Davis",
 			EmailVerified: true,
-			CreatedAt:     "2021-06-25T19:07:33.155Z",
-			UpdatedAt:     "2021-06-25T19:07:33.155Z",
+			CreatedAt:     time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+			UpdatedAt:     time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 		},
 	}
 
@@ -308,8 +309,8 @@ func TestUsersGetPasswordReset(t *testing.T) {
 		Email:              "marcelina@foo-corp.com",
 		PasswordResetToken: "myToken",
 		PasswordResetUrl:   "https://your-app.com/reset-password?token=myToken",
-		ExpiresAt:          "2021-06-25T19:07:33.155Z",
-		CreatedAt:          "2021-06-25T19:07:33.155Z",
+		ExpiresAt:          time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+		CreatedAt:          time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 	}
 
 	getByIDRes, err := GetPasswordReset(context.Background(), GetPasswordResetOpts{
@@ -335,8 +336,8 @@ func TestUserManagementCreatePasswordReset(t *testing.T) {
 		Email:              "marcelina@foo-corp.com",
 		PasswordResetToken: "myToken",
 		PasswordResetUrl:   "https://your-app.com/reset-password?token=myToken",
-		ExpiresAt:          "2021-06-25T19:07:33.155Z",
-		CreatedAt:          "2021-06-25T19:07:33.155Z",
+		ExpiresAt:          time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+		CreatedAt:          time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 	}
 
 	createRes, err := CreatePasswordReset(context.Background(), CreatePasswordResetOpts{
@@ -580,10 +581,10 @@ func TestUsersGetMagicAuth(t *testing.T) {
 		ID:        "magic_auth_123",
 		UserId:    "user_123",
 		Email:     "marcelina@foo-corp.com",
-		ExpiresAt: "2021-06-25T19:07:33.155Z",
+		ExpiresAt: time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 		Code:      "123456",
-		CreatedAt: "2021-06-25T19:07:33.155Z",
-		UpdatedAt: "2021-06-25T19:07:33.155Z",
+		CreatedAt: time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+		UpdatedAt: time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 	}
 
 	getByIDRes, err := GetMagicAuth(context.Background(), GetMagicAuthOpts{
@@ -607,10 +608,10 @@ func TestUserManagementCreateMagicAuth(t *testing.T) {
 		ID:        "magic_auth_123",
 		UserId:    "user_123",
 		Email:     "marcelina@foo-corp.com",
-		ExpiresAt: "2021-06-25T19:07:33.155Z",
+		ExpiresAt: time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 		Code:      "123456",
-		CreatedAt: "2021-06-25T19:07:33.155Z",
-		UpdatedAt: "2021-06-25T19:07:33.155Z",
+		CreatedAt: time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+		UpdatedAt: time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 	}
 
 	createRes, err := CreateMagicAuth(context.Background(), CreateMagicAuthOpts{
@@ -647,16 +648,16 @@ func TestUserManagementEnrollAuthFactor(t *testing.T) {
 	expectedResponse := EnrollAuthFactorResponse{
 		Factor: models.Factor{
 			ID:        "auth_factor_test123",
-			CreatedAt: "2022-02-17T22:39:26.616Z",
-			UpdatedAt: "2022-02-17T22:39:26.616Z",
+			CreatedAt: time.Date(2022, 2, 17, 22, 39, 26, 616, time.UTC),
+			UpdatedAt: time.Date(2022, 2, 17, 22, 39, 26, 616, time.UTC),
 			Type:      "generic_otp",
 		},
 		Challenge: models.Challenge{
 			ID:        "auth_challenge_test123",
-			CreatedAt: "2022-02-17T22:39:26.616Z",
-			UpdatedAt: "2022-02-17T22:39:26.616Z",
+			CreatedAt: time.Date(2022, 2, 17, 22, 39, 26, 616, time.UTC),
+			UpdatedAt: time.Date(2022, 2, 17, 22, 39, 26, 616, time.UTC),
 			FactorID:  "auth_factor_test123",
-			ExpiresAt: "2022-02-17T22:39:26.616Z",
+			ExpiresAt: time.Date(2022, 2, 17, 22, 39, 26, 616, time.UTC),
 		},
 	}
 
@@ -683,14 +684,14 @@ func TestUserManagementListAuthFactors(t *testing.T) {
 		Data: []models.Factor{
 			{
 				ID:        "auth_factor_test123",
-				CreatedAt: "2022-02-17T22:39:26.616Z",
-				UpdatedAt: "2022-02-17T22:39:26.616Z",
+				CreatedAt: time.Date(2022, 2, 17, 22, 39, 26, 616, time.UTC),
+				UpdatedAt: time.Date(2022, 2, 17, 22, 39, 26, 616, time.UTC),
 				Type:      "generic_otp",
 			},
 			{
 				ID:        "auth_factor_test234",
-				CreatedAt: "2022-02-17T22:39:26.616Z",
-				UpdatedAt: "2022-02-17T22:39:26.616Z",
+				CreatedAt: time.Date(2022, 2, 17, 22, 39, 26, 616, time.UTC),
+				UpdatedAt: time.Date(2022, 2, 17, 22, 39, 26, 616, time.UTC),
 				Type:      "generic_otp",
 			},
 		},
@@ -717,8 +718,8 @@ func TestUserManagementGetOrganizationMembership(t *testing.T) {
 		UserID:         "user_01E4ZCR3C5A4QZ2Z2JQXGKZJ9E",
 		OrganizationID: "org_01E4ZCR3C56J083X43JQXF3JK5",
 		Status:         models.OrganizationMembershipStatusActive,
-		CreatedAt:      "2021-06-25T19:07:33.155Z",
-		UpdatedAt:      "2021-06-25T19:07:33.155Z",
+		CreatedAt:      time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+		UpdatedAt:      time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 	}
 
 	userRes, err := GetOrganizationMembership(context.Background(), GetOrganizationMembershipOpts{
@@ -745,8 +746,8 @@ func TestUserManagementListOrganizationMemberships(t *testing.T) {
 				UserID:         "user_01E4ZCR3C5A4QZ2Z2JQXGKZJ9E",
 				OrganizationID: "org_01E4ZCR3C56J083X43JQXF3JK5",
 				Status:         models.OrganizationMembershipStatusActive,
-				CreatedAt:      "2021-06-25T19:07:33.155Z",
-				UpdatedAt:      "2021-06-25T19:07:33.155Z",
+				CreatedAt:      time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+				UpdatedAt:      time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 			},
 		},
 		ListMetadata: common.ListMetadata{
@@ -778,8 +779,8 @@ func TestUserManagementCreateOrganizationMembership(t *testing.T) {
 		OrganizationID: "org_01E4ZCR3C56J083X43JQXF3JK5",
 		Status:         models.OrganizationMembershipStatusActive,
 		Role:           expectedRole,
-		CreatedAt:      "2021-06-25T19:07:33.155Z",
-		UpdatedAt:      "2021-06-25T19:07:33.155Z",
+		CreatedAt:      time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+		UpdatedAt:      time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 	}
 
 	userRes, err := CreateOrganizationMembership(context.Background(), CreateOrganizationMembershipOpts{
@@ -825,8 +826,8 @@ func TestUsersUpdateOrganizationMembership(t *testing.T) {
 		OrganizationID: "org_01E4ZCR3C56J083X43JQXF3JK5",
 		Status:         models.OrganizationMembershipStatusActive,
 		Role:           expectedRole,
-		CreatedAt:      "2021-06-25T19:07:33.155Z",
-		UpdatedAt:      "2021-06-25T19:07:33.155Z",
+		CreatedAt:      time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+		UpdatedAt:      time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 	}
 
 	body, err := UpdateOrganizationMembership(
@@ -854,8 +855,8 @@ func TestUserManagementDeactivateOrganizationMembership(t *testing.T) {
 		UserID:         "user_01E4ZCR3C5A4QZ2Z2JQXGKZJ9E",
 		OrganizationID: "org_01E4ZCR3C56J083X43JQXF3JK5",
 		Status:         models.OrganizationMembershipStatusInactive,
-		CreatedAt:      "2021-06-25T19:07:33.155Z",
-		UpdatedAt:      "2021-06-25T19:07:33.155Z",
+		CreatedAt:      time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+		UpdatedAt:      time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 	}
 
 	userRes, err := DeactivateOrganizationMembership(context.Background(), DeactivateOrganizationMembershipOpts{
@@ -879,8 +880,8 @@ func TestUserManagementReactivateOrganizationMembership(t *testing.T) {
 		UserID:         "user_01E4ZCR3C5A4QZ2Z2JQXGKZJ9E",
 		OrganizationID: "org_01E4ZCR3C56J083X43JQXF3JK5",
 		Status:         models.OrganizationMembershipStatusActive,
-		CreatedAt:      "2021-06-25T19:07:33.155Z",
-		UpdatedAt:      "2021-06-25T19:07:33.155Z",
+		CreatedAt:      time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+		UpdatedAt:      time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 	}
 
 	userRes, err := ReactivateOrganizationMembership(context.Background(), ReactivateOrganizationMembershipOpts{
@@ -904,9 +905,9 @@ func TestUsersGetInvitation(t *testing.T) {
 		State:               models.InvitationStatePending,
 		Token:               "myToken",
 		AcceptInvitationUrl: "https://your-app.com/invite?invitation_token=myToken",
-		ExpiresAt:           "2021-06-25T19:07:33.155Z",
-		CreatedAt:           "2021-06-25T19:07:33.155Z",
-		UpdatedAt:           "2021-06-25T19:07:33.155Z",
+		ExpiresAt:           time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+		CreatedAt:           time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+		UpdatedAt:           time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 	}
 
 	getByIDRes, err := GetInvitation(context.Background(), GetInvitationOpts{
@@ -930,9 +931,9 @@ func TestUsersFindInvitationByToken(t *testing.T) {
 		State:               models.InvitationStatePending,
 		Token:               "myToken",
 		AcceptInvitationUrl: "https://your-app.com/invite?invitation_token=myToken",
-		ExpiresAt:           "2021-06-25T19:07:33.155Z",
-		CreatedAt:           "2021-06-25T19:07:33.155Z",
-		UpdatedAt:           "2021-06-25T19:07:33.155Z",
+		ExpiresAt:           time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+		CreatedAt:           time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+		UpdatedAt:           time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 	}
 
 	getByIDRes, err := FindInvitationByToken(context.Background(), FindInvitationByTokenOpts{
@@ -959,9 +960,9 @@ func TestUsersListInvitations(t *testing.T) {
 					State:               models.InvitationStatePending,
 					Token:               "myToken",
 					AcceptInvitationUrl: "https://your-app.com/invite?invitation_token=myToken",
-					ExpiresAt:           "2021-06-25T19:07:33.155Z",
-					CreatedAt:           "2021-06-25T19:07:33.155Z",
-					UpdatedAt:           "2021-06-25T19:07:33.155Z",
+					ExpiresAt:           time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+					CreatedAt:           time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+					UpdatedAt:           time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 				},
 			},
 			ListMetadata: common.ListMetadata{
@@ -992,9 +993,9 @@ func TestUsersSendInvitation(t *testing.T) {
 		State:               models.InvitationStatePending,
 		Token:               "myToken",
 		AcceptInvitationUrl: "https://your-app.com/invite?invitation_token=myToken",
-		ExpiresAt:           "2021-06-25T19:07:33.155Z",
-		CreatedAt:           "2021-06-25T19:07:33.155Z",
-		UpdatedAt:           "2021-06-25T19:07:33.155Z",
+		ExpiresAt:           time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+		CreatedAt:           time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+		UpdatedAt:           time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 	}
 
 	createRes, err := SendInvitation(context.Background(), SendInvitationOpts{
@@ -1024,9 +1025,9 @@ func TestUsersRevokeInvitation(t *testing.T) {
 		State:               models.InvitationStatePending,
 		Token:               "myToken",
 		AcceptInvitationUrl: "https://your-app.com/invite?invitation_token=myToken",
-		ExpiresAt:           "2021-06-25T19:07:33.155Z",
-		CreatedAt:           "2021-06-25T19:07:33.155Z",
-		UpdatedAt:           "2021-06-25T19:07:33.155Z",
+		ExpiresAt:           time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+		CreatedAt:           time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
+		UpdatedAt:           time.Date(2021, 6, 25, 19, 07, 33, 155, time.UTC),
 	}
 
 	revokeRes, err := RevokeInvitation(context.Background(), RevokeInvitationOpts{

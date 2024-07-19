@@ -1,5 +1,7 @@
 package models
 
+import "time"
+
 // OrganizationDomain contains data about an Organization's Domains.
 type OrganizationDomain struct {
 	// The Organization Domain's unique identifier.
@@ -27,10 +29,10 @@ type Organization struct {
 	Domains []OrganizationDomain `json:"domains"`
 
 	// The timestamp of when the Organization was created.
-	CreatedAt string `json:"created_at"`
+	CreatedAt time.Time `json:"created_at"`
 
 	// The timestamp of when the Organization was updated.
-	UpdatedAt string `json:"updated_at"`
+	UpdatedAt time.Time `json:"updated_at"`
 }
 
 type OrganizationDomainDataState string

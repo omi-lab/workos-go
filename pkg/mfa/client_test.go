@@ -7,6 +7,7 @@ import (
 	"net/http/httptest"
 	"strings"
 	"testing"
+	"time"
 
 	"github.com/omi-lab/workos-go/v4/pkg/models"
 	"github.com/stretchr/testify/require"
@@ -35,8 +36,8 @@ func TestGetFactor(t *testing.T) {
 			},
 			expected: models.Factor{
 				ID:        "auth_factor_test123",
-				CreatedAt: "2022-02-17T22:39:26.616Z",
-				UpdatedAt: "2022-02-17T22:39:26.616Z",
+				CreatedAt: time.Date(2022, 2, 17, 22, 39, 26, 616, time.UTC),
+				UpdatedAt: time.Date(2022, 2, 17, 22, 39, 26, 616, time.UTC),
 				Type:      "generic_otp",
 			},
 		},
@@ -120,8 +121,8 @@ func TestEnrollFactor(t *testing.T) {
 			},
 			expected: models.Factor{
 				ID:        "auth_factor_test123",
-				CreatedAt: "2022-02-17T22:39:26.616Z",
-				UpdatedAt: "2022-02-17T22:39:26.616Z",
+				CreatedAt: time.Date(2022, 2, 17, 22, 39, 26, 616, time.UTC),
+				UpdatedAt: time.Date(2022, 2, 17, 22, 39, 26, 616, time.UTC),
 				Type:      "generic_otp",
 			},
 		},
@@ -136,8 +137,8 @@ func TestEnrollFactor(t *testing.T) {
 			},
 			expected: models.Factor{
 				ID:        "auth_factor_test123",
-				CreatedAt: "2022-02-17T22:39:26.616Z",
-				UpdatedAt: "2022-02-17T22:39:26.616Z",
+				CreatedAt: time.Date(2022, 2, 17, 22, 39, 26, 616, time.UTC),
+				UpdatedAt: time.Date(2022, 2, 17, 22, 39, 26, 616, time.UTC),
 				Type:      "generic_otp",
 			},
 		},
@@ -177,8 +178,8 @@ func enrollFactorTestHandler(w http.ResponseWriter, r *http.Request) {
 
 	body, err := json.Marshal(models.Factor{
 		ID:        "auth_factor_test123",
-		CreatedAt: "2022-02-17T22:39:26.616Z",
-		UpdatedAt: "2022-02-17T22:39:26.616Z",
+		CreatedAt: time.Date(2022, 2, 17, 22, 39, 26, 616, time.UTC),
+		UpdatedAt: time.Date(2022, 2, 17, 22, 39, 26, 616, time.UTC),
 		Type:      "generic_otp",
 	})
 	if err != nil {
@@ -213,10 +214,10 @@ func TestChallengeFactor(t *testing.T) {
 			},
 			expected: models.Challenge{
 				ID:        "auth_challenge_test123",
-				CreatedAt: "2022-02-17T22:39:26.616Z",
-				UpdatedAt: "2022-02-17T22:39:26.616Z",
+				CreatedAt: time.Date(2022, 2, 17, 22, 39, 26, 616, time.UTC),
+				UpdatedAt: time.Date(2022, 2, 17, 22, 39, 26, 616, time.UTC),
 				FactorID:  "auth_factor_test123",
-				ExpiresAt: "2022-02-17T22:39:26.616Z",
+				ExpiresAt: time.Date(2022, 2, 17, 22, 39, 26, 616, time.UTC),
 			},
 		},
 	}
@@ -255,10 +256,10 @@ func challengeFactorTestHandler(w http.ResponseWriter, r *http.Request) {
 
 	body, err := json.Marshal(models.Challenge{
 		ID:        "auth_challenge_test123",
-		CreatedAt: "2022-02-17T22:39:26.616Z",
-		UpdatedAt: "2022-02-17T22:39:26.616Z",
+		CreatedAt: time.Date(2022, 2, 17, 22, 39, 26, 616, time.UTC),
+		UpdatedAt: time.Date(2022, 2, 17, 22, 39, 26, 616, time.UTC),
 		FactorID:  "auth_factor_test123",
-		ExpiresAt: "2022-02-17T22:39:26.616Z",
+		ExpiresAt: time.Date(2022, 2, 17, 22, 39, 26, 616, time.UTC),
 	})
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
@@ -326,8 +327,8 @@ func getFactorTestHandler(w http.ResponseWriter, r *http.Request) {
 
 	body, err := json.Marshal(models.Factor{
 		ID:        "auth_factor_test123",
-		CreatedAt: "2022-02-17T22:39:26.616Z",
-		UpdatedAt: "2022-02-17T22:39:26.616Z",
+		CreatedAt: time.Date(2022, 2, 17, 22, 39, 26, 616, time.UTC),
+		UpdatedAt: time.Date(2022, 2, 17, 22, 39, 26, 616, time.UTC),
 		Type:      "generic_otp",
 	})
 

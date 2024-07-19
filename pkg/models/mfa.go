@@ -1,5 +1,7 @@
 package models
 
+import "time"
+
 // Type represents the type of Authentication Factor
 type FactorType string
 
@@ -17,10 +19,10 @@ type Factor struct {
 	Object string `json:"object"`
 
 	// The timestamp of when the request was created.
-	CreatedAt string `json:"created_at"`
+	CreatedAt time.Time `json:"created_at"`
 
 	// The timestamp of when the request was updated.
-	UpdatedAt string `json:"updated_at"`
+	UpdatedAt time.Time `json:"updated_at"`
 
 	// The type of request either 'sms' or 'totp'
 	Type FactorType `json:"type"`
@@ -50,13 +52,13 @@ type Challenge struct {
 	Object string `json:"object"`
 
 	// The timestamp of when the request was created.
-	CreatedAt string `json:"created_at"`
+	CreatedAt time.Time `json:"created_at"`
 
 	// The timestamp of when the request was updated.
-	UpdatedAt string `json:"updated_at"`
+	UpdatedAt time.Time `json:"updated_at"`
 
 	// The timestamp of when the request expires.
-	ExpiresAt string `json:"expires_at"`
+	ExpiresAt time.Time `json:"expires_at"`
 
 	// The authentication factor Id used to create the request.
 	FactorID string `json:"authentication_factor_id"`

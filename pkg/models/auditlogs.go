@@ -85,8 +85,8 @@ type AuditLogExport struct {
 	URL string `json:"url"`
 
 	// AuditLogExport's created at date
-	CreatedAt string `json:"created_at"`
+	CreatedAt time.Time `json:"created_at"`
 
 	// AuditLogExport's updated at date
-	UpdatedAt string `json:"updated_at"`
+	UpdatedAt time.Time `json:"updated_at"`
 }

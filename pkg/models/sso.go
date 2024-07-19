@@ -1,5 +1,7 @@
 package models
 
+import "time"
+
 // ConnectionType represents a connection type.
 type ConnectionType string
 
@@ -94,8 +96,8 @@ type Connection struct {
 	Domains []ConnectionDomain `json:"domains"`
 
 	// The timestamp of when the Connection was created.
-	CreatedAt string `json:"created_at"`
+	CreatedAt time.Time `json:"created_at"`
 
 	// The timestamp of when the Connection was updated.
-	UpdatedAt string `json:"updated_at"`
+	UpdatedAt time.Time `json:"updated_at"`
 }

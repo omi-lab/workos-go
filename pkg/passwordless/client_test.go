@@ -7,6 +7,7 @@ import (
 	"net/http/httptest"
 	"strings"
 	"testing"
+	"time"
 
 	"github.com/omi-lab/workos-go/v4/pkg/models"
 	"github.com/stretchr/testify/require"
@@ -38,7 +39,7 @@ func TestCreateSession(t *testing.T) {
 			expected: models.PasswordlessSession{
 				ID:        "session_id",
 				Email:     "sasa@foo-corp.com",
-				ExpiresAt: "",
+				ExpiresAt: time.Time{},
 				Link:      "https://id.workos.test/passwordless/1234/confirm",
 			},
 		},
@@ -83,7 +84,7 @@ func createSessionTestHandler(w http.ResponseWriter, r *http.Request) {
 		models.PasswordlessSession{
 			ID:        "session_id",
 			Email:     "sasa@foo-corp.com",
-			ExpiresAt: "",
+			ExpiresAt: time.Time{},
 			Link:      "https://id.workos.test/passwordless/1234/confirm",
 		})
 

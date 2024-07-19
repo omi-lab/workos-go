@@ -1,15 +1,19 @@
 package models
 
-import "github.com/omi-lab/workos-go/v4/pkg/common"
+import (
+	"time"
+
+	"github.com/omi-lab/workos-go/v4/pkg/common"
+)
 
 type EmailVerification struct {
-	ID        string `json:"id"`
-	UserId    string `json:"user_id"`
-	Email     string `json:"email"`
-	ExpiresAt string `json:"expires_at"`
-	Code      string `json:"code"`
-	CreatedAt string `json:"created_at"`
-	UpdatedAt string `json:"updated_at"`
+	ID        string    `json:"id"`
+	UserId    string    `json:"user_id"`
+	Email     string    `json:"email"`
+	ExpiresAt time.Time `json:"expires_at"`
+	Code      string    `json:"code"`
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
 }
 
 // InvitationState represents the state of an Invitation.
@@ -27,35 +31,35 @@ type Invitation struct {
 	ID                  string          `json:"id"`
 	Email               string          `json:"email"`
 	State               InvitationState `json:"state"`
-	AcceptedAt          string          `json:"accepted_at,omitempty"`
-	RevokedAt           string          `json:"revoked_at,omitempty"`
+	AcceptedAt          *time.Time      `json:"accepted_at,omitempty"`
+	RevokedAt           *time.Time      `json:"revoked_at,omitempty"`
 	Token               string          `json:"token"`
 	AcceptInvitationUrl string          `json:"accept_invitation_url"`
 	OrganizationID      string          `json:"organization_id,omitempty"`
 	InviterUserID       string          `json:"inviter_user_id,omitempty"`
-	ExpiresAt           string          `json:"expires_at"`
-	CreatedAt           string          `json:"created_at"`
-	UpdatedAt           string          `json:"updated_at"`
+	ExpiresAt           time.Time       `json:"expires_at"`
+	CreatedAt           time.Time       `json:"created_at"`
+	UpdatedAt           time.Time       `json:"updated_at"`
 }
 
 type MagicAuth struct {
-	ID        string `json:"id"`
-	UserId    string `json:"user_id"`
-	Email     string `json:"email"`
-	ExpiresAt string `json:"expires_at"`
-	Code      string `json:"code"`
-	CreatedAt string `json:"created_at"`
-	UpdatedAt string `json:"updated_at"`
+	ID        string    `json:"id"`
+	UserId    string    `json:"user_id"`
+	Email     string    `json:"email"`
+	ExpiresAt time.Time `json:"expires_at"`
+	Code      string    `json:"code"`
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
 }
 
 type PasswordReset struct {
-	ID                 string `json:"id"`
-	UserId             string `json:"user_id"`
-	Email              string `json:"email"`
-	PasswordResetToken string `json:"password_reset_token"`
-	PasswordResetUrl   string `json:"password_reset_url"`
-	ExpiresAt          string `json:"expires_at"`
-	CreatedAt          string `json:"created_at"`
+	ID                 string    `json:"id"`
+	UserId             string    `json:"user_id"`
+	Email              string    `json:"email"`
+	PasswordResetToken string    `json:"password_reset_token"`
+	PasswordResetUrl   string    `json:"password_reset_url"`
+	ExpiresAt          time.Time `json:"expires_at"`
+	CreatedAt          time.Time `json:"created_at"`
 }
 
 // OrganizationMembershipStatus represents the status of an Organization Membership.
@@ -86,10 +90,10 @@ type OrganizationMembership struct {
 	Status OrganizationMembershipStatus `json:"status"`
 
 	// CreatedAt is the timestamp of when the OrganizationMembership was created.
-	CreatedAt string `json:"created_at"`
+	CreatedAt time.Time `json:"created_at"`
 
 	// UpdatedAt is the timestamp of when the OrganizationMembership was updated.
-	UpdatedAt string `json:"updated_at"`
+	UpdatedAt time.Time `json:"updated_at"`
 }
 
 // User contains data about a particular User.
@@ -108,10 +112,10 @@ type User struct {
 	Email string `json:"email"`
 
 	// The timestamp of when the User was created.
-	CreatedAt string `json:"created_at"`
+	CreatedAt time.Time `json:"created_at"`
 
 	// The timestamp of when the User was updated.
-	UpdatedAt string `json:"updated_at"`
+	UpdatedAt time.Time `json:"updated_at"`
 
 	// Whether the User email is verified.
 	EmailVerified bool `json:"email_verified"`
